@@ -11,15 +11,27 @@ class RBB_model extends CI_Model
     public $NAMA_REK;
     public $SISA_ANGGARAN;
 
-    public function rules()//belum di setting
+    public function rules()
     {
         return[
-            ['field' => 'm_name', 
-            'label' => 'm_name', 
+            ['field' => 'KODE_RBB', 
+            'label' => 'KODE_RBB', 
             'rules' => 'required'],
 
-            ['field' => 'price', 
-            'label' => 'price', 
+            ['field' => 'PROGRAM_KERJA', 
+            'label' => 'PROGRAM_KERJA', 
+            'rules' => 'required'],
+
+            ['field' => 'ANGGARAN', 
+            'label' => 'ANGGARAN', 
+            'rules' => 'required'],
+
+            ['field' => 'GL', 
+            'label' => 'GL', 
+            'rules' => 'required'],
+
+            ['field' => 'NAMA_REK', 
+            'label' => 'NAMA_REK', 
             'rules' => 'required']
         ];
     }
@@ -37,9 +49,11 @@ class RBB_model extends CI_Model
         $this->ANGGARAN = $post["ANGGARAN"];
         $this->GL = $post["GL"];
         $this->NAMA_REK = $post["NAMA_REK"];
-        $this->SISA_ANGGARAN = $post["SISA_ANGGARAN"];
+        $this->SISA_ANGGARAN = $post["ANGGARAN"];
+        
         return $this->db->insert($this->_table, $this);
-        }
+    
+    }
     
     public function getThis($KODERBB)
     {

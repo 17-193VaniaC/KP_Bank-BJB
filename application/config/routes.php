@@ -52,9 +52,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['rbb'] = 'IT_FINANCE/rbb';
+$route['rbb'] = 'rbb';
 $route['Perjanjian-Kerjasama'] = 'IT_FINANCE/PKS';
-$route['Invoice'] = 'IT_FINANCE/Invoice';
+$route['Invoice'] = 'Invoice';
+$route['create-rbb'] = 'rbb/add';
 $route['Vendor'] = 'IT_FINANCE/Vendor';
 $route['Jenis_Product'] = 'IT_FINANCE/Jenis_Product';
 

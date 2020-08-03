@@ -14,7 +14,7 @@ class RBB extends CI_Controller
     public function index()
     {
         $data["rbb"] = $this->RBB_model->getAll();
-        $this->load->view("IT_FINANCE/rbb", $data);
+        $this->load->view("rbb", $data);
     }
 
     public function add()
@@ -55,7 +55,7 @@ class RBB extends CI_Controller
         if (!isset($rbb)) show_404();
         
         if ($this->RBB_model->delete($rbb)) {
-            redirect(site_url('IT_FINANCE/rbb'));
+            redirect(site_url('rbb'));
         }
     }
 }
