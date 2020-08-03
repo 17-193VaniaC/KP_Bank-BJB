@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Jas10</title>
+	<title>Welcome to CodeIgniter</title>
 
 	<style type="text/css">
 
@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	body {
 		background-color: #fff;
 		margin: 40px;
-		font: 14px/20px normal Helvetica, Arial, sans-serif;
+		font: 13px/20px normal Helvetica, Arial, sans-serif;
 		color: #4F5155;
 	}
 
@@ -63,60 +63,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		border: 1px solid #D0D0D0;
 		box-shadow: 0 0 8px #D0D0D0;
 	}
-
-	.Contact{
-		text-align: center;
-
-	}
-	.menu{
-	background-color: #dbf1ff;
-	}
-	.menu.submenu{
-		text-align: center;
-		border: 1px 
-		width: 20px;
-		padding: 14px 16px;
-		float: left;
-		border: 1px solid #888;
-	}
-
-	.
 	</style>
 </head>
 <body>
 
 <div id="container">
-	<h1>Selamat datang di Jastip10!</h1>
-	<div id="body">
-		<p><i> <b>Pelayanan jasa</b> titip barang terpercaya </i></p>
+	<h1>Welcome to CodeIgniter!</h1>
 
-		<strong>Produk</strong>
-		<p>Menerima jasa penitipan barang dari:</p>
-		<ul>
-	  		<li>Jepang</li>
-			<li>Malaysia</li>
-			<li>Korea</li>
-		 	<li>Paris</li>
-		 	<li>Singapura</li>
-		    <li>dan negara lainnya</li>
-		</ul> 
-		<strong>Lama Pelayanan</strong>
-		<p>Lama pengiriman barang dapat memakai waktu 4-8 minggu</p>
-		<strong>Harga</strong>
-		<p>Setelah pembeli mengirimkan produk yang ingin dipesankan, harga totalnya akan dihitungHarga produk akan disesuaikan dengan bea cukai dan pajak (jika ada).</p>
-		<strong>Deskripsi</strong>
-		<p>Layanan jasa titip</p>
-	
+	<div id="body">
+		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+
+		<p>If you would like to edit this page you'll find it located at:</p>
+		<code>application/views/welcome_message.php</code>
+
+		<p>The corresponding controller for this page is found at:</p>
+		<code>application/controllers/Welcome.php</code>
+
+		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
 	</div>
 
-	<div class="Contact">
-
-		<strong>Dibuat Oleh</strong><br>
-		Vania Cikanindi
-		<br>NRP. 05111740000193
-		<br>PBKK - b</div>
-	<p class="footer">Jas10 ver.<strong> 1.0.9</strong> <br>Page Rendered<strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
-
+	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
 </div>
+
 </body>
 </html>
