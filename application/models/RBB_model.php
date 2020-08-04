@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 class RBB_model extends CI_Model
 {
@@ -13,52 +13,71 @@ class RBB_model extends CI_Model
 
     public function rules()
     {
-        return[
-            ['field' => 'KODE_RBB', 
-            'label' => 'KODE_RBB', 
-            'rules' => 'required|is_unique[rbb.KODE_RBB]']
-            ,
+        return [
+            [
+                'field' => 'KODE_RBB',
+                'label' => 'KODE_RBB',
+                'rules' => 'required|is_unique[rbb.KODE_RBB]'
+            ],
 
-            ['field' => 'PROGRAM_KERJA', 
-            'label' => 'PROGRAM_KERJA', 
-            'rules' => 'required'],
+            [
+                'field' => 'PROGRAM_KERJA',
+                'label' => 'PROGRAM_KERJA',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'ANGGARAN', 
-            'label' => 'ANGGARAN', 
-            'rules' => 'required'],
+            [
+                'field' => 'ANGGARAN',
+                'label' => 'ANGGARAN',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'GL', 
-            'label' => 'GL', 
-            'rules' => 'required'],
+            [
+                'field' => 'GL',
+                'label' => 'GL',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'NAMA_REK', 
-            'label' => 'NAMA_REK', 
-            'rules' => 'required']
+            [
+                'field' => 'NAMA_REK',
+                'label' => 'NAMA_REK',
+                'rules' => 'required'
+            ]
         ];
     }
 
     public function rules2()
     {
-        return[
-            ['field' => 'PROGRAM_KERJA', 
-            'label' => 'PROGRAM_KERJA', 
-            'rules' => 'required'],
+        return [
+            [
+                'field' => 'PROGRAM_KERJA',
+                'label' => 'PROGRAM_KERJA',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'ANGGARAN', 
-            'label' => 'ANGGARAN', 
-            'rules' => 'required'],
+            [
+                'field' => 'ANGGARAN',
+                'label' => 'ANGGARAN',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'GL', 
-            'label' => 'GL', 
-            'rules' => 'required'],
+            [
+                'field' => 'GL',
+                'label' => 'GL',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'NAMA_REK', 
-            'label' => 'NAMA_REK', 
-            'rules' => 'required'],
+            [
+                'field' => 'NAMA_REK',
+                'label' => 'NAMA_REK',
+                'rules' => 'required'
+            ],
 
-            ['field' => 'SISA_ANGGARAN', 
-            'label' => 'SISA_ANGGARAN', 
-            'rules' => 'required']
+            [
+                'field' => 'SISA_ANGGARAN',
+                'label' => 'SISA_ANGGARAN',
+                'rules' => 'required'
+            ]
         ];
     }
 
@@ -76,11 +95,10 @@ class RBB_model extends CI_Model
         $this->GL = $post["GL"];
         $this->NAMA_REK = $post["NAMA_REK"];
         $this->SISA_ANGGARAN = $post["SISA_ANGGARAN"];
-        
+
         return $this->db->insert($this->_table, $this);
-    
     }
-    
+
     public function getById($KODERBB)
     {
         return $this->db->get_where($this->_table, ["KODE_RBB" => $KODERBB])->row();
@@ -100,18 +118,26 @@ class RBB_model extends CI_Model
 
     public function delete($KODERBB)
     {
-       
-        return $this->db->delete($this->_table, array("KODE_RBB" =>$KODERBB));
+
+        return $this->db->delete($this->_table, array("KODE_RBB" => $KODERBB));
     }
 
-    public function sisa_subtr($KODERBB, $nominal)//untk mengurangi anggaran RBB
+    public function sisa_subtr($KODERBB, $nominal) //untk mengurangi anggaran RBB
     {
         $this->$_table->set('SISA_ANGGARAN', 'SISA_ANGGARAN - $nominal', False);
         $this->$_table->where('KODE_RBB', $KODERBB);
         $this->$_table->update();
-
     }
 
-}
+    function getKode()
+    {
+        $response = array();
 
-?>
+        // Select record
+        $this->db->select('KODE_RBB');
+        $q = $this->db->get('rbb');
+        $response = $q->result();
+
+        return $response;
+    }
+}
