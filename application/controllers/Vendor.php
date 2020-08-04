@@ -38,9 +38,5 @@ class Vendor extends CI_Controller
         if ($this->Vendor_model->delete($vendor)) {
             redirect(site_url('vendor'));
         }
-        else{
-            echo "GAGA;";
-
-        }
     }
 }

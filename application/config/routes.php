@@ -58,5 +58,5 @@ $route['Invoice'] = 'Invoice';
 $route['create-rbb'] = 'rbb/add';
 $route['edit-rbb'] = 'rbb/edit';
 $route['vendor'] = 'vendor';
-$route['Jenis_Product'] = 'IT_FINANCE/Jenis_Product';
+$route['jenis_project'] = 'jproject';
 

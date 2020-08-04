@@ -14,7 +14,7 @@ class RBB extends CI_Controller
     public function index()
     {
         $data["rbb"] = $this->RBB_model->getAll();
-        $this->load->view("rbb", $data);
+        $this->load->view("RBB/rbb", $data);
     }
 
     public function add()
@@ -29,7 +29,7 @@ class RBB extends CI_Controller
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
 
-        $this->load->view("IT_FINANCE/create_rbb", $rbb);
+        $this->load->view("RBB/create_rbb", $rbb);
     }
 
     public function edit($KODE_RBB = null)
@@ -52,7 +52,7 @@ class RBB extends CI_Controller
         $data["rbb"] = $rbb->getById($KODE_RBB);
         if (!$data["rbb"]) show_404();
         
-        $this->load->view("IT_FINANCE/edit_rbb", $data);
+        $this->load->view("RBB/edit_rbb", $data);
     }
 
     public function delete($rbb=null)
