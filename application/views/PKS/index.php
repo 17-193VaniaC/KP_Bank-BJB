@@ -1,3 +1,7 @@
+<?php if ($this->session->flashdata('message')) { ?>
+    <?php echo $this->session->flashdata('message') ?>
+<?php } ?>
+
 <table style="width:100%">
     <tr>
         <th>Nomor PKS</th>

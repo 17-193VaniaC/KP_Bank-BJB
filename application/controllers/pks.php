@@ -107,6 +107,7 @@ class pks extends CI_Controller
     {
         $data['pks'] = $this->Pks_model->deleteData($no_pks);
 
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
         redirect('pks/index');
     }
 }
