@@ -14,7 +14,7 @@ class Invoice extends CI_Controller
     public function index()
     {
         $data["invoice"] = $this->Invoice_model->getAll();
-        $this->load->view("invoice", $data);
+        $this->load->view("IT_FINANCE/invoice_rbb", $data);
     }
 
     public function add()

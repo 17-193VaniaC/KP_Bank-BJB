@@ -11,16 +11,29 @@ class Invoice_model extends CI_Model
     public $NOMINAL_BAYAR;
     public $SISA_ANGGARAN_PKS;
 
-    public function rules()//belum di setting
+    public function rules()
     {
         return[
-            ['field' => 'm_name', 
-            'label' => 'm_name', 
+            ['field' => 'INVOICE', 
+            'label' => 'INVOICE', 
+            'rules' => 'required|is_unique[pembayaran.INVOICE]'],
+
+            ['field' => 'NO_PKS',
+            'label' => 'NO_PKS', 
             'rules' => 'required'],
 
-            ['field' => 'price', 
-            'label' => 'price', 
+            ['field' => 'TGL_INVOICE', 
+            'label' => 'TGL_INVOICE', 
+            'rules' => 'required'],
+
+            ['field' => 'TERMIN', 
+            'label' => 'TERMIN', 
+            'rules' => 'required'],
+
+            ['field' => 'NOMINAL_BAYAR', 
+            'label' => 'SISA_ANGGARAN_PKS', 
             'rules' => 'required']
+
         ];
     }
 
@@ -30,14 +43,26 @@ class Invoice_model extends CI_Model
     }
 
     public function save()
-    {
+    {   //jika ada invoice dari pks ini sebelumnya
+        if(){
+
+        }
+
+        $this->db->select('NOMINAL_PKS');
+        $this->db->from('pks');
+        $this->db->where('NO_PKS', $post['NO_PKS']);
+        $last_budget = $this->db->get();
+
         $post = $this->input->post();
         $this->INVOICE = $post["INVOICE"];
         $this->NO_PKS = $post["NO_PKS"];
         $this->TGL_INVOICE = $post["TGL_INVOICE"];
         $this->TERMIN = $post["TERMIN"];
         $this->NOMINAL_BAYAR = $post["NOMINAL_BAYAR"];
-        $this->SISA_ANGGARAN_PKS = $post["SISA_ANGGARAN_PKS"];
+
+
+        $this->SISA_ANGGARAN_PKS = $last_budget
+
         return $this->db->insert($this->_table, $this);
         }
     
@@ -63,6 +88,23 @@ class Invoice_model extends CI_Model
         
         return $this->db->delete($this->_table, array("INVOICE" =>$INVOICE));
     }
+
+    public function checkbudget($NO_PKS){
+        $termin_bayar = $this->db->get_where('pks', array('NO_PKS'=>$NO_PKS))
+        //if pks invoice is exist
+        if($termin_bayar->num_row()>0){
+            //check the last budget
+            $this->db->select('SISA_ANGGARAN_PKS');
+            $this->db->from('pembayaran');
+            $this->db->where('NO_PKS', $NO_PKS);
+            $this->db->order_by('INPUT_DATE');
+            $budget_remain=$this->get();
+        }
+
+
+
+    }
+        }
 
 }
 

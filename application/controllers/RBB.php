@@ -23,28 +23,33 @@ class RBB extends CI_Controller
         $validation = $this->form_validation;
         $validation->set_rules($rbb->rules());
 
-        if ($validation->run()) {
+        if ($validation->run()==TRUE) {
             $rbb->save();
+            echo "bisa";
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
 
-        $this->load->view("IT_FINANCE/create_rbb");
+        $this->load->view("IT_FINANCE/create_rbb", $rbb);
     }
 
-    public function edit($rbb = null)
+    public function edit($KODE_RBB = null)
     {
-        if (!isset($rbb)) redirect('IT_FINANCE/edit_rbb');
+        if (!isset($KODE_RBB)) redirect('rbb');
        
         $rbb = $this->RBB_model;
         $validation = $this->form_validation;
-        $validation->set_rules($rbb->rules());
+        $validation->set_rules($rbb->rules2());
 
         if ($validation->run()) {
             $rbb->update();
             $this->session->set_flashdata('success', 'Berhasil disimpan');
+            ECHO "BISA";
+        }
+        else{
+            echo "tidak valid";
         }
 
-        $data["rbb"] = $menu->getById($rbb);
+        $data["rbb"] = $rbb->getById($KODE_RBB);
         if (!$data["rbb"]) show_404();
         
         $this->load->view("IT_FINANCE/edit_rbb", $data);
