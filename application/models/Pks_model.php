@@ -3,7 +3,7 @@
 class Pks_model extends CI_Model
 {
 
-    function getData()
+    public function getData()
     {
         $response = array();
 
@@ -15,7 +15,7 @@ class Pks_model extends CI_Model
         return $response;
     }
 
-    function getById($no_pks)
+    public function getById($no_pks)
     {
         $this->db->select('*');
         $q = $this->db->get_where('pks', ['NO_PKS' => $no_pks]);

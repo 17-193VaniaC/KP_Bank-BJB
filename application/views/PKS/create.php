@@ -36,7 +36,7 @@
     <div class="form-group">
         <select class="form-control form-control-user" id="nama_vendor" name="nama_vendor">
             <?php foreach ($vendor as $row) : ?>
-                <option value="<?= $row->nama_vendor ?>"><?= $row->nama_vendor ?></option>
+                <option value="<?= $row->VENDOR ?>"><?= $row->VENDOR ?></option>
             <?php endforeach; ?>
         </select>
         <?= form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>

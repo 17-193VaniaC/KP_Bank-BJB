@@ -14,14 +14,14 @@ class pks extends CI_Controller
 
     public function index()
     {
-        $pks['pks'] = $this->Pks_model->getData();
+        $pks['pks'] = $this->Pks_model->getAll();
         $this->load->view('pks/index', $pks);
     }
 
     public function create()
     {
         $dataa['no_rbb'] = $this->RBB_model->getKode();
-        $dataa['vendor'] = $this->Vendor_model->getData();
+        $dataa['vendor'] = $this->Vendor_model->getAll();
 
         // $dataa['no_rbb'] = $no_rbb;
         // $dataa['vendor'] = $vendor;
@@ -65,7 +65,7 @@ class pks extends CI_Controller
     {
         $data['pks'] = $this->Pks_model->getById($no_pks);
         $data['no_rbb'] = $this->RBB_model->getKode();
-        $data['vendor'] = $this->Vendor_model->getData();
+        $data['vendor'] = $this->Vendor_model->getAll();
 
         $this->form_validation->set_rules('kode_rbb', 'Kode_rbb', 'required|trim');
         $this->form_validation->set_rules('jenis', 'Jenis', 'required|trim');
