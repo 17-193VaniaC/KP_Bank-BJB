@@ -56,6 +56,7 @@ class pks extends CI_Controller
             ];
 
             $this->db->insert('pks', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
             redirect('pks/index');
         }
     }
@@ -97,6 +98,7 @@ class pks extends CI_Controller
             $this->db->where('no_pks', $no_pks);
             $this->db->update('pks');
 
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been edited.</div>');
             redirect('pks/index');
         }
     }
