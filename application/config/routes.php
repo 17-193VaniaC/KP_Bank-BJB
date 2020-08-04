@@ -57,6 +57,6 @@ $route['Perjanjian-Kerjasama'] = 'IT_FINANCE/PKS';
 $route['Invoice'] = 'Invoice';
 $route['create-rbb'] = 'rbb/add';
 $route['edit-rbb'] = 'rbb/edit';
-$route['Vendor'] = 'IT_FINANCE/Vendor';
+$route['vendor'] = 'vendor';
 $route['Jenis_Product'] = 'IT_FINANCE/Jenis_Product';
 

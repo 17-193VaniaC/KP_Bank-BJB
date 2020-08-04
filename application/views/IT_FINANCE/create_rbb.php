@@ -12,9 +12,9 @@
 					<td style="margin-left: 3px; width: 20%; padding:10px;">
 								<label for="KODE_RBB">Kode RBB</label>
 								</td><td style="margin-left: 3px; width: 30%; padding:10px;">
-								<input type="text" name="KODE_RBB" placeholder="Kode RBB" value="<?php echo form_error('KODE_RBB')?>"/>
-					</td>
+								<input type="text" name="KODE_RBB" placeholder="Kode RBB"/>
 									<?php echo form_error('KODE_RBB') ?>
+					</td>
 
 					</tr><tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
