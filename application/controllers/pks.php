@@ -6,7 +6,7 @@ class pks extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('form_validation');
+        $this->load->form_validation;
         $this->load->model('RBB_model');
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
@@ -56,10 +56,17 @@ class pks extends CI_Controller
             ];
 
             $this->db->insert('pks', $data);
+            $n_termin = $this->input->post('termin');
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
-            redirect('pks/index');
+            if(empty($n_termin)){//termin lebih dari satu, diarahkan ke halaman termin
+                redirect('pks/index');
+            }
+            else{
+                redirect('Termin/add/'.$data['no_pks']."/".$n_termin."/1");
+            }
+            }
         }
-    }
+    
 
     public function edit($no_pks)
     {
@@ -109,5 +116,13 @@ class pks extends CI_Controller
 
         $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
         redirect('pks/index');
+    }
+
+    public function search(){
+        $query = '';
+        $result= '';
+        $this->load->Pks_model;
+        if($this->input->$post())
+        $this->load->load_file('application/views/PKS/search_by_nopks.php');
     }
 }

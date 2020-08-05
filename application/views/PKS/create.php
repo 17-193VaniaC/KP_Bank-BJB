@@ -41,6 +41,7 @@
         </select>
         <?= form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>
     </div>
+        <input type="text" class="form-control form-control-user" id="termin" name="termin" placeholder="Kosongkan jika tanpa termin">
 
     <button type="submit" class="btn btn-info btn-user btn-block">
         Create PKS

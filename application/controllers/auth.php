@@ -12,8 +12,8 @@ class auth extends CI_Controller
 
     public function login()
     {
-        $this->form_validation->set_rules('username', 'Username', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('username', 'username', 'required');
+        $this->form_validation->set_rules('password', 'password', 'required');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header');
@@ -29,14 +29,23 @@ class auth extends CI_Controller
     {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
+        $post = $this->input->post();
 
         $user = $this->db->get_where('user', ['USERNAME' => $username])->row_array();
 
         if ($user) {
-            if (password_verify($this->input->post('password'), $user['PASSWORD'])) {
-                echo 'Berhasil'
+            if (password_verify($password, $user['PASSWORD'])) {
+                echo 'Berhasil';
             } else {
-                echo 'Tidak berhasil'
+                echo password_hash($password, PASSWORD_DEFAULT);
+                echo "<br>";
+                echo $password;
+                echo "<br>";
+                echo $this->input->post('password');
+                echo "<br>";
+                echo $this->input->post['password'];
+                echo "<br>";
+                echo 'Tidak berhasil';
             }
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Email is not registered! </div>');

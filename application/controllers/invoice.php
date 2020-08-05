@@ -14,21 +14,24 @@ class Invoice extends CI_Controller
     public function index()
     {
         $data["invoice"] = $this->Invoice_model->getAll();
-        $this->load->view("IT_FINANCE/invoice_rbb", $data);
+        $this->load->view("Invoice/invoice", $data);
     }
 
     public function add()
-    {
+    {   
+
         $invoice = $this->Invoice_model;
+        $terminkps = $this->Termin_model;
         $validation = $this->form_validation;
         $validation->set_rules($invoice->rules());
 
         if ($validation->run()) {
             $invoice->save();
+            $terminkps->StatPaid($this->input->$post["no_kpr"]);
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
 
-        $this->load->view("IT_FINANCE/invoice_rbb");
+        $this->load->view("Invoice/create_invoice");
     }
 
 
@@ -37,7 +40,7 @@ class Invoice extends CI_Controller
         if (!isset($invoice)) show_404();
         
         if ($this->Invoice_model->delete($invoice)) {
-            redirect(site_url('invoice'));
+            redirect(site_url('Invoice'));
         }
     }
 }

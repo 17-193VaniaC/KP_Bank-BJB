@@ -94,7 +94,7 @@ class RBB_model extends CI_Model
         $this->ANGGARAN = $post["ANGGARAN"];
         $this->GL = $post["GL"];
         $this->NAMA_REK = $post["NAMA_REK"];
-        $this->SISA_ANGGARAN = $post["SISA_ANGGARAN"];
+        $this->SISA_ANGGARAN = $post["ANGGARAN"];
 
         return $this->db->insert($this->_table, $this);
     }

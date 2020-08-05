@@ -26,10 +26,6 @@ class Invoice_model extends CI_Model
             'label' => 'TGL_INVOICE', 
             'rules' => 'required'],
 
-            ['field' => 'TERMIN', 
-            'label' => 'TERMIN', 
-            'rules' => 'required'],
-
             ['field' => 'NOMINAL_BAYAR', 
             'label' => 'SISA_ANGGARAN_PKS', 
             'rules' => 'required']
@@ -89,7 +85,7 @@ class Invoice_model extends CI_Model
         return $this->db->delete($this->_table, array("INVOICE" =>$INVOICE));
     }
 
-    public function checkbudget($NO_PKS){
+    public function checkbudget($NO_PKS){// return sisa budget
         $termin_bayar = $this->db->get_where('pks', array('NO_PKS'=>$NO_PKS))
         //if pks invoice is exist
         if($termin_bayar->num_row()>0){
@@ -98,13 +94,18 @@ class Invoice_model extends CI_Model
             $this->db->from('pembayaran');
             $this->db->where('NO_PKS', $NO_PKS);
             $this->db->order_by('INPUT_DATE');
-            $budget_remain=$this->get();
+            $budget_remain=$this->db->get();
+            return $budget_remain; //sisa budget di invoice terakhir
         }
-
-
-
+        else{
+            $this->db->select('NOMINAL_PKS');
+            $this->db->from('pks')
+            $this->db->where('NO_PKS', $NO_PKS);
+            $budget_pks=$this->db->get();
+            return $budget_remain;//anggaran pks
+        }
     }
-        }
+        
 
 }
 
