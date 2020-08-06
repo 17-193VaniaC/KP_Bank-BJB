@@ -3,15 +3,20 @@
 class Pks_model extends CI_Model
 {
 
-    public function getAll()
+    public function getAll($that= null)
     {
         $response = array();
-
+        if(!empty($that)){
+        $this->db->select('*');
+        $this->db->where('NO_PKS', $that);
+        $q = $this->db->get('pks');
+        $response = $q->result();
+        return $response;
+        }
         // Select record
         $this->db->select('*');
         $q = $this->db->get('pks');
         $response = $q->result();
-
         return $response;
     }
 
@@ -30,13 +35,10 @@ class Pks_model extends CI_Model
     }
 
     public function seeThisPKS($nopks){
-        $this->db->select('*');
-        $this->db->from('pks');
-        if(!empty($no_pks)){
-            $this->db->like('NO_PKS',$nopks);
-        }
+        $this->db->like('NO_PKS',$nopks, 'after');
         $this->db->order_by('INPUT_DATE');
-        return $this->db->get();
+        $this->db->limit(8);
+        return $this->db->get('pks')->result();
 
     }
 }

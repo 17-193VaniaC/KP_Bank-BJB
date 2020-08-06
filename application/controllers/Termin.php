@@ -11,9 +11,9 @@ class Termin extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function index()
+    public function index($nopks = null)
     {   
-        $data["termin"] = $this->Termin_model->getAll();
+        $data["termin"] = $this->Termin_model->getAll($nopks);
         $this->load->view("Termin/Termin", $data);
     }
 
@@ -35,8 +35,6 @@ class Termin extends CI_Controller
         if ($NTERMIN < $NPAYMENT){
             redirect(site_url('termin'));
         }
-        
-
         $data['nopks']=$NOPKS;
         $data['ntermin']=$NTERMIN;;
         $data['npayment']=$NPAYMENT;
@@ -51,7 +49,7 @@ class Termin extends CI_Controller
        
         $termin= $this->Termin_model;
         $validation = $this->form_validation;
-        $validation->set_rules($termin->rules2());
+        $validation->set_rules($termin->rules());
 
         if ($validation->run()) {
             $termin->update();
@@ -60,7 +58,6 @@ class Termin extends CI_Controller
 
         $data["termin"] = $termin->getById($KODETERMIN);
         if (!$data["termin"]) show_404();
-        
         $this->load->view("Termin/edit_termin", $data);
     }
 
@@ -71,5 +68,10 @@ class Termin extends CI_Controller
         if ($this->Termin_model->delete($KODETERMIN)) {
             redirect(site_url('Termin'));
         }
+    }
+     public function Termin_pks($nopks)
+    {   
+        $data["termin"] = $this->Termin_model->getAll($nopks);
+        $this->load->view("Termin/Termin_pks", $data);
     }
 }

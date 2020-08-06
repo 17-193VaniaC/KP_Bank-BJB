@@ -31,20 +31,17 @@ class auth extends CI_Controller
         $password = $this->input->post('password');
         $post = $this->input->post();
 
-        $user = $this->db->get_where('user', ['USERNAME' => $username])->row_array();
-
+        $user = $this->db->get_where('user', ['USERNAME' => $username])->row();
         if ($user) {
-            if (password_verify($password, $user['PASSWORD'])) {
+            $betul= password_verify($post['password'], $user->PASSWORD);
+            echo $betul;
+            if ($betul){
                 echo 'Berhasil';
-            } else {
-                echo password_hash($password, PASSWORD_DEFAULT);
-                echo "<br>";
-                echo $password;
-                echo "<br>";
-                echo $this->input->post('password');
-                echo "<br>";
-                echo $this->input->post['password'];
-                echo "<br>";
+            }
+            else {
+                echo "betul ga?";
+                echo $betul;
+             
                 echo 'Tidak berhasil';
             }
         } else {
@@ -72,18 +69,21 @@ class auth extends CI_Controller
             $this->load->view('auth/register');
             $this->load->view('templates/footer');
         } else {
+            $PASS=$this->input->post('password1');
+            $PASS=password_hash($PASS, PASSWORD_DEFAULT);
+            
             $data = [
                 'ROLE' => $this->input->post('role'),
                 'NAMA' => $this->input->post('nama'),
                 'USERNAME' => $this->input->post('username'),
-                'PASSWORD' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT)
+                'PASSWORD'=> $PASS
             ];
-
+            echo $data['PASSWORD'];
             // var_dump(password_verify($this->input->post('password1'), password_hash($this->input->post('password1'), PASSWORD_DEFAULT)));
             // die;
             $this->db->insert('user', $data);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Account has been created.</div>');
-            redirect('dashboard');
+            redirect('register');
         }
     }
 }

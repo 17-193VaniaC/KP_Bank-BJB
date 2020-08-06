@@ -24,10 +24,11 @@
 		<td><?php echo $listtermin->NOMINAL; ?></td>
 		<td><?php echo $listtermin->BULAN; ?></td>
 		<td><?php echo $listtermin->STATUS; ?></td>
-		<td><a href="<?php echo site_url('termin/edit/' . $listtermin->KODE_TERMIN) ?>"><button>Edit</button></a>
-            <a href="<?php echo site_url('termin/delete/' . $listtermin->KODE_TERMIN) ?>"><button>Delete</button></a>
+		<td><a href="<?php echo site_url('termin/edit/' . $listtermin->NO_PKS); ?>" class="btn btn-success"><button>Edit</button></a>
+                    <a href="<?php echo site_url('termin/delete/' . $listtermin->NO_PKS); ?>" class="btn btn-danger"><button>Delete</button></a>
         </td>
 	</tr>
+		<>
 <?php endforeach;  ?>
 	<tr><td> </td>
 		

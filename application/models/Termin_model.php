@@ -34,11 +34,21 @@ class Termin_model extends CI_Model
     }
 
 
-    public function getAll()
+
+    public function getAll($nopks)
     {   
+        $response = array();
+        if(!empty($nopks)){
+        $this->db->select('*');
+        $this->db->where('NO_PKS', $nopks);
+        $this->db->order_by('NO_PKS, TERMIN','asc');
+        $q = $this->db->get('termin_pks');
+        $response = $q->result();
+        return $response;
+        }
         $this->db->select('*');
         $this->db->from('termin_pks');
-        $this->db->order_by('NO_PKS, TERMIN','asc');;
+        $this->db->order_by('NO_PKS, TERMIN','asc');
         $termin =$this->db->get()->result();
         return $termin;
     }
@@ -56,7 +66,7 @@ class Termin_model extends CI_Model
     }
 
     public function getById($KODETERMIN)
-    {
+    {   
         return $this->db->get_where($this->_table, ["KODE_TERMIN" => $KODETERMIN])->row();
     }
     public function getByIdPKS($NOPKS)
@@ -67,12 +77,11 @@ class Termin_model extends CI_Model
     public function update()
     {
         $post = $this->input->post();
-        $this->NO_PKS = $nopks;
-        $this->KODE_TERMIN = uniqid();
+        $this->KODE_TERMIN = $post["KODE_TERMIN"];
         $this->NOMINAL = $post["NOMINAL"];
         $this->TERMIN = $post["TERMIN"];
         $this->BULAN = $post["BULAN"];
-        $this->STATUS = "UNPAID";
+        $this->STATUS = $post["STATUS"];
         return $this->db->update($this->_table, $this, array('KODE_TERMIN' => $post['KODE_TERMIN']));
     }
 

@@ -6,15 +6,15 @@ class pks extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->form_validation;
+        $this->load->library('form_validation');
         $this->load->model('RBB_model');
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
     }
 
-    public function index()
-    {
-        $pks['pks'] = $this->Pks_model->getAll();
+    public function index(){
+        $hupla = $this->input->get('searchById');
+        $pks['pks'] = $this->Pks_model->getAll($hupla);
         $this->load->view('pks/index', $pks);
     }
 
@@ -118,11 +118,14 @@ class pks extends CI_Controller
         redirect('pks/index');
     }
 
-    public function search(){
-        $query = '';
-        $result= '';
-        $this->load->Pks_model;
-        if($this->input->$post())
-        $this->load->load_file('application/views/PKS/search_by_nopks.php');
+    public function search(){//Auto complete search
+        if (isset($_GET['term'])) {
+            $res= $this->Pks_model->seeThisPKS($_GET['term']);
+            if(count($res)>0){
+                foreach ($res as $reskey)
+                    $arr_res[] = $reskey->NO_PKS;
+                    echo json_encode($arr_res);
+                }
+        }
     }
 }
