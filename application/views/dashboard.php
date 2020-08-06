@@ -17,7 +17,7 @@
                     </button></a>
             </div>
             <div class="col-sm-4">
-                <a href="<?= base_url('pks/index'); ?>"><button>
+                <a href="<?= base_url('pks'); ?>"><button>
                         <h3>PKS</h3>
                     </button></a>
             </div>

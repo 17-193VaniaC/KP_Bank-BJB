@@ -6,28 +6,36 @@ class pks extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
+        if (!$this->session->userdata('username')) {
+            redirect('login');
+        }
+
         $this->load->library('form_validation');
         $this->load->model('RBB_model');
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
     }
 
-    public function index(){
+    public function index()
+    {
+
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $hupla = $this->input->get('searchById');
-        $pks['pks'] = $this->Pks_model->getAll($hupla);
-        $this->load->view('pks/index', $pks);
+        $data['pks'] = $this->Pks_model->getAll($hupla);
+
+        $this->load->view('templates/header.php');
+        $this->load->view('templates/navbar.php', $data);
+        $this->load->view('pks/index', $data);
+        $this->load->view('templates/footer.php');
     }
 
     public function create()
     {
+        $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+
         $dataa['no_rbb'] = $this->RBB_model->getKode();
         $dataa['vendor'] = $this->Vendor_model->getAll();
-
-        // $dataa['no_rbb'] = $no_rbb;
-        // $dataa['vendor'] = $vendor;
-
-        // var_dump($dataa);
-        // die;
 
         $this->form_validation->set_rules('no_pks', 'No_pks', 'required|trim|is_unique[pks.no_pks]');
         $this->form_validation->set_rules('kode_rbb', 'Kode_rbb', 'required|trim');
@@ -39,8 +47,10 @@ class pks extends CI_Controller
         $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
 
         if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header.php');
+            $this->load->view('templates/navbar.php', $dataa);
             $this->load->view('pks/create', $dataa);
-            // $this->load->view('pks/create', $dataa);
+            $this->load->view('templates/footer.php');
         } else {
             $data = [
                 'no_pks' => $this->input->post('no_pks'),
@@ -58,18 +68,21 @@ class pks extends CI_Controller
             $this->db->insert('pks', $data);
             $n_termin = $this->input->post('termin');
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
-            if(empty($n_termin)){//termin lebih dari satu, diarahkan ke halaman termin
+            if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
                 redirect('pks/index');
-            }
-            else{
-                redirect('Termin/add/'.$data['no_pks']."/".$n_termin."/1");
-            }
+            } else {
+                redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1");
             }
         }
-    
+    }
+
 
     public function edit($no_pks)
     {
+
+
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+
         $data['pks'] = $this->Pks_model->getById($no_pks);
         $data['no_rbb'] = $this->RBB_model->getKode();
         $data['vendor'] = $this->Vendor_model->getAll();
@@ -83,9 +96,10 @@ class pks extends CI_Controller
         $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            echo 'oiii';
+            $this->load->view('templates/header.php');
+            $this->load->view('templates/navbar.php', $data);
             $this->load->view('pks/edit', $data);
-            // $this->load->view('pks/create', $dataa);
+            $this->load->view('templates/footer.php');
         } else {
             $kode_rbb = $this->input->post('kode_rbb');
             $jenis = $this->input->post('jenis');
@@ -118,14 +132,15 @@ class pks extends CI_Controller
         redirect('pks/index');
     }
 
-    public function search(){//Auto complete search
+    public function search()
+    { //Auto complete search
         if (isset($_GET['term'])) {
-            $res= $this->Pks_model->seeThisPKS($_GET['term']);
-            if(count($res)>0){
+            $res = $this->Pks_model->seeThisPKS($_GET['term']);
+            if (count($res) > 0) {
                 foreach ($res as $reskey)
                     $arr_res[] = $reskey->NO_PKS;
-                    echo json_encode($arr_res);
-                }
+                echo json_encode($arr_res);
+            }
         }
     }
 }

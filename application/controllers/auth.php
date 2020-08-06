@@ -9,6 +9,16 @@ class auth extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
     }
+
+    public function index()
+    {
+        if ($this->session->userdata('username')) {
+            redirect('dashboard');
+        } else {
+            redirect('login');
+        }
+    }
+
     public function login()
     {
         if ($this->session->userdata('username')) {
