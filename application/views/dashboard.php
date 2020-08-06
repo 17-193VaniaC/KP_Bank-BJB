@@ -26,5 +26,13 @@
                         <h3>Invoice</h3>
                     </button></a>
             </div>
+            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+                <hr>
+                <div class="col-sm-4">
+                    <a href="<?= base_url('register'); ?>"><button>
+                            <h3>Register Account</h3>
+                        </button></a>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
