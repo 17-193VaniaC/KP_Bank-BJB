@@ -23,7 +23,7 @@
                                     </div>
                                     <form class="user" method="post" action="<?= base_url('login') ?>">
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Enter Username...">
+                                            <input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Enter Username..." value="<?= set_value('username') ?>">
                                             <?= form_error('username', '<small class="text-danger pl-3">', '</small>'); ?>
                                         </div>
                                         <div class="form-group">

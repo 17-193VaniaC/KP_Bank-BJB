@@ -21,8 +21,14 @@ class Welcome extends CI_Controller
 	 */
 	public function index()
 	{
-		$this->load->view('templates/header.php');
-		$this->load->view('dashboard');
-		$this->load->view('templates/footer.php');
+		$data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+		if ($data['user']) {
+			$this->load->view('templates/header.php');
+			$this->load->view('templates/navbar.php', $data);
+			$this->load->view('dashboard', $data);
+			$this->load->view('templates/footer.php');
+		} else {
+			redirect('login');
+		}
 	}
 }

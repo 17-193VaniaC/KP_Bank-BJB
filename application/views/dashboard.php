@@ -3,6 +3,8 @@
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
 
+
+
     <div class="jumbotron text-center">
         <h1>Selamat datang di BJB</h1>
     </div>

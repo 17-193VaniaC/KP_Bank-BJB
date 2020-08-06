@@ -1,6 +1,6 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class RBB extends CI_Controller
 {
@@ -14,53 +14,81 @@ class RBB extends CI_Controller
     public function index()
     {
         $data["rbb"] = $this->RBB_model->getAll();
-        $this->load->view("RBB/rbb", $data);
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($data['user']) {
+            $this->load->view('templates/header.php');
+            $this->load->view('templates/navbar.php', $data);
+            $this->load->view("RBB/rbb", $data);
+            $this->load->view('templates/footer.php');
+        } else {
+            redirect('login');
+        }
     }
 
     public function add()
     {
-        $rbb = $this->RBB_model;
-        $validation = $this->form_validation;
-        $validation->set_rules($rbb->rules());
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($data['user']) {
 
-        if ($validation->run()==TRUE) {
-            $rbb->save();
-            echo "bisa";
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
+            $rbb = $this->RBB_model;
+            $validation = $this->form_validation;
+            $validation->set_rules($rbb->rules());
+
+            if ($validation->run() == TRUE) {
+                $rbb->save();
+                $this->session->set_flashdata('success', 'Berhasil disimpan');
+            }
+
+            $this->load->view('templates/header.php');
+            $this->load->view('templates/navbar.php', $data);
+            $this->load->view("RBB/create_rbb", $rbb);
+            $this->load->view('templates/footer.php');
+        } else {
+            redirect('login');
         }
-
-        $this->load->view("RBB/create_rbb", $rbb);
     }
 
     public function edit($KODE_RBB = null)
     {
-        if (!isset($KODE_RBB)) redirect('rbb');
-       
-        $rbb = $this->RBB_model;
-        $validation = $this->form_validation;
-        $validation->set_rules($rbb->rules2());
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($data['user']) {
 
-        if ($validation->run()) {
-            $rbb->update();
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
-            ECHO "BISA";
-        }
-        else{
-            echo "tidak valid";
-        }
+            if (!isset($KODE_RBB)) redirect('rbb');
 
-        $data["rbb"] = $rbb->getById($KODE_RBB);
-        if (!$data["rbb"]) show_404();
-        
-        $this->load->view("RBB/edit_rbb", $data);
+            $rbb = $this->RBB_model;
+            $validation = $this->form_validation;
+            $validation->set_rules($rbb->rules2());
+
+            if ($validation->run()) {
+                $rbb->update();
+                $this->session->set_flashdata('success', 'Berhasil disimpan');
+            } else {
+            }
+
+            $data["rbb"] = $rbb->getById($KODE_RBB);
+            if (!$data["rbb"]) show_404();
+
+            $this->load->view('templates/header.php');
+            $this->load->view('templates/navbar.php', $data);
+            $this->load->view("RBB/edit_rbb", $data);
+            $this->load->view('templates/footer.php');
+        } else {
+            redirect('login');
+        }
     }
 
-    public function delete($rbb=null)
+    public function delete($rbb = null)
     {
-        if (!isset($rbb)) show_404();
-        
-        if ($this->RBB_model->delete($rbb)) {
-            redirect(site_url('rbb'));
+
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($data['user']) {
+            if (!isset($rbb)) show_404();
+
+            if ($this->RBB_model->delete($rbb)) {
+                redirect(site_url('rbb'));
+            }
+        } else {
+            redirect('login');
         }
     }
 }
