@@ -9,19 +9,20 @@ class auth extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
     }
-
     public function login()
     {
-        $this->form_validation->set_rules('username', 'username', 'required');
-        $this->form_validation->set_rules('password', 'password', 'required');
-
+        if ($this->session->userdata('username')) {
+            redirect('dashboard');
+        }
+        $this->form_validation->set_rules('username', 'Username', 'trim|required');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header');
             $this->load->view('auth/login');
             $this->load->view('templates/footer');
         } else {
             //Validasi sukses  
-            $this->_login();
+            $this->_login();  //_ untuk menandakan private hanya untuk kelas ini saja  
         }
     }
 
@@ -29,61 +30,75 @@ class auth extends CI_Controller
     {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
-        $post = $this->input->post();
-
-        $user = $this->db->get_where('user', ['USERNAME' => $username])->row();
+        $user = $this->db->get_where('user', ['USERNAME' => $username])->row_array();  //baca : select * dari tael user where email == $email  
         if ($user) {
-            $betul= password_verify($post['password'], $user->PASSWORD);
-            echo $betul;
-            if ($betul){
-                echo 'Berhasil';
-            }
-            else {
-                echo "betul ga?";
-                echo $betul;
-             
-                echo 'Tidak berhasil';
+            // jika user aktif 
+            if (password_verify($password, $user['PASSWORD'])) {
+                $data = [
+                    'username' => $user['USERNAME'],
+                    'role' => $user['ROLE']
+                ];
+                $this->session->set_userdata($data);
+                if ($user['ROLE'] == 'IT FINANCE') {
+                    redirect('dashboard');
+                } elseif ($user['ROLE'] == 'GROUP HEAD') {
+                    redirect('dashboard');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> You are can not access with this account! </div>');
+                    redirect('login');
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Wrong password</div>');
+                redirect('login');
             }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Email is not registered! </div>');
-            redirect('auth');
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Account is not registered! </div>');
+            redirect('login');
         }
     }
 
     public function registration()
     {
-        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.username]', [
-            'is_unique' => 'This username has already registered!'
-        ]);
-        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', [
-            'matches' => 'Password 1 dont match',
-            'min_length' => 'Password minimum 6 characters'
-        ]);
-        $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
         $this->form_validation->set_rules('role', 'Role', 'required|trim');
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 
+        $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.USERNAME]', [
+            'is_unique' => 'This email has already registered!'
+        ]);
+        $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', [
+            'matches' => 'password dont match',
+            'min_length' => 'Password too short!'
+        ]); //trim agar jika menyisakan spasi di depan atau dibelakang akan dihapus agar tidak tersimpan di db  
+        $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
         if ($this->form_validation->run() == false) {
-
             $this->load->view('templates/header');
             $this->load->view('auth/register');
             $this->load->view('templates/footer');
         } else {
-            $PASS=$this->input->post('password1');
-            $PASS=password_hash($PASS, PASSWORD_DEFAULT);
-            
             $data = [
                 'ROLE' => $this->input->post('role'),
-                'NAMA' => $this->input->post('nama'),
-                'USERNAME' => $this->input->post('username'),
-                'PASSWORD'=> $PASS
+                'NAMA' => $this->input->post('nama', true),
+                'USERNAME' => htmlspecialchars($this->input->post('username', true)),
+                'PASSWORD' => password_hash($this->input->post('password1'), PASSWORD_BCRYPT)
             ];
-            echo $data['PASSWORD'];
-            // var_dump(password_verify($this->input->post('password1'), password_hash($this->input->post('password1'), PASSWORD_DEFAULT)));
-            // die;
             $this->db->insert('user', $data);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Account has been created.</div>');
-            redirect('register');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your account has been created. Please wait until your account is activated to create your program(s). </div>');
+            redirect('welcome');
         }
+    }
+
+    public function logout()
+    {
+        $this->session->unset_userdata('username');
+        $this->session->unset_userdata('role');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> You have been logout. </div>');
+        redirect('dashboard');
+    }
+    public function blocked()
+    {
+        $this->load->view('auth/block');
     }
 }
