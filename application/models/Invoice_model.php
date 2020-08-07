@@ -5,11 +5,9 @@ class Invoice_model extends CI_Model
     private $_table = "pembayaran";
 
     public $INVOICE;
-    public $NO_PKS;
+    public $KODE_TERMIN;
     public $TGL_INVOICE;
-    public $TERMIN;
-    public $NOMINAL_BAYAR;
-    public $SISA_ANGGARAN_PKS;
+    public $INPUT_DATE;
 
     public function rules()
     {
@@ -18,16 +16,12 @@ class Invoice_model extends CI_Model
             'label' => 'INVOICE', 
             'rules' => 'required|is_unique[pembayaran.INVOICE]'],
 
-            ['field' => 'NO_PKS',
-            'label' => 'NO_PKS', 
+            ['field' => 'KODE_TERMIN',
+            'label' => 'KODE_TERMIN', 
             'rules' => 'required'],
 
             ['field' => 'TGL_INVOICE', 
             'label' => 'TGL_INVOICE', 
-            'rules' => 'required'],
-
-            ['field' => 'NOMINAL_BAYAR', 
-            'label' => 'SISA_ANGGARAN_PKS', 
             'rules' => 'required']
 
         ];
@@ -38,26 +32,21 @@ class Invoice_model extends CI_Model
         return $this->db->get($this->_table)->result();
     }
 
-    public function save()
-    {   //jika ada invoice dari pks ini sebelumnya
-        if(){
+    public function save(){   
+        //$last_termin = $this->Invoice_model->checktermin($NOPKS);
+        // if($last_termin >0 ){
+        //    $nominalbayar = $this->Invoice_model->termin_val($NOPKS, $last_termin);
+            // $last_budget = $this->Invoice_model->budget_remain($NOPKS);
+            // $termin= $this->load->model("Termin_model");
 
-        }
+            $post = $this->input->post();
+            $this->INVOICE = $post["INVOICE"];
+            $this->KODE_TERMIN = $post["KODE_TERMIN"];
+            $this->TGL_INVOICE = $post["TGL_INVOICE"];
+            $this->INPUT_DATE =  date("Y-m-d h:i:s");
 
-        $this->db->select('NOMINAL_PKS');
-        $this->db->from('pks');
-        $this->db->where('NO_PKS', $post['NO_PKS']);
-        $last_budget = $this->db->get();
-
-        $post = $this->input->post();
-        $this->INVOICE = $post["INVOICE"];
-        $this->NO_PKS = $post["NO_PKS"];
-        $this->TGL_INVOICE = $post["TGL_INVOICE"];
-        $this->TERMIN = $post["TERMIN"];
-        $this->NOMINAL_BAYAR = $post["NOMINAL_BAYAR"];
-
-
-        $this->SISA_ANGGARAN_PKS = $last_budget
+            // $termin->paid($post["KODE_TERMIN"]);
+       
 
         return $this->db->insert($this->_table, $this);
         }
@@ -79,17 +68,32 @@ class Invoice_model extends CI_Model
     }
 
     public function delete($INVOICE)
-    {
-        $this->_deleteImage($INVOICE);
-        
+    {        
         return $this->db->delete($this->_table, array("INVOICE" =>$INVOICE));
     }
 
-    public function checkbudget($NO_PKS){// return sisa budget
-        $termin_bayar = $this->db->get_where('pks', array('NO_PKS'=>$NO_PKS))
+    public function checktermin($NOPKS){// return sisa termin
+        $status_unpaid ="UNPAID";
+        $unpaid_stats = array("NO_PKS" => $NOPKS, "STATUS" => $status_unpaid);
+        $this->db->select("TERMIN");
+        $this->db->where($unpaid_stats);
+        $this->db->order_by("TERMIN",'asc');
+        $this->db->limit(1);
+        $checktermin = $this->db->get('termin');
+        //jika tidak ada termin yang belum dibayar
+        if(!empty($checktermin->num_row())){//
+            return $checktermin; //termin yang belum di bayar
+        }
+        else{
+            return 0;//termin 0
+        }
+    }
+
+    public function termin_val($NOPKS, $termin){// return nominal termin
+        $checktermin = $this->db->get_where('termin', $arrayName = array('NO_PKS' => $NOPKS));
         //if pks invoice is exist
-        if($termin_bayar->num_row()>0){
-            //check the last budget
+        if($checktermin->num_row()<1){
+            $checkinvoicce = $this->db->get_where('invoice', $arrayName = array('NO_PKS' => $NOPKS));
             $this->db->select('SISA_ANGGARAN_PKS');
             $this->db->from('pembayaran');
             $this->db->where('NO_PKS', $NO_PKS);
@@ -99,11 +103,21 @@ class Invoice_model extends CI_Model
         }
         else{
             $this->db->select('NOMINAL_PKS');
-            $this->db->from('pks')
+            $this->db->from('pks');
             $this->db->where('NO_PKS', $NO_PKS);
             $budget_pks=$this->db->get();
             return $budget_remain;//anggaran pks
         }
+    }
+
+    public function seeThisTermin($nopks){
+        $this->db->from('termin_pks');
+        $this->db->like('NO_PKS',$nopks, 'after');
+        $this->db->where('STATUS', "UNPAID");
+        $this->db->order_by('NO_PKS');
+        $this->db->limit(4);
+        return $this->db->get()->result();
+
     }
         
 

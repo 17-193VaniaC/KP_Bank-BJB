@@ -20,7 +20,7 @@ class Termin extends CI_Controller
     public function add($NOPKS = NULL , $NTERMIN = NULL, $NPAYMENT=NULL)
     {
         if(empty($NOPKS)|empty($NTERMIN)|empty($NPAYMENT)){
-            redirect(site_url('termin'));
+            redirect(site_url('termin/add'));
         }
         $data['termin']= $this->Termin_model;
         $validation = $this->form_validation;
@@ -74,4 +74,17 @@ class Termin extends CI_Controller
         $data["termin"] = $this->Termin_model->getAll($nopks);
         $this->load->view("Termin/Termin_pks", $data);
     }
+
+    function search(){//Auto complete search for Termin
+        if (isset($_GET['term'])) {
+            $this->load->model("Termin_model");
+            $ress= $this->Termin_model->seeThisTermin($_GET['term']);
+            if(count($ress)>0){
+                foreach ($ress as $reskey)
+                    $arr_res[] = $reskey->NO_PKS;
+                    echo json_encode($arr_res);
+            }
+        }
+    }
+
 }

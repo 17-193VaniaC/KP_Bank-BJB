@@ -37,8 +37,10 @@ class Pks_model extends CI_Model
     public function seeThisPKS($nopks){
         $this->db->like('NO_PKS',$nopks, 'after');
         $this->db->order_by('INPUT_DATE');
-        $this->db->limit(8);
+        $this->db->limit(4);
         return $this->db->get('pks')->result();
-
+        // $temp = $this->db->get('pks')->result();
+        // var_dump($temp);
+        // die;
     }
 }
