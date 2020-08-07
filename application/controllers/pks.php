@@ -19,12 +19,12 @@ class pks extends CI_Controller
 
     public function index()
     {
-
+        $title['title'] = 'PKS';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $hupla = $this->input->get('searchById');
         $data['pks'] = $this->Pks_model->getAll($hupla);
 
-        $this->load->view('templates/header.php');
+        $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view('pks/index', $data);
         $this->load->view('templates/footer.php');
@@ -32,6 +32,7 @@ class pks extends CI_Controller
 
     public function create()
     {
+        $title['title'] = 'Create PKS';
         $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
         $dataa['no_rbb'] = $this->RBB_model->getKode();
@@ -47,7 +48,7 @@ class pks extends CI_Controller
         $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header.php');
+            $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $dataa);
             $this->load->view('pks/create', $dataa);
             $this->load->view('templates/footer.php');
@@ -79,8 +80,7 @@ class pks extends CI_Controller
 
     public function edit($no_pks)
     {
-
-
+        $title['title'] = 'Edit PKS';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
         $data['pks'] = $this->Pks_model->getById($no_pks);

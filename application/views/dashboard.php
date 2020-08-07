@@ -26,6 +26,18 @@
                         <h3>Invoice</h3>
                     </button></a>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="<?= base_url('vendor'); ?>"><button>
+                        <h3>Vendor</h3>
+                    </button></a>
+            </div>
+            <div class="col-sm-4">
+                <a href="<?= base_url('jenis_project'); ?>"><button>
+                        <h3>Jenis Project</h3>
+                    </button></a>
+            </div>
             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                 <hr>
                 <div class="col-sm-4">

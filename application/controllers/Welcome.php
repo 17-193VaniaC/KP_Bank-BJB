@@ -14,8 +14,9 @@ class Welcome extends CI_Controller
 
 	public function index()
 	{
+		$title['title'] = 'Dashboard';
 		$data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-		$this->load->view('templates/header.php');
+		$this->load->view('templates/header.php', $title);
 		$this->load->view('templates/navbar.php', $data);
 		$this->load->view('dashboard', $data);
 		$this->load->view('templates/footer.php');

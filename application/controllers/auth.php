@@ -69,6 +69,7 @@ class auth extends CI_Controller
 
     public function registration()
     {
+        $title['title'] = 'Register Account';
         $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($dataa['user']['ROLE'] == 'IT FINANCE') {
             // if ($this->session->userdata('email')) {
@@ -86,7 +87,7 @@ class auth extends CI_Controller
             ]); //trim agar jika menyisakan spasi di depan atau dibelakang akan dihapus agar tidak tersimpan di db  
             $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
             if ($this->form_validation->run() == false) {
-                $this->load->view('templates/header');
+                $this->load->view('templates/header', $title);
                 $this->load->view('templates/navbar', $dataa);
                 $this->load->view('auth/register');
                 $this->load->view('templates/footer');

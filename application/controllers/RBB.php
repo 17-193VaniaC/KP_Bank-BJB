@@ -18,6 +18,7 @@ class RBB extends CI_Controller
 
     public function index()
     {
+        $title['title'] = 'RBB';
         $data["rbb"] = $this->RBB_model->getAll();
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $this->load->view('templates/header.php');
@@ -28,6 +29,7 @@ class RBB extends CI_Controller
 
     public function add()
     {
+        $title['title'] = 'Create RBB';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
         $rbb = $this->RBB_model;
@@ -39,7 +41,7 @@ class RBB extends CI_Controller
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
 
-        $this->load->view('templates/header.php');
+        $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view("RBB/create_rbb", $rbb);
         $this->load->view('templates/footer.php');
@@ -47,6 +49,7 @@ class RBB extends CI_Controller
 
     public function edit($KODE_RBB = null)
     {
+        $title['title'] = 'Edit RBB';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
         if (!isset($KODE_RBB)) redirect('rbb');
@@ -64,7 +67,7 @@ class RBB extends CI_Controller
         $data["rbb"] = $rbb->getById($KODE_RBB);
         if (!$data["rbb"]) show_404();
 
-        $this->load->view('templates/header.php');
+        $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view("RBB/edit_rbb", $data);
         $this->load->view('templates/footer.php');

@@ -1,0 +1,23 @@
+.container-bg{
+    /* background-color: #2175b0; */
+    /* opacity: 0.5; */
+    min-height: 700px;
+}
+
+.page-title{
+    margin-top: 20px;
+}
+
+#footer {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:60px;   /* Height of the footer */
+    background-color:rgb(41, 115, 151);
+ }
+
+
+ /* Jenis project */
+ .row-container{
+     min-height: 650px;
+ }
