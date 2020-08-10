@@ -63,7 +63,7 @@ class pks extends CI_Controller
                 'nominal_pks' => $this->input->post('nominal_pks'),
                 'nama_vendor' => $this->input->post('nama_vendor'),
                 'input_user' => $this->input->post('nama_vendor'),
-                'input_date' => time()
+                'input_date' => date("Y-m-d h:i:s")
             ];
 
             $this->db->insert('pks', $data);

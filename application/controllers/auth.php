@@ -21,13 +21,14 @@ class auth extends CI_Controller
 
     public function login()
     {
+        $title['title'] = 'Login';
         if ($this->session->userdata('username')) {
             redirect('dashboard');
         }
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header');
+            $this->load->view('templates/header', $title);
             $this->load->view('auth/login');
             $this->load->view('templates/footer');
         } else {

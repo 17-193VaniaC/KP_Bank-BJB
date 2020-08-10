@@ -1,9 +1,7 @@
-<?php if ($this->session->flashdata('message')) { ?>
-    <?php echo $this->session->flashdata('message') ?>
-<?php } ?>
-
-
 <div class="container-xl" style="margin-top: 50px;">
+    <?php if ($this->session->flashdata('message')) { ?>
+        <?php echo $this->session->flashdata('message') ?>
+    <?php } ?>
     <div class="table-responsive">
         <div class="table-wrapper">
             <div class="table-title">
