@@ -20,10 +20,20 @@
                     </select>
                     <?= form_error('kode_rbb', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
+
                 <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="jenis" name="jenis" placeholder="jenis...">
+                    <select class="form-control form-control-user" id="jenis" name="jenis">
+                        <?php foreach ($jenis as $row) : ?>
+                            <option value="<?= $row->jenis ?>"><?= $row->jenis ?></option>
+                        <?php endforeach; ?>
+                    </select>
                     <?= form_error('jenis', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
+
+                <!-- <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="jenis" name="jenis" placeholder="jenis...">
+                    <?= form_error('jenis', '<small class="text-danger pl-3">', '</small>'); ?>
+                </div> -->
                 <div class="form-group">
                     <input type="text" class="form-control form-control-user" id="kode_project" name="kode_project" placeholder="Kode project...">
                     <?= form_error('kode_project', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -48,7 +58,10 @@
                     </select>
                     <?= form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
-                <input type="text" class="form-control form-control-user" id="termin" name="termin" placeholder="Kosongkan jika tanpa termin">
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="termin" name="termin" placeholder="Kosongkan jika tanpa termin">
+                    <?= form_error('termin', '<small class="text-danger pl-3">', '</small>'); ?>
+                </div>
 
                 <button type="submit" class="btn btn-info btn-user btn-block">
                     Create PKS

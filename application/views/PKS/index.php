@@ -32,6 +32,7 @@
                         <th>Nama Project</th>
                         <th>tanggal PKS</th>
                         <th>Nominal PKS</th>
+                        <th>Sisa Anggaran</th>
                         <th>Nama Vendor</th>
                         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                             <th>Action</th>
@@ -42,13 +43,14 @@
                     <div id="result"></div>
                     <?php foreach ($pks as $row) : ?>
                         <tr>
-                            <td><a href="<?php echo site_url('Termin/Termin_pks/' . $row->NO_PKS); ?>"><?= $row->NO_PKS ?></a></td>
+                            <td><a href="<?php echo site_url('Termin/termin_pks/' . $row->NO_PKS); ?>"><?= $row->NO_PKS ?></a></td>
                             <td><?= $row->KODE_RBB ?></td>
                             <td><?= $row->JENIS ?></td>
                             <td><?= $row->KODE_PROJECT ?></td>
                             <td><?= $row->NAMA_PROJECT ?></td>
                             <td><?= $row->TGL_PKS ?></td>
                             <td><?= $row->NOMINAL_PKS ?></td>
+                            <td><?= $row->SISA_ANGGARAN ?></td>
                             <td><?= $row->NAMA_VENDOR ?></td>
                             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                 <td>

@@ -15,6 +15,7 @@ class pks extends CI_Controller
         $this->load->model('RBB_model');
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
+        $this->load->model('JProject_model');
     }
 
     public function index()
@@ -37,6 +38,7 @@ class pks extends CI_Controller
 
         $dataa['no_rbb'] = $this->RBB_model->getKode();
         $dataa['vendor'] = $this->Vendor_model->getAll();
+        $dataa['jenis'] = $this->JProject_model->getAll();
 
         $this->form_validation->set_rules('no_pks', 'No_pks', 'required|trim|is_unique[pks.no_pks]');
         $this->form_validation->set_rules('kode_rbb', 'Kode_rbb', 'required|trim');
@@ -46,6 +48,7 @@ class pks extends CI_Controller
         $this->form_validation->set_rules('tgl_pks', 'Tgl_pks', 'required|trim');
         $this->form_validation->set_rules('nominal_pks', 'Nominal_pks', 'required|trim');
         $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
+        $this->form_validation->set_rules('termin', 'Termin', 'required|trim|less_than_equal_to[12]');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header.php', $title);
@@ -62,6 +65,7 @@ class pks extends CI_Controller
                 'tgl_pks' => $this->input->post('tgl_pks'),
                 'nominal_pks' => $this->input->post('nominal_pks'),
                 'nama_vendor' => $this->input->post('nama_vendor'),
+                'sisa_anggaran' => $this->input->post('nominal_pks'),
                 'input_user' => $this->input->post('nama_vendor'),
                 'input_date' => date("Y-m-d h:i:s")
             ];
@@ -96,7 +100,7 @@ class pks extends CI_Controller
         $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
 
         if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header.php');
+            $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
             $this->load->view('pks/edit', $data);
             $this->load->view('templates/footer.php');
@@ -115,6 +119,7 @@ class pks extends CI_Controller
             $this->db->set('nama_project', $nama_project);
             $this->db->set('tgl_pks', $tgl_pks);
             $this->db->set('nominal_pks', $nominal_pks);
+            $this->db->set('sisa_anggaran', $nominal_pks);
             $this->db->set('nama_vendor', $nama_vendor);
             $this->db->where('no_pks', $no_pks);
             $this->db->update('pks');
@@ -128,7 +133,7 @@ class pks extends CI_Controller
     {
         $data['pks'] = $this->Pks_model->deleteData($no_pks);
 
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Your data has been deleted.</div>');
         redirect('pks/index');
     }
 

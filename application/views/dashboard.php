@@ -22,7 +22,7 @@
                     </button></a>
             </div>
             <div class="col-sm-4">
-                <a href=""><button>
+                <a href="<?= base_url('invoice'); ?>"><button>
                         <h3>Invoice</h3>
                     </button></a>
             </div>
