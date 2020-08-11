@@ -29,7 +29,9 @@ class Vendor extends CI_Controller
     }
 
     public function add()
-    {
+    {   $this->session->set_flashdata('success', '');
+        $this->session->set_flashdata('failed', '');
+        $title['title'] = 'Vendor';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             $vendor = $this->Vendor_model;
@@ -40,8 +42,17 @@ class Vendor extends CI_Controller
                 $vendor->save();
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
             }
-            redirect('vendor');
-        } else {
+            else{
+                $this->session->set_flashdata('failed', 'GAGAL');
+
+            }
+        $data["vendor"] = $this->Vendor_model->getAll();
+        $this->load->view('templates/header.php', $title);
+        $this->load->view('templates/navbar.php', $data);
+        $this->load->view("IT_FINANCE/vendor", $data);
+        $this->load->view('templates/footer.php');
+        }
+        else {
             redirect('dashboard');
         }
     }

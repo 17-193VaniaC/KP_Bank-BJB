@@ -1,11 +1,19 @@
-<div class="container-xl" style="margin-top: 50px;">
-	<?php if($this->session->flashdata('success')){?>
-	<?php echo $this->session->flashdata('success'); ?>
-	<?php }?>
-	<?php if($this->session->flashdata('failed')){?>
-	<?php echo $this->session->flashdata('failed'); ?>
-	<?php }?>
-
+<div class="container-xl" style="margin-top: 20px;">
+		<?php if($this->session->flashdata('success')){?>
+		<?php 
+		echo "<div class='alert alert-success'>";
+		echo $this->session->flashdata('success');
+		echo "</div>";
+		 ?>
+		<?php }?>
+		<?php if($this->session->flashdata('failed')){?>
+		<?php 
+			echo "<div class='alert alert-danger'>";
+			echo "<strong>Gagal</strong>";
+			echo form_error('nama_vendor');
+			echo "</div>";
+		?>
+		<?php }?>
 
 	<h3>
 		<div class="container-half">
@@ -17,10 +25,9 @@
 		<div class="col-lg">  
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
 				<div class="form-group">
-				<input type="text" name="nama_vendor" placeholder="Nama Vendor" class="form-control"/><?php echo form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>
+				<input type="text" name="nama vendor" placeholder="Nama Vendor" class="form-control"/>
 				<input type="submit" name="btn" value="Tambah vendor" class="btn btn-primary" />
 				</div>
-				<?php echo form_error('nama_vendor') ?>
 			</form>
 		</div>
 		</div>
@@ -37,7 +44,7 @@
 						<th class="table-option-row">Opsi</th>
 					<?php endif; ?>
 				</tr>
-			</thead>
+			</thead><?php $counter = 1;?>
 			<?php
 			foreach ($vendor as $listvendor) : ?>
 				<tr>
@@ -91,7 +98,7 @@
 		    </div>
 	    <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <input type="submit" name="btn" value="edit" class="btn btn-primary" />
+        <input type="submit" name="btn" value="Edit" class="btn btn-primary" />
 		</form>
       </div>
     </div>
