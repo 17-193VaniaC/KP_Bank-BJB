@@ -63,13 +63,7 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : ?>
-                    <hr>
 
-                    <!-- redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1"); -->
-                    <?= $baris ?>
-                    <a href="<?= base_url('Termin/addMore/' . $no_pks . '/' . $baris); ?>">Create</a>
-                <?php endif; ?>
                 <!-- <script type="text/javascript">
                 $(document).ready(function() {
                     $("#searchById").autocomplete({
@@ -79,6 +73,12 @@
             </script> -->
             </div>
         </div>
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : ?>
+            <hr>
+
+            <!-- redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1"); -->
+            <a href="<?= base_url('Termin/addMore/' . $no_pks . '/' . $baris); ?>">Create</a>
+        <?php endif; ?>
         <p>Total Nominal Termin: <?= $total ?> dari <?= $pks['NOMINAL_PKS'] ?></p>
         <?php if ($total > $pks['NOMINAL_PKS']) : ?>
             <div class="alert alert-warning" role="alert">
