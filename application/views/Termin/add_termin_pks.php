@@ -11,7 +11,7 @@
                 <?php echo form_error('NOMINAL') ?>
         </td>
         <td>
-            <input type="month" name="TGL_TERMIN" placeholder="Tanggal Termin" />
+            <input type="date" name="TGL_TERMIN" placeholder="Tanggal Termin" />
             <?php echo form_error('TGL_TERMIN') ?></td>
         <TD>
             <input type="text" name="TERMIN" value="<?php echo $termin_ke ?>" readonly />
