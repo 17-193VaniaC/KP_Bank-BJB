@@ -39,6 +39,7 @@
                         <div id="result"></div>
                         <?php foreach ($termin as $row) : ?>
                             <tr>
+                                <?php $baris++ ?>
                                 <td><?= $row->TERMIN ?></td>
                                 <td><?= $row->TGL_TERMIN ?></td>
                                 <td><?= $row->NOMINAL ?></td> <?php $total += $row->NOMINAL ?>
@@ -46,8 +47,13 @@
                                 <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                     <td>
                                         <div class="btn-group">
-                                            <a href="#"><button class="btn btn-success">Edit</button></a>
-                                            <a href="#"><button class="btn btn-danger">Delete</button></a>
+                                            <?php if ($row->STATUS == 'UNPAID') : ?>
+                                                <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $row->NO_PKS) ?>"><button class="btn btn-success">Edit</button></a>
+                                                <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $row->NO_PKS) ?>"><button class="btn btn-danger">Delete</button></a>
+                                            <?php else : ?>
+                                                <a href="<?= site_url('Termin/edit/0/' . $row->NO_PKS) ?>"><button class="btn btn-success">Edit</button></a>
+                                                <a href="<?= site_url('Termin/delete/0/' . $row->NO_PKS) ?>"><button class="btn btn-danger">Delete</button></a>
+                                            <?php endif; ?>
                                             <!-- <a href="<?php echo site_url('pks/edit/' . $row->NO_PKS); ?>"><button class="btn btn-success">Edit</button></a>
                                             <a href="<?php echo site_url('pks/delete/' . $row->NO_PKS); ?>"><button class="btn btn-danger">Delete</button></a> -->
                                         </div>
@@ -57,9 +63,12 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+                <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : ?>
                     <hr>
-                    <a href="<?= base_url('Termin/add'); ?>">Create</a>
+
+                    <!-- redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1"); -->
+                    <?= $baris ?>
+                    <a href="<?= base_url('Termin/addMore/' . $no_pks . '/' . $baris); ?>">Create</a>
                 <?php endif; ?>
                 <!-- <script type="text/javascript">
                 $(document).ready(function() {
@@ -70,7 +79,12 @@
             </script> -->
             </div>
         </div>
-        <p>Total : <?= $total ?> dari <?= $pks['NOMINAL_PKS'] ?></p>
+        <p>Total Nominal Termin: <?= $total ?> dari <?= $pks['NOMINAL_PKS'] ?></p>
+        <?php if ($total > $pks['NOMINAL_PKS']) : ?>
+            <div class="alert alert-warning" role="alert">
+                Total nominal termin melebihi nominal PKS! Harap cek kembali!
+            </div>
+        <?php endif; ?>
     <?php else : ?>
         <h1>Termin Kosong</h1>
     <?php endif; ?>

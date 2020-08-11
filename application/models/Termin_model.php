@@ -15,11 +15,11 @@ class Termin_model extends CI_Model
     {
         return [
 
-            [
-                'field' => 'TERMIN',
-                'label' => 'TERMIN',
-                'rules' => 'required'
-            ],
+            // [
+            //     'field' => 'TERMIN',
+            //     'label' => 'TERMIN',
+            //     'rules' => 'required'
+            // ],
             [
                 'field' => 'TGL_TERMIN',
                 'label' => 'TGL_TERMIN',
@@ -74,15 +74,21 @@ class Termin_model extends CI_Model
         return $this->db->get_where($this->_table, ["NO_PKS" => $NOPKS])->row();
     }
 
-    public function update()
+    public function update($kode_termin)
     {
         $post = $this->input->post();
-        $this->KODE_TERMIN = $post["KODE_TERMIN"];
-        $this->NOMINAL = $post["NOMINAL"];
-        $this->TERMIN = $post["TERMIN"];
-        $this->TGL_TERMIN = $post["TGL_TERMIN"];
-        $this->STATUS = $post["STATUS"];
-        return $this->db->update($this->_table, $this, array('KODE_TERMIN' => $post['KODE_TERMIN']));
+
+
+        $this->db->set('NOMINAL', $post["NOMINAL"]);
+        $this->db->set('TGL_TERMIN', $post["TGL_TERMIN"]);
+        $this->db->where('KODE_TERMIN', $kode_termin);
+        $this->db->update($this->_table);
+
+
+
+        // $this->NOMINAL = $post["NOMINAL"];
+        // $this->TGL_TERMIN = $post["TGL_TERMIN"];
+        // return $this->db->update($this->_table, $this, array('KODE_TERMIN' => $kode_termin));
     }
 
     public function delete($KODETERMIN)
