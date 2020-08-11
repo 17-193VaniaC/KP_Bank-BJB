@@ -18,6 +18,7 @@ input[type=number] {
 }
 
 
+
 .container-bg{
     /* background-color: #2175b0; */
     /* opacity: 0.5; */
@@ -56,6 +57,31 @@ input[type=number] {
     height: 15px;
     background-color: #007bff;
  }
+/*POP UP*/
+.myModal-custom {
+  display: none; 
+  position: fixed;
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0); 
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+.close{
+    float: right;
+
+}
 
 
  /* Jenis project */
@@ -86,8 +112,16 @@ input[type=number] {
     text-align: right;
     padding-right: 10px;
  }
+
+ .container-sixtyfive{
+    float: left;
+    width: 65%;
+    margin-bottom: 5px;
+ }
+
 /*posisi kolom opsi*/
  .table-option-row{
     text-align: center;
     padding: 5px;
  }
+

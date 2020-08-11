@@ -1,17 +1,40 @@
-<div class="row">
-	<div class="col-md text-center page-title">
-		<h2>Daftar Vendor</h2>
+<div class="container-xl" style="margin-top: 50px;">
+	<?php if($this->session->flashdata('success')){?>
+	<?php echo $this->session->flashdata('success'); ?>
+	<?php }?>
+	<?php if($this->session->flashdata('failed')){?>
+	<?php echo $this->session->flashdata('failed'); ?>
+	<?php }?>
+
+
+	<h3>
+		<div class="container-half">
+			Daftar Vendor
+		</div>
+	</h3>
+	<div class="container-half right">
+		<div class="row mt-3">
+		<div class="col-lg">  
+			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
+				<div class="form-group">
+				<input type="text" name="nama_vendor" placeholder="Nama Vendor" class="form-control"/><?php echo form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>
+				<input type="submit" name="btn" value="Tambah vendor" class="btn btn-primary" />
+				</div>
+				<?php echo form_error('nama_vendor') ?>
+			</form>
+		</div>
+		</div>
 	</div>
-</div>
-<div class="row row-container">
-	<div class="col-md-6">
-		<table class="table table-hover table-bordered" style="width:100%; margin-top: 50px;">
-			<thead class="table-secondary">
+	<br><br>
+<div class="table-responsive">
+    <div class="table-wrapper">
+	<table class="table table-striped table-hover table-bordered">
+			<thead class="">
 				<tr class="text-center">
 					<th>No</th>
 					<th>Nama Vendor</th>
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-						<th>Action</th>
+						<th class="table-option-row">Opsi</th>
 					<?php endif; ?>
 				</tr>
 			</thead>
@@ -24,31 +47,146 @@
 					<td><?php echo $listvendor->nama_vendor ?></td>
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 						<td class="text-center">
-							<a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">
-								<button class="btn btn-danger">Hapus</button></a>
+							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-vendor="<?php echo $listvendor->nama_vendor;?>">Edit</button>
+						</a>
+							<button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor;?>">Hapus</button>
+
+							<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>"> -->
+							<!-- <button class="btn btn-danger">Hapus</button></a> -->
 						</td>
 					<?php endif; ?>
 				</tr>
 			<?php endforeach;  ?>
+
 		</table>
-	</div>
-	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-		<div class="col-md-6 my-auto">
-			<div class="row">
-				<div class="col text-center">
-					<h4>Tambah Vendor</h4>
-				</div>
-			</div>
-			<div class="row mt-3">
-				<div class="col-lg">
-					<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
-						<div class="form-group">
-							<input type="text" name="VENDOR" placeholder="Nama Vendor" />
-							<?php echo form_error('VENDOR') ?>
-						</div>
-						<input type="submit" name="btn" value="Save" class="save-button" />
-					</form>
-				</div>
-			</div>
-		</div>
-	<?php endif; ?>
+	</div></div>
+
+
+<!-- Modal edit -->
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Vendor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form action="" method="post" id="form_edit">
+      <div class="modal-body" id="modal-edit">
+      	<table style="margin: 8%;">
+					<tr>
+						<td style="margin-left: 3px; width: 20%; padding:10px;">
+							<label for="nama_vendor">Nama Vendor</label>
+						</td>
+						<td style="margin-left: 3px; width: 30%; padding:10px;">
+						<input type="hidden" name="nama_vendor_1" id="nama_vendor_1" value="nama_vendor_1"/>
+						<input type="text" name="nama_vendor" id="nama_vendor" class="form-controll" />
+						<?php echo form_error('nama_vendor') ?>
+						</td>
+					</tr>
+					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>			
+					</tr>
+				</table>
+		    </div>
+	    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <input type="submit" name="btn" value="edit" class="btn btn-primary" />
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal hapus -->
+<div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Hapus Vendor </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form  method="post" id="form_hapus">
+      <div class="modal-body" id="modal_body_delete">
+      	<table style="margin: 8%;">
+					<tr>
+						<td style="margin-left: 3px; width: 20%; padding:10px;">
+							<label for="nama_vendor">Hapus Vendor</label>
+						</td>
+						<td style="margin-left: 3px; width: 30%; padding:10px;">
+							<input type="text" name="nama_vendor" id="nama_vendor" class="form-controll" />
+							<?php echo form_error('nama_vendor') ?>
+							?
+						</td>
+					</tr>
+					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>			
+					</tr>
+				</table>
+		    </div>
+	    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">
+		<button class="btn btn-danger">Hapus</button></a>
+       <!--  <a href="<?php echo site_url('vendor/edit/' . $listvendor->nama_vendor) ?>""><button class="btn btn-success">Ubah</button></a> -->
+      </div>
+  </form>
+    </div>
+  </div>
+</div>
+
+<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+
+</div>
+</div>
+<?php endif; ?>
+</div>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script>
+   	$(document).on('click', '#editbutton', function(){
+   		var n_vendor = $(this).data('vendor');
+   		// var n_vendor = $(nama_vendor).val();
+   		$(".modal-body #nama_vendor").val(n_vendor);
+   		$(".modal-body #nama_vendor_1").val(n_vendor);
+    	});
+
+    $(document).ready(function(){
+    	$("#form_edit").on("submit", (function(e){
+    		e.preventDevaullt();
+	       	$.ajax({
+	       		url: <?php site_url('vendor/edit/')?> + n_vendor,
+	       		type: post,
+	       		data: {nama_vendor:nama_vendor},
+	       		success: function(data){
+	       			alert("data berhasil diubah");
+	       			$("#modalEdit").modal("hide");
+	       			location.reload();
+	       		}
+    		});
+    	}));
+   	});
+
+   	$(document).on("click", "#deletebutton", function(){
+   		var n_vendor = $(this).data(vendor2);
+   		$("#modal_body_delete #nama_vendor").val(n_vendor);
+   	});
+
+   	$(document).ready(function(){
+    	$("#form_hapus").on("submit", (function(e){
+    		e.preventDevaullt();
+	       	$.ajax({
+	       		url: <?php site_url('vendor/delete/')?> + n_vendor,
+	       		type: post,
+	       		data: {nama_vendor:nama_vendor},
+	       		success: function(data){
+	       			alert("data berhasil dihapus");
+	       			$("#modalEdit").modal("hide");
+	       			location.reload();
+	       		}
+    		});
+    	}));
+   	});
+
+</script>
