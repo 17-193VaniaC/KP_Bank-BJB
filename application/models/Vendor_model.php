@@ -10,8 +10,8 @@ class Vendor_model extends CI_Model
     {
         return [
             [
-                'field' => 'VENDOR',
-                'label' => 'VENDOR',
+                'field' => 'nama_vendor',
+                'label' => 'nama_vendor',
                 'rules' => 'trim|required|is_unique[vendor.nama_vendor]'
             ]
         ];
@@ -21,11 +21,20 @@ class Vendor_model extends CI_Model
     {
         return $this->db->get($this->_table)->result();
     }
+    public function update($vendor = null)
+    {
+        $post = $this->input->post();
+        $this->nama_vendor = $post["nama_vendor"];
+        $this->db-set("nama-vendor", $post["nama_vendor"]);
+        $this->db->where("nama-vendor", $post["nama_vendor_1"]);
+        return $this->db->update('vendor');
+    }
+
 
     public function save()
     {
         $post = $this->input->post();
-        $this->nama_vendor = $post["VENDOR"];
+        $this->nama_vendor = $post["nama_vendor"];
         return $this->db->insert($this->_table, $this);
     }
 
@@ -35,7 +44,7 @@ class Vendor_model extends CI_Model
     }
 
     public function delete($nama_v)
-    {
+    {   
         return $this->db->delete($this->_table, array("nama_vendor" => $nama_v));
     }
 }

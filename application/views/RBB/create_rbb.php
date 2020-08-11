@@ -20,11 +20,11 @@ input[type=number] {
 
 <table style="margin: 15%; margin-top: 100px; margin-bottom: 50PX;" >
 					<tr>
-						<form action="<?php echo site_url('rbb/add') ?>" method="post">
+					<form action="<?php echo site_url('rbb/add') ?>" method="post">
 					<td style="margin-left: 3px; width: 20%; padding:10px;">
-								<label for="KODE_RBB">Kode RBB</label>
-								</td><td style="margin-left: 3px; width: 30%; padding:10px;">
-								<input type="text" name="KODE_RBB" placeholder="Kode RBB"/>
+						<label for="KODE_RBB">Kode RBB</label>
+						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
+							<input type="text" name="KODE_RBB" placeholder="Kode RBB" class="form-control" />
 									<?php echo form_error('KODE_RBB') ?>
 					</td>
 
@@ -32,7 +32,7 @@ input[type=number] {
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 								<label for="PROGRAM_KERJA">Program Kerja</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
-								<input type="text" name="PROGRAM_KERJA" placeholder="Program Kerja" />
+								<input type="text" name="PROGRAM_KERJA" placeholder="Program Kerja" class="form-control"/>
 									<?php echo form_error('PROGRAM_KERJA') ?>
 						</td>
 					</tr><tr>
@@ -40,7 +40,7 @@ input[type=number] {
 								<label for="ANGGARAN">Nominal Anggaran</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
 								<input type="number" name="ANGGARAN" placeholder="Nominal Anggaran" style="-moz-appearance: textfield;
-  margin: 0;" />
+  margin: 0;" class="form-control"/>
 									<?php echo form_error('ANGGARAN') ?>
 						</td>
 					</tr><tr>
@@ -59,7 +59,7 @@ input[type=number] {
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 								<label for="NAMA_REKE">Nama Rekening</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
-								<input type="text" name="NAMA_REK" placeholder="Nama Rekening" />
+								<input type="text" name="NAMA_REK" placeholder="Nama Rekening" class="form-control" />
 									<?php echo form_error('NAMA_REK') ?>
 						</td>
 					</tr>

@@ -46,18 +46,29 @@ class Vendor extends CI_Controller
         }
     }
 
-    public function delete($vendor = null)
+    public function edit($vendor =null)
     {
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        if ($data['user']['ROLE'] == 'IT FINANCE') {
-            $vendorr = urldecode($vendor);
-            if (!isset($vendorr)) show_404();
 
-            if ($this->Vendor_model->delete($vendorr)) {
-                redirect(site_url('vendor'));
-            }
-        } else {
-            redirect('dashboard');
-        }
+        if (!isset($vendor)) redirect('RBB');
+        $vendor = $this->Vendor_model;
+        if($vendor->update() == TRUE){
+            $this->session->set_flashdata('success', 'Berhasil disimpan');
+            redirect("pks");
+            
+        } 
+        $this->session->set_flashdata('failed', 'Data gagal disimpan');
+        redirect("rbb");
+         
     }
+
+    public function delete($vendor = null)
+    {
+        if(empty("vendor")) redirect('termin');
+        $data['vendor'] = $this->Vendor_model->delete($vendor);
+        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+        redirect('vendor');
+    }
+
+
 }
