@@ -11,7 +11,7 @@
 		<th>No. PKS</th>
 		<th>Termin</th>
 		<th>Nominal</th>
-		<th>Bulan</th>
+		<th>Tanggal Termin</th>
 		<th>Status</th>
 		<th>Opsi</th>
 
@@ -22,7 +22,7 @@
 		<td><?php echo $listtermin->NO_PKS; ?></td>
 		<td><?php echo $listtermin->TERMIN; ?></td>
 		<td><?php echo $listtermin->NOMINAL; ?></td>
-		<td><?php echo $listtermin->BULAN; ?></td>
+		<td><?php echo $listtermin->TGL_TERMIN; ?></td>
 		<td><?php echo $listtermin->STATUS; ?></td>
 		<td><a href="<?php echo site_url('termin/edit/' . $listtermin->KODE_TERMIN) ?>"><button>Edit</button></a>
             <a href="<?php echo site_url('termin/delete/' . $listtermin->KODE_TERMIN) ?>"><button>Delete</button></a>

@@ -7,7 +7,7 @@ class Termin_model extends CI_Model
     public $NO_PKS;
     public $KODE_TERMIN;
     public $TERMIN;
-    public $BULAN;
+    public $TGL_TERMIN;
     public $NOMINAL;
     public $STATUS;
 
@@ -21,8 +21,8 @@ class Termin_model extends CI_Model
                 'rules' => 'required'
             ],
             [
-                'field' => 'BULAN',
-                'label' => 'BULAN',
+                'field' => 'TGL_TERMIN',
+                'label' => 'TGL_TERMIN',
                 'rules' => 'required'
             ],
             [
@@ -42,7 +42,7 @@ class Termin_model extends CI_Model
         $this->db->select('*');
         $this->db->where('NO_PKS', $termin);
         $this->db->order_by('TERMIN','asc');
-        $q = $this->db->get('termin');
+        $q = $this->db->get('termin_pks');
         $response = $q->result();
         return $response;
         }
@@ -60,7 +60,7 @@ class Termin_model extends CI_Model
         $this->KODE_TERMIN = uniqid();
         $this->NOMINAL = $post["NOMINAL"];
         $this->TERMIN = $post["TERMIN"];
-        $this->BULAN = $post["BULAN"];
+        $this->BULAN = $post["TGL_TERMIN"];
         $this->STATUS = "UNPAID";
         return $this->db->insert($this->_table, $this);
     }
@@ -80,7 +80,7 @@ class Termin_model extends CI_Model
         $this->KODE_TERMIN = $post["KODE_TERMIN"];
         $this->NOMINAL = $post["NOMINAL"];
         $this->TERMIN = $post["TERMIN"];
-        $this->BULAN = $post["BULAN"];
+        $this->BULAN = $post["TGL_TERMIN"];
         $this->STATUS = $post["STATUS"];
         return $this->db->update($this->_table, $this, array('KODE_TERMIN' => $post['KODE_TERMIN']));
     }
@@ -118,7 +118,15 @@ class Termin_model extends CI_Model
         $sql = mysqli_fetch_array($query);
         return $sql;
     }
+    public function paidDate($notermin){
+        $this->db->from('invoice');
+        $this->db->like('NO_PKS',$nopks, 'after');
+        $this->db->where('STATUS', "UNPAID");
+        $this->db->order_by('NO_PKS');
+        $this->db->limit(4);
+        return $this->db->get()->result();
 
+    }
 
 
 }
