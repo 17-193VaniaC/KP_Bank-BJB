@@ -140,4 +140,29 @@ class RBB_model extends CI_Model
 
         return $response;
     }
+    public function isExist(){
+        $post = $this->input->post();//Take from input
+        $this->db->where('KODE_RBB', $post["KODE_RBB"]);
+        $rbbdata = $this->db->get('rbb')->result();
+        if(count($rbbdata) <1){ //no data found
+            return False;
+        }
+        return true;
+
+    }
+    public function sych(){
+        $post = $this->input->post();//Take from input
+        $this->db->where('KODE_RBB', $post["KODE_RBB"]);
+        $rbb = $this->db->get('rbb')->result();
+        $used = $rbb[0]->ANGGARAN-$rbb[0]->SISA_ANGGARAN;
+        if($post["NOMINAL"] < $used){//if the new budget is less than used budget
+            return false;
+        }
+        $new_left = $post["NOMINAL"] - $used;
+        $this->db->set("ANGGARAN", $post["NOMINAL"], False);
+        $this->db->set("SISA_ANGGARAN", $new_left, False);
+        $this->db->where('KODE_RBB', $post['KODE_RBB']);
+        $this->db->update('rbb');
+        return true;
+    }
 }

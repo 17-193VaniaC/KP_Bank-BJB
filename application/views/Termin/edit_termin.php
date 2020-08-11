@@ -30,10 +30,10 @@
 						</td>
 					</tr><tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
-								<label for="BULAN">Bulan</label>
+								<label for="TGL_TERMIN">Bulan</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
-								<input type="text" name="BULAN" placeholder=""  value="<?php echo $termin->BULAN ?>"/>
-									<?php echo form_error('BULAN') ?>
+								<input type="text" name="TGL_TERMIN" placeholder=""  value="<?php echo $termin->TGL_TERMIN ?>"/>
+									<?php echo form_error('TGL_TERMIN') ?>
 						</td></tr><tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 								<label for="STATUS">STATUS</label>

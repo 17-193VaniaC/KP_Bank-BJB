@@ -64,3 +64,4 @@ $route['jenis_project'] = 'jproject';
 $route['register'] = 'auth/registration';
 $route['login'] = 'auth/login';
 $route['dashboard'] = 'Welcome';
+$route['mutasi_pks'] = 'Mutasi_PKS';

@@ -31,7 +31,7 @@ class RBB extends CI_Controller
     {
         $title['title'] = 'Create RBB';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-
+        $data['gl'] = $this->db->get('gl')->result();
         $rbb = $this->RBB_model;
         $validation = $this->form_validation;
         $validation->set_rules($rbb->rules());
@@ -43,7 +43,7 @@ class RBB extends CI_Controller
 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
-        $this->load->view("RBB/create_rbb", $rbb);
+        $this->load->view("RBB/create_rbb", $data);
         $this->load->view('templates/footer.php');
     }
 

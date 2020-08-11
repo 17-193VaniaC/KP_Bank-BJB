@@ -31,7 +31,6 @@ class Termin extends CI_Controller
             $data['termin']->save($NOPKS);
             $this->session->set_flashdata('success', 'Berhasil disimpan');
             $NPAYMENT = $NPAYMENT + 1;
-            echo "bisa";
         }
         if ($NTERMIN < $NPAYMENT) {
             redirect(site_url('termin'));

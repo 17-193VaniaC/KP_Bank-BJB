@@ -21,8 +21,8 @@ class Termin_model extends CI_Model
                 'rules' => 'required'
             ],
             [
-                'field' => 'BULAN',
-                'label' => 'BULAN',
+                'field' => 'TGL_TERMIN',
+                'label' => 'TGL_TERMIN',
                 'rules' => 'required'
             ],
             [
@@ -60,7 +60,7 @@ class Termin_model extends CI_Model
         $this->KODE_TERMIN = uniqid();
         $this->NOMINAL = $post["NOMINAL"];
         $this->TERMIN = $post["TERMIN"];
-        $this->TGL_TERMIN = $post["BULAN"];
+        $this->TGL_TERMIN = $post["TGL_TERMIN"];
         $this->STATUS = "UNPAID";
         return $this->db->insert($this->_table, $this);
     }
@@ -80,7 +80,7 @@ class Termin_model extends CI_Model
         $this->KODE_TERMIN = $post["KODE_TERMIN"];
         $this->NOMINAL = $post["NOMINAL"];
         $this->TERMIN = $post["TERMIN"];
-        $this->TGL_TERMIN = $post["BULAN"];
+        $this->TGL_TERMIN = $post["TGL_TERMIN"];
         $this->STATUS = $post["STATUS"];
         return $this->db->update($this->_table, $this, array('KODE_TERMIN' => $post['KODE_TERMIN']));
     }
@@ -136,5 +136,14 @@ class Termin_model extends CI_Model
         $query = mysqli_query($database, "select * from termin_pks where NO_PKS='$nopks' AND STATUS='UNPAID' order by TERMIN limit 1");
         $sql = mysqli_fetch_array($query);
         return $sql;
+    }
+    public function paidDate($notermin)
+    {
+        $this->db->from('invoice');
+        $this->db->like('NO_PKS', $nopks, 'after');
+        $this->db->where('STATUS', "UNPAID");
+        $this->db->order_by('NO_PKS');
+        $this->db->limit(4);
+        return $this->db->get()->result();
     }
 }
