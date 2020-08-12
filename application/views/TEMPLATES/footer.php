@@ -1,6 +1,6 @@
-<footer id="footer" class="sticky-footer bg-white fixed-bottom">
+<footer id="footer" class="sticky-footer bg-white">
     <div class="container my-auto">
-        <div class="copyright text-center my-auto">
+        <div class="copyright text-center my-auto"><br>
             <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span><br><br>
     </div>
         </div>
