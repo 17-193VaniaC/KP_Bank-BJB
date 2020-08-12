@@ -21,6 +21,17 @@ class Vendor extends CI_Controller
 
         $data['counter'] = 1;
         $data["vendor"] = $this->Vendor_model->getAll();
+        $vendor = $this->Vendor_model;
+        $validation = $this->form_validation;
+        $validation->set_rules($vendor->rules());
+        $var=0;
+        if ($validation->run() == TRUE) {
+            $var = 1;
+            $vendor->update();
+            $this->session->set_flashdata('success', 'Data berhasil diubah');
+            $data["vendor"] = $this->Vendor_model->getAll();
+
+        } 
 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
@@ -43,34 +54,17 @@ class Vendor extends CI_Controller
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
             }
             else{
-                $this->session->set_flashdata('failed', 'GAGAL');
-
+                $this->session->set_flashdata('failed', 'Data yang dimasukan kosong atau sudah ada');
             }
-        $data["vendor"] = $this->Vendor_model->getAll();
+
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
-        $this->load->view("IT_FINANCE/vendor", $data);
         $this->load->view('templates/footer.php');
+        redirect('vendor');
         }
         else {
             redirect('dashboard');
         }
-    }
-
-    public function edit($vendor =null)
-    {
-        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-
-        if (!isset($vendor)) redirect('RBB');
-        $vendor = $this->Vendor_model;
-        if($vendor->update() == TRUE){
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
-            redirect("pks");
-            
-        } 
-        $this->session->set_flashdata('failed', 'Data gagal disimpan');
-        redirect("rbb");
-         
     }
 
     public function delete($vendor = null)
