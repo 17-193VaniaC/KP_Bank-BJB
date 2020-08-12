@@ -40,6 +40,7 @@
 				<tr class="text-center">
 					<th>No</th>
 					<th>Nama Vendor</th>
+					<th>Jumlah penggunaan</th>
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 						<th class="table-option-row">Opsi</th>
 					<?php endif; ?>
@@ -52,6 +53,7 @@
 						<?= $counter++ ?>
 					</td>
 					<td><?php echo $listvendor->nama_vendor ?></td>
+					<td><?php echo $listvendor->STATUS ?></td>
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 						<td class="text-center">
 							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR;?>" data-vendor="<?php echo $listvendor->nama_vendor;?>"> Edit</button>

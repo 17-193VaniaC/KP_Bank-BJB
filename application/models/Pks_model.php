@@ -39,8 +39,9 @@ class Pks_model extends CI_Model
     }
 
     function deleteData($no_pks)
-    {
+    {   
         $this->db->delete('pks', array('No_PKS' => $no_pks));
+
     }
 
     public function seeThisPKS($nopks)
@@ -49,8 +50,19 @@ class Pks_model extends CI_Model
         $this->db->order_by('INPUT_DATE');
         $this->db->limit(4);
         return $this->db->get('pks')->result();
-        // $temp = $this->db->get('pks')->result();
-        // var_dump($temp);
-        // die;
     }
+
+    public function getVendor($nopks){
+        $this->db->select('VENDOR');
+        $this->db->where("NO_PKS", $nopks);
+        return $this->db->get()->result();
+    }
+
+    public function getJP($nopks){
+        $this->db->select('JENIS_PROJECT');
+        $this->db->where("NO_PKS", $nopks);
+        return $this->db->get()->result();
+    }
+
+    // public function countPKSthi
 }

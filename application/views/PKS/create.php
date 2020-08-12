@@ -27,7 +27,7 @@
                     <label for="jenis">Jenis</label>
                     <select class="form-control form-control-user" id="jenis" name="jenis">
                         <?php foreach ($jenis as $row) : ?>
-                            <option value="<?= $row->jenis ?>"><?= $row->jenis ?></option>
+                            <option value="<?= $row->KODE_JENISPROJECT ?>"><?= $row->jenis ?></option>
                         <?php endforeach; ?>
                     </select>
                     <?= form_error('jenis', '<small class="text-danger pl-3">', '</small>'); ?>
@@ -61,7 +61,7 @@
                     <label for="nama_vendor">Nama Vendor</label>
                     <select class="form-control form-control-user" id="nama_vendor" name="nama_vendor">
                         <?php foreach ($vendor as $row) : ?>
-                            <option value="<?= $row->nama_vendor ?>"><?= $row->nama_vendor ?></option>
+                            <option value="<?= $row->KODE_VENDOR ?>"><?= $row->nama_vendor ?></option>
                         <?php endforeach; ?>
                     </select>
                     <?= form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>

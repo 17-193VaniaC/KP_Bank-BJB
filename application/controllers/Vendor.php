@@ -70,8 +70,14 @@ class Vendor extends CI_Controller
     public function delete($vendor = null)
     {
         if(empty("vendor")) redirect('termin');
-        $data['vendor'] = $this->Vendor_model->delete($vendor);
-        $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+        $thisdata = $this->Vendor_model->getById($vendor);
+        if($thisdata->STATUS <1){
+            $this->Vendor_model->delete($vendor);
+            $this->session->set_flashdata('delete_success', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+        }
+        else{
+            $this->session->set_flashdata('delete_failed', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+        }
         redirect('vendor');
     }
 

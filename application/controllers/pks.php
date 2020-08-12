@@ -88,6 +88,13 @@ class pks extends CI_Controller
                 $log->save($data_log);
 
                 $this->db->insert('pks', $data);
+                $this->load->model("Vendor_model");
+                $this->load->model("JProject_model");
+                // $v_pks = $this->Pks_model->getVendor($this->input->post('no_pks'));
+                // $jp_pks = $this->Pks_model->getJP($this->input->post('no_pks'));
+
+                $this->Vendor_model->updateStatusAdd();
+                $this->JProject_model->updateStatusAdd();
 
                 // MENGURANGI SISA ANGGARAN RBB
                 $rbb = $this->RBB_model;

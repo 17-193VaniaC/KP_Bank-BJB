@@ -50,4 +50,29 @@ class Vendor_model extends CI_Model
     {   
         return $this->db->delete($this->_table, array("KODE_VENDOR" => $kodev));
     }
+
+    public function updateStatusDel(){
+         $post = $this->input->post();
+        $this->db->select('STATUS');
+        $r = $this->db->get_where('vendor', ['KODE_VENDOR' => $post["nama_vendor"]])->result();
+        $RN = $r[0]->STATUS;
+        $RN = $RN-1;
+        $this->db->set('STATUS', $RN);
+        $this->db->where("KODE_VENDOR",  $post["nama_vendor"]);
+        return $this->db->update('vendor');
+    }
+
+    public function updateStatusAdd(){
+        $post = $this->input->post();
+        $this->db->select('STATUS');
+        $r = $this->db->get_where('vendor', ['KODE_VENDOR' => $post["nama_vendor"]])->result();
+        $RN = $r[0]->STATUS;
+        $RN = $RN+1;
+        $this->db->set('STATUS', $RN);
+        $this->db->where("KODE_VENDOR",  $post["nama_vendor"]);
+        return $this->db->update('vendor');
+    }
 }
+
+
+
