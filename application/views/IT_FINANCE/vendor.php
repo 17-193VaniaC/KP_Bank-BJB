@@ -84,7 +84,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-		<form action="<?php site_url('rbb'); ?>" method="post" >
+		<form action="" method="post" >
       <div class="modal-body" id="modal-edit">
       	<table style="margin: 8%;">
       		<div class="notif-warning" id="notif-warning">

@@ -8,16 +8,29 @@ class Pks_model extends CI_Model
         $response = array();
         if (!empty($that)) {
             $this->db->select('*');
-            $this->db->where('NO_PKS', $that);
-            $q = $this->db->get('pks');
-            $response = $q->result();
-            return $response;
+            $this->db->join('vendor', 'vendor.KODE_VENDOR = pks.nama_vendor');
+            $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
+            $this->db->where("KODE_PKS", $that);
+            return $this->db->get('pks')->result();
         }
         // Select record
         $this->db->select('*');
+        $this->db->join('vendor', 'vendor.KODE_VENDOR = pks.nama_vendor');
+        $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
         $q = $this->db->get('pks');
+
         $response = $q->result();
         return $response;
+    }
+    public function showData(){
+        $this->db->select('*');
+        $this->db->join('vendor', 'vendor.KODE_VENDOR = pks.nama_vendor');
+        $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
+
+        $q = $this->db->get('pks');
+        $response = $q->result();
+         return $response;
+
     }
 
     public function getByRBB($kode_rbb)

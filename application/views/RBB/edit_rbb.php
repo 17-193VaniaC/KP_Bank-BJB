@@ -20,7 +20,11 @@
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 								<label for="GL">GL</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
-								<input type="text" name="GL" placeholder="GL"  value="<?php echo $rbb->GL ?>" class="form-control"/>
+							 <select class="form-control form-control-user" name="GL" value="<?php echo $rbb->GL ?>">
+		                        <?php foreach ($gl as $row) : ?>
+		                            <option value="<?= $row->KODE_GL ?>"><?= $row->KODE_GL ?></option>
+		                        <?php endforeach; ?>
+		                    </select>
 									<?php echo form_error('GL') ?>
 						</td>
 					</tr><tr>

@@ -84,6 +84,8 @@ class RBB extends CI_Controller
         }
 
         $data["rbb"] = $rbb->getById($KODE_RBB);
+        $data['gl'] = $this->db->get('gl')->result();
+
         if (!$data["rbb"]) show_404();
 
         $this->load->view('templates/header.php', $title);
@@ -115,8 +117,5 @@ class RBB extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> RBB tidak bisa dihapus karena telah terdapat data PKS. Jika ingin menghapus, silahkan hapus data PKS terlebih dahulu</div>');
         }
         redirect('RBB');
-        // if ($this->RBB_model->delete($rbb)) {
-        //     redirect(site_url('rbb'));
-        // }
     }
 }

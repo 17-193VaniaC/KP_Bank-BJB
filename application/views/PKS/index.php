@@ -1,4 +1,4 @@
-<div class="container-xl" style="margin-top: 50px;">
+<div  style="margin-top: 50px; padding: 25px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
@@ -6,15 +6,18 @@
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8">
-                        <h2>Daftar <b>PKS</b></h2>
+                    <div class="col-sm-4">
+                        <a href="<?= base_url('pks/'); ?>" style="text-decoration: none;"><h2>Daftar <b>PKS</b></h2></a>
                     </div>
+                        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+                            <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">Tambah PKS</a>
+                        <?php endif; ?>
                     <div class="col-sm-4">
                         <div class="row">
                             <div class="search-box">
                                 <form method="get" class="form-inline">
                                     <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" />
-                                    <input type="submit" name="search">
+                                    <input class="btn btn-primary" type="submit" name="search" value="Cari">
                                 </form>
                             </div>
                         </div>
@@ -45,13 +48,13 @@
                         <tr>
                             <td><a href="<?php echo site_url('Termin/termin_pks/' . $row->NO_PKS); ?>"><?= $row->NO_PKS ?></a></td>
                             <td><?= $row->KODE_RBB ?></td>
-                            <td><?= $row->JENIS ?></td>
+                            <td><?= $row->jenis ?></td>
                             <td><?= $row->KODE_PROJECT ?></td>
                             <td><?= $row->NAMA_PROJECT ?></td>
                             <td><?= $row->TGL_PKS ?></td>
                             <td><?= $row->NOMINAL_PKS ?></td>
                             <td><?= $row->SISA_ANGGARAN ?></td>
-                            <td><?= $row->NAMA_VENDOR ?></td>
+                            <td><?= $row->nama_vendor ?></td>
                             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                 <td>
                                     <div class="btn-group">
@@ -64,10 +67,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                <hr>
-                <a href="<?= base_url('pks/create'); ?>">Create</a>
-            <?php endif; ?>
+         
             <script type="text/javascript">
                 $(document).ready(function() {
                     $("#searchById").autocomplete({
