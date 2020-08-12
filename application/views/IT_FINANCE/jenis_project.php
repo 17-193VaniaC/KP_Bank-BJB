@@ -7,10 +7,10 @@
 		echo "</div>";
 		 ?>
 		<?php }?>
-		<?php if(!empty($this->session->flashdata('failed')) | !empty(form_error('jenis'))){?>
+		<?php if(!empty($this->session->flashdata('failed')) | !empty(form_error('jenis')) ){?>
 		<?php 
 			echo "<div class='alert alert-danger'>";
-			echo "<strong>Gagal menambahkan data</strong><br>";
+			echo "<strong>Error</strong><br>";
 			echo $this->session->flashdata('failed');
 			echo form_error('jenis');
 			echo "</div>";
@@ -63,7 +63,7 @@
 							<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor;?>">Hapus</button> -->
 
 							<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
-							<a class="btn btn-danger" href="<?php echo site_url('jenis/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Are you sure?')">Hapus</a>
+							<a class="btn btn-danger" href="<?php echo site_url('JProject/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Are you sure?')">Hapus</a>
 
 							<!-- <button class="btn btn-danger" onclick="comfirm('are you sure?')" >Hapus</button> -->
 						<!-- </a> -->

@@ -10,7 +10,7 @@
 		<?php if(!empty($this->session->flashdata('failed')) | !empty(form_error('nama_vendor'))){?>
 		<?php 
 			echo "<div class='alert alert-danger'>";
-			echo "<strong>Gagal menambahkan data</strong><br>";
+			echo "<strong>Error</strong><br>";
 			echo $this->session->flashdata('failed');
 			echo form_error('nama_vendor');
 			echo "</div>";

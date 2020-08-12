@@ -54,10 +54,10 @@ class JProject extends CI_Controller
         $thisdata = $this->JProject_model->getById($jenis);
         if($thisdata->STATUS <1){
             $this->JProject_model->delete($jenis);
-            $this->session->set_flashdata('delete_success', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+            $this->session->set_flashdata('success', 'Your data has been deleted');
         }
         else{
-            $this->session->set_flashdata('delete_failed', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+            $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
         }
             redirect('jproject');
         // }

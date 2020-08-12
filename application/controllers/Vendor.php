@@ -73,10 +73,10 @@ class Vendor extends CI_Controller
         $thisdata = $this->Vendor_model->getById($vendor);
         if($thisdata->STATUS <1){
             $this->Vendor_model->delete($vendor);
-            $this->session->set_flashdata('delete_success', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+            $this->session->set_flashdata('delete_success', 'Data berhasil dihapus');
         }
         else{
-            $this->session->set_flashdata('delete_failed', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+            $this->session->set_flashdata('delete_failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
         }
         redirect('vendor');
     }
