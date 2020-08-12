@@ -13,6 +13,7 @@ class pks extends CI_Controller
 
         $this->load->library('form_validation');
         $this->load->model('RBB_model');
+        $this->load->model('MutasiRBB_model');
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
         $this->load->model('JProject_model');
@@ -71,6 +72,25 @@ class pks extends CI_Controller
             ];
 
             $this->db->insert('pks', $data);
+
+            // MENGURANGI SISA ANGGARAN RBB
+            $rbb = $this->RBB_model;
+            $data_rbb = $rbb->getById($this->input->post('kode_rbb'));
+            $sisa = $data_rbb->SISA_ANGGARAN - $this->input->post('nominal_pks');
+
+            $this->db->set('SISA_ANGGARAN', $sisa);
+            $this->db->where('KODE_RBB', $this->input->post('kode_rbb'));
+            $this->db->update('rbb');
+            // END
+
+            // ADD MUTASI
+            $data_mutasi['KODE_RBB'] = $this->input->post('kode_rbb');
+            $data_mutasi['NOMINAL'] = $this->input->post('nominal_pks');
+            $data_mutasi['NO_PKS'] = $this->input->post('no_pks');
+            $mutasi = $this->MutasiRBB_model;
+            $mutasi->save_pks($data_mutasi);
+            // END
+
             $n_termin = $this->input->post('termin');
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
             if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin

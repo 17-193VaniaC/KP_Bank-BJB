@@ -49,9 +49,18 @@ class MutasiRBB_model extends CI_Model
         return $this->db->insert($this->_table, $this);
     }
 
+    public function save_pks($data)
+    {
+        $this->KODE_RBB = $data["KODE_RBB"];
+        $this->KODE_MUTASI = uniqid();
+        $this->NOMINAL = $data["NOMINAL"];
+        $this->TGL_MUTASI = date('Y-m-d');
+        $this->KETERANGAN = $data["NO_PKS"];
+        return $this->db->insert($this->_table, $this);
+    }
+
     public function getById($KODERBB)
     {
         return $this->db->get_where($this->_table, ["KODE_RBB" => $KODERBB])->row();
     }
-
 }
