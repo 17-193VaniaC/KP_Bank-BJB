@@ -18,6 +18,7 @@ class pks extends CI_Controller
         $this->load->model('Vendor_model');
         $this->load->model('JProject_model');
         $this->load->model('Termin_model');
+        $this->load->model('Log_model');
     }
 
     public function index()
@@ -77,6 +78,14 @@ class pks extends CI_Controller
                     'input_user' => $this->input->post('nama_vendor'),
                     'input_date' => date("Y-m-d h:i:s")
                 ];
+
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $dataa['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'pks';
+                $data_log['KODE_DATA'] = $this->input->post('no_pks');
+                $data_log['ACTIVITY'] = 'add';
+                $log->save($data_log);
 
                 $this->db->insert('pks', $data);
 
@@ -155,6 +164,14 @@ class pks extends CI_Controller
             $this->db->where('no_pks', $no_pks);
             $this->db->update('pks');
 
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'pks';
+            $data_log['KODE_DATA'] = $no_pks;
+            $data_log['ACTIVITY'] = 'edit';
+            $log->save($data_log);
+
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been edited.</div>');
             redirect('pks/index');
         }
@@ -163,6 +180,7 @@ class pks extends CI_Controller
     public function delete($no_pks)
     {
         // $data['pks'] = $this->Pks_model->deleteData($no_pks);
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $termin = $this->Termin_model;
         $data_termin = $termin->getRow($no_pks);
 
@@ -199,6 +217,14 @@ class pks extends CI_Controller
         $data_mutasi['NO_PKS'] = $no_pks;
         $mutasi = $this->MutasiRBB_model;
         $mutasi->save_pks($data_mutasi);
+
+        // ADD LOG
+        $log = $this->Log_model;
+        $data_log['USER'] = $data['user']['NAMA'];
+        $data_log['TABLE_NAME'] = 'pks';
+        $data_log['KODE_DATA'] = $no_pks;
+        $data_log['ACTIVITY'] = 'delete';
+        $log->save($data_log);
 
         // HAPUS PKS
         $pks->deleteData($no_pks);

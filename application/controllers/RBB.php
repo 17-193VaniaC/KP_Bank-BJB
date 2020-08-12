@@ -13,6 +13,8 @@ class RBB extends CI_Controller
         }
 
         $this->load->model("RBB_model");
+        $this->load->model("Pks_model");
+        $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
 
@@ -38,6 +40,15 @@ class RBB extends CI_Controller
 
         if ($validation->run() == TRUE) {
             $rbb->save();
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'rbb';
+            $data_log['KODE_DATA'] = $this->input->post('KODE_RBB');
+            $data_log['ACTIVITY'] = 'add';
+            $log->save($data_log);
+
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
 
@@ -60,6 +71,15 @@ class RBB extends CI_Controller
 
         if ($validation->run()) {
             $rbb->update();
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'rbb';
+            $data_log['KODE_DATA'] = $this->input->post('KODE_RBB');
+            $data_log['ACTIVITY'] = 'edit';
+            $log->save($data_log);
+
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
 
@@ -72,12 +92,31 @@ class RBB extends CI_Controller
         $this->load->view('templates/footer.php');
     }
 
-    public function delete($rbb = null)
+    public function delete($kode_rbb)
     {
-        if (!isset($rbb)) show_404();
+        $pks = $this->Pks_model;
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        $data_pks = $pks->getByRBB($kode_rbb);
 
-        if ($this->RBB_model->delete($rbb)) {
-            redirect(site_url('rbb'));
+        if (!$data_pks) {
+            $rbb = $this->RBB_model;
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'rbb';
+            $data_log['KODE_DATA'] = $kode_rbb;
+            $data_log['ACTIVITY'] = 'delete';
+            $log->save($data_log);
+
+            $rbb->delete($kode_rbb);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> RBB berhasil dihapus.</div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> RBB tidak bisa dihapus karena telah terdapat data PKS. Jika ingin menghapus, silahkan hapus data PKS terlebih dahulu</div>');
         }
+        redirect('RBB');
+        // if ($this->RBB_model->delete($rbb)) {
+        //     redirect(site_url('rbb'));
+        // }
     }
 }

@@ -56,12 +56,6 @@ class RBB_model extends CI_Model
             ],
 
             [
-                'field' => 'ANGGARAN',
-                'label' => 'ANGGARAN',
-                'rules' => 'required'
-            ],
-
-            [
                 'field' => 'GL',
                 'label' => 'GL',
                 'rules' => 'required'
@@ -70,12 +64,6 @@ class RBB_model extends CI_Model
             [
                 'field' => 'NAMA_REK',
                 'label' => 'NAMA_REK',
-                'rules' => 'required'
-            ],
-
-            [
-                'field' => 'SISA_ANGGARAN',
-                'label' => 'SISA_ANGGARAN',
                 'rules' => 'required'
             ]
         ];
@@ -109,10 +97,8 @@ class RBB_model extends CI_Model
         $post = $this->input->post();
         $this->KODE_RBB = $post["KODE_RBB"];
         $this->PROGRAM_KERJA = $post["PROGRAM_KERJA"];
-        $this->ANGGARAN = $post["ANGGARAN"];
         $this->GL = $post["GL"];
         $this->NAMA_REK = $post["NAMA_REK"];
-        $this->SISA_ANGGARAN = $post["SISA_ANGGARAN"];
 
         return $this->db->update($this->_table, $this, array('KODE_RBB' => $post['KODE_RBB']));
     }

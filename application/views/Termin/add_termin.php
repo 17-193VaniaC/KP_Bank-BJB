@@ -16,7 +16,7 @@
 		<tr>
 			<td>
 				<form action="<?php echo site_url("Termin/add/" . $nopks . "/" . $ntermin . "/" . $npayment) ?>" method="post">
-					<input type="text" name="NOMINAL" placeholder="Nominal Termin" val />
+					<input type="number" name="NOMINAL" placeholder="Nominal Termin" val />
 					<?php echo form_error('NOMINAL') ?>
 			</td>
 			<td>

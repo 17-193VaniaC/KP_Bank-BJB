@@ -54,7 +54,7 @@
                 </div>
                 <div class="form-group">
                     <label for="nominal_pks">Nominal PKS</label>
-                    <input type="text" class="form-control form-control-user" id="nominal_pks" name="nominal_pks" placeholder="Nominal pks...">
+                    <input type="number" class="form-control form-control-user" id="nominal_pks" name="nominal_pks" placeholder="Nominal pks...">
                     <?= form_error('nominal_pks', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
                 <div class="form-group">
