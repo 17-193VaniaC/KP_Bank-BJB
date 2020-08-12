@@ -58,46 +58,56 @@ class pks extends CI_Controller
             $this->load->view('pks/create', $dataa);
             $this->load->view('templates/footer.php');
         } else {
-            $data = [
-                'no_pks' => $this->input->post('no_pks'),
-                'kode_rbb' => $this->input->post('kode_rbb'),
-                'jenis' => $this->input->post('jenis'),
-                'kode_project' => $this->input->post('kode_project'),
-                'nama_project' => $this->input->post('nama_project'),
-                'tgl_pks' => $this->input->post('tgl_pks'),
-                'nominal_pks' => $this->input->post('nominal_pks'),
-                'nama_vendor' => $this->input->post('nama_vendor'),
-                'sisa_anggaran' => $this->input->post('nominal_pks'),
-                'input_user' => $this->input->post('nama_vendor'),
-                'input_date' => date("Y-m-d h:i:s")
-            ];
-
-            $this->db->insert('pks', $data);
-
-            // MENGURANGI SISA ANGGARAN RBB
             $rbb = $this->RBB_model;
             $data_rbb = $rbb->getById($this->input->post('kode_rbb'));
-            $sisa = $data_rbb->SISA_ANGGARAN - $this->input->post('nominal_pks');
 
-            $this->db->set('SISA_ANGGARAN', $sisa);
-            $this->db->where('KODE_RBB', $this->input->post('kode_rbb'));
-            $this->db->update('rbb');
-            // END
+            $total = $data_rbb->SISA_ANGGARAN - $this->input->post('nominal_pks');
 
-            // ADD MUTASI
-            $data_mutasi['KODE_RBB'] = $this->input->post('kode_rbb');
-            $data_mutasi['NOMINAL'] = $this->input->post('nominal_pks');
-            $data_mutasi['NO_PKS'] = $this->input->post('no_pks');
-            $mutasi = $this->MutasiRBB_model;
-            $mutasi->save_pks($data_mutasi);
-            // END
+            if ($total > 0) {
+                $data = [
+                    'no_pks' => $this->input->post('no_pks'),
+                    'kode_rbb' => $this->input->post('kode_rbb'),
+                    'jenis' => $this->input->post('jenis'),
+                    'kode_project' => $this->input->post('kode_project'),
+                    'nama_project' => $this->input->post('nama_project'),
+                    'tgl_pks' => $this->input->post('tgl_pks'),
+                    'nominal_pks' => $this->input->post('nominal_pks'),
+                    'nama_vendor' => $this->input->post('nama_vendor'),
+                    'sisa_anggaran' => $this->input->post('nominal_pks'),
+                    'input_user' => $this->input->post('nama_vendor'),
+                    'input_date' => date("Y-m-d h:i:s")
+                ];
 
-            $n_termin = $this->input->post('termin');
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
-            if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
-                redirect('pks/index');
+                $this->db->insert('pks', $data);
+
+                // MENGURANGI SISA ANGGARAN RBB
+                $rbb = $this->RBB_model;
+                $data_rbb = $rbb->getById($this->input->post('kode_rbb'));
+                $sisa = $data_rbb->SISA_ANGGARAN - $this->input->post('nominal_pks');
+
+                $this->db->set('SISA_ANGGARAN', $sisa);
+                $this->db->where('KODE_RBB', $this->input->post('kode_rbb'));
+                $this->db->update('rbb');
+                // END
+
+                // ADD MUTASI
+                $data_mutasi['KODE_RBB'] = $this->input->post('kode_rbb');
+                $data_mutasi['NOMINAL'] = $this->input->post('nominal_pks');
+                $data_mutasi['NO_PKS'] = $this->input->post('no_pks');
+                $mutasi = $this->MutasiRBB_model;
+                $mutasi->save_pks($data_mutasi);
+                // END
+
+                $n_termin = $this->input->post('termin');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
+                if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
+                    redirect('pks/index');
+                } else {
+                    redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1");
+                }
             } else {
-                redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1");
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal PKS melebihi sisa anggaran RBB (' . $total . ')</div>');
+                redirect('pks');
             }
         }
     }
@@ -160,7 +170,7 @@ class pks extends CI_Controller
         if ($data_termin) {
             if ($data_termin['STATUS'] == 'UNPAID') {
 
-                // hapus semua termin
+                // HAPUS TERMIN
                 $hapus_termin = $termin->getAll($no_pks);
 
                 foreach ($hapus_termin as $row) {
@@ -173,7 +183,7 @@ class pks extends CI_Controller
         }
         $pks = $this->Pks_model;
 
-        // tambah anggaran RBB
+        // TAMBAH ANGGARAN RBB
         $data_pks = $pks->getById($no_pks);
         $rbb = $this->RBB_model;
         $data_rbb = $rbb->getById($data_pks['KODE_RBB']);
@@ -183,7 +193,14 @@ class pks extends CI_Controller
         $this->db->where('KODE_RBB', $data_pks['KODE_RBB']);
         $this->db->update('rbb');
 
-        // hapus PKS
+        // TAMBAH MUTASI RBB
+        $data_mutasi['KODE_RBB'] = $data_pks['KODE_RBB'];
+        $data_mutasi['NOMINAL'] = $data_pks['NOMINAL_PKS'];
+        $data_mutasi['NO_PKS'] = $no_pks;
+        $mutasi = $this->MutasiRBB_model;
+        $mutasi->save_pks($data_mutasi);
+
+        // HAPUS PKS
         $pks->deleteData($no_pks);
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Your data has been deleted.</div>');

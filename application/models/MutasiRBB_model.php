@@ -54,7 +54,7 @@ class MutasiRBB_model extends CI_Model
         $this->KODE_RBB = $data["KODE_RBB"];
         $this->KODE_MUTASI = uniqid();
         $this->NOMINAL = $data["NOMINAL"];
-        $this->TGL_MUTASI = date('Y-m-d');
+        $this->TGL_MUTASI = date("Y-m-d h:i:s");
         $this->KETERANGAN = $data["NO_PKS"];
         return $this->db->insert($this->_table, $this);
     }
