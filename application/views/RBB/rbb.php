@@ -10,7 +10,9 @@
 			Rencana Bisnis Bank 	
 		</div>
 		<div class="container-half right">
-			<button class="btn btn-primary" > + Tambah RBB </button>
+			<a  href="<?php echo site_url("rbb/add");?>" >	
+			<button class="btn btn-primary"> + Tambah RBB </button>
+			</a>
 		</div>
 	</h3>
 

@@ -17,7 +17,20 @@ input[type=number] {
 }
 </style>
 <body>
-
+	<?php if($this->session->flashdata('success')){?>
+		<?php 
+		echo "<div class='alert alert-success'>";
+		echo $this->session->flashdata('success');
+		echo "</div>";
+		 ?>
+		<?php }?>
+		<?php if($this->session->flashdata('failed')){?>
+		<?php 
+			echo $this->session->flashdata('failed');
+			echo "<strong>Gagal</strong>";
+			echo "</div>";
+		?>
+		<?php }?>
 <table style="margin: 15%; margin-top: 100px; margin-bottom: 50PX;" >
 					<tr>
 					<form action="<?php echo site_url('rbb/add') ?>" method="post">
@@ -25,7 +38,7 @@ input[type=number] {
 						<label for="KODE_RBB">Kode RBB</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
 							<input type="text" name="KODE_RBB" placeholder="Kode RBB" class="form-control" />
-									<?php echo form_error('KODE_RBB') ?>
+									<small class="text-danger"><?php echo form_error('KODE_RBB') ?></small>
 					</td>
 
 					</tr><tr>
@@ -33,7 +46,7 @@ input[type=number] {
 								<label for="PROGRAM_KERJA">Program Kerja</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
 								<input type="text" name="PROGRAM_KERJA" placeholder="Program Kerja" class="form-control"/>
-									<?php echo form_error('PROGRAM_KERJA') ?>
+									<small class="text-danger"><?php echo form_error('PROGRAM_KERJA') ?></small>
 						</td>
 					</tr><tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
@@ -41,7 +54,7 @@ input[type=number] {
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
 								<input type="number" name="ANGGARAN" placeholder="Nominal Anggaran" style="-moz-appearance: textfield;
   margin: 0;" class="form-control"/>
-									<?php echo form_error('ANGGARAN') ?>
+									<small class="text-danger"><?php echo form_error('ANGGARAN') ?></small>
 						</td>
 					</tr><tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
@@ -60,7 +73,7 @@ input[type=number] {
 								<label for="NAMA_REKE">Nama Rekening</label>
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
 								<input type="text" name="NAMA_REK" placeholder="Nama Rekening" class="form-control" />
-									<?php echo form_error('NAMA_REK') ?>
+									<small class="text-danger"><?php echo form_error('NAMA_REK') ?></small>
 						</td>
 					</tr>
 
@@ -69,6 +82,9 @@ input[type=number] {
 							<button value="save" type="submit" class="btn btn-success">
 								Simpan
 							</button>
+							<a href="<?php echo site_url("rbb");?>"s class="btn btn-secondary">
+								Batal
+							</a>
 						</td>
 					</tr>
 					</form>

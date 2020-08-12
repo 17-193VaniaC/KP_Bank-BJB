@@ -3,36 +3,36 @@
 		<?php 
 		echo "<div class='alert alert-success'>";
 		echo $this->session->flashdata('success');
+		$this->session->set_flashdata('success', '');
 		echo "</div>";
 		 ?>
 		<?php }?>
-		<?php if($this->session->flashdata('failed')){?>
+		<?php if(!empty($this->session->flashdata('failed')) | !empty(form_error('nama_vendor'))){?>
 		<?php 
 			echo "<div class='alert alert-danger'>";
-			echo "<strong>Gagal</strong>";
+			echo "<strong>Gagal menambahkan data</strong><br>";
+			echo $this->session->flashdata('failed');
 			echo form_error('nama_vendor');
 			echo "</div>";
 		?>
 		<?php }?>
-
-	<h3>
-		<div class="container-half">
-			Daftar Vendor
-		</div>
-	</h3>
+		
+	
+	<div class="container-half">
+		<h3>Daftar Vendor</h3>
+	</div>
 	<div class="container-half right">
-		<div class="row mt-3">
-		<div class="col-lg">  
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
-				<div class="form-group">
-				<input type="text" name="nama vendor" placeholder="Nama Vendor" class="form-control"/>
+				<input type="text" name="nama_vendor" placeholder="Nama Vendor" class="form-control"/><br>
 				<input type="submit" name="btn" value="Tambah vendor" class="btn btn-primary" />
-				</div>
 			</form>
-		</div>
-		</div>
+
+	<!-- <small class="text-danger" style="text-align: center;"><?php echo form_error('nama_vendor');?></small> -->
 	</div>
 	<br><br>
+
+
+<!-- ##############################################TABEL VENDOR######################################################## -->
 <div class="table-responsive">
     <div class="table-wrapper">
 	<table class="table table-striped table-hover table-bordered">
@@ -54,12 +54,15 @@
 					<td><?php echo $listvendor->nama_vendor ?></td>
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 						<td class="text-center">
-							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-vendor="<?php echo $listvendor->nama_vendor;?>">Edit</button>
+							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR;?>" data-vendor="<?php echo $listvendor->nama_vendor;?>"> Edit</button>
 						</a>
-							<button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor;?>">Hapus</button>
+							<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor;?>">Hapus</button> -->
 
-							<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>"> -->
-							<!-- <button class="btn btn-danger">Hapus</button></a> -->
+							<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
+							<a class="btn btn-danger" href="<?php echo site_url('vendor/delete/' . $listvendor->KODE_VENDOR); ?>" onclick="return confirm('Are you sure?')">Hapus</a>
+
+							<!-- <button class="btn btn-danger" onclick="comfirm('are you sure?')" >Hapus</button> -->
+						<!-- </a> -->
 						</td>
 					<?php endif; ?>
 				</tr>
@@ -69,7 +72,7 @@
 	</div></div>
 
 
-<!-- Modal edit -->
+<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
 <div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -79,17 +82,16 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-		<form action="" method="post" id="form_edit">
+		<form action="<?php site_url('rbb'); ?>" method="post" >
       <div class="modal-body" id="modal-edit">
       	<table style="margin: 8%;">
 					<tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
-							<label for="nama_vendor">Nama Vendor</label>
+						Nama Vendor
 						</td>
 						<td style="margin-left: 3px; width: 30%; padding:10px;">
-						<input type="hidden" name="nama_vendor_1" id="nama_vendor_1" value="nama_vendor_1"/>
-						<input type="text" name="nama_vendor" id="nama_vendor" class="form-controll" />
-						<?php echo form_error('nama_vendor') ?>
+						<input type="hidden" name="KODE_VENDOR" id="kode_vendor" class="form-control"/>
+						<input type="text" name="nama_vendor" id="nama_vendor" class="form-control" />
 						</td>
 					</tr>
 					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>			
@@ -106,8 +108,8 @@
 </div>
 
 
-<!-- Modal hapus -->
-<div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!--+++++++++++++++++++++++++++++++++++++++++++++++++++ Modal hapus ++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+<!-- <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -118,25 +120,24 @@
       </div>
 		<form  method="post" id="form_hapus">
       <div class="modal-body" id="modal_body_delete">
-      	<table style="margin: 8%;">
+      	<table style="margin: 10%;">
 					<tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 							<label for="nama_vendor">Hapus Vendor</label>
 						</td>
 						<td style="margin-left: 3px; width: 30%; padding:10px;">
 							<input type="text" name="nama_vendor" id="nama_vendor" class="form-controll" />
-							<?php echo form_error('nama_vendor') ?>
 							?
 						</td>
 					</tr>
-					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>			
+					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>
 					</tr>
 				</table>
 		    </div>
 	    <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
         <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">
-		<button class="btn btn-danger">Hapus</button></a>
+		<button class="btn btn-danger">Hapus</button></a> -->
        <!--  <a href="<?php echo site_url('vendor/edit/' . $listvendor->nama_vendor) ?>""><button class="btn btn-success">Ubah</button></a> -->
       </div>
   </form>
@@ -145,55 +146,57 @@
 </div>
 
 <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-
 </div>
 </div>
 <?php endif; ?>
 </div>
+
+
+
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
 <script>
    	$(document).on('click', '#editbutton', function(){
    		var n_vendor = $(this).data('vendor');
-   		// var n_vendor = $(nama_vendor).val();
+   		var kode_vendor = $(this).data('id');
    		$(".modal-body #nama_vendor").val(n_vendor);
-   		$(".modal-body #nama_vendor_1").val(n_vendor);
+   		$(".modal-body #kode_vendor").val(kode_vendor);
     	});
 
-    $(document).ready(function(){
-    	$("#form_edit").on("submit", (function(e){
-    		e.preventDevaullt();
-	       	$.ajax({
-	       		url: <?php site_url('vendor/edit/')?> + n_vendor,
-	       		type: post,
-	       		data: {nama_vendor:nama_vendor},
-	       		success: function(data){
-	       			alert("data berhasil diubah");
-	       			$("#modalEdit").modal("hide");
-	       			location.reload();
-	       		}
-    		});
-    	}));
-   	});
+    // $(document).ready(function(){
+    // 	$("#form_edit").on("submit", (function(e){
+    // 		e.preventDevaullt();
+	   //     	$.ajax({
+	   //     		url: <?php site_url('vendor/edit/')?> + n_vendor,
+	   //     		type: post,
+	   //     		data: {nama_vendor:nama_vendor, KODE_VENDOR: KODE_VENDOR},
+	   //     		success: function(data){
+	   //     			alert("data berhasil diubah");
+	   //     			$("#modalEdit").modal("hide");
+	   //     			location.reload();
+	   //     		}
+    // 		});
+    // 	}));
+   	// });
 
-   	$(document).on("click", "#deletebutton", function(){
-   		var n_vendor = $(this).data(vendor2);
-   		$("#modal_body_delete #nama_vendor").val(n_vendor);
-   	});
+   	// $(document).on("click", "#deletebutton", function(){
+   	// 	var n_vendor = $(this).data(vendor2);
+   	// 	$("#modal_body_delete #nama_vendor").val(n_vendor);
+   	// });
 
-   	$(document).ready(function(){
-    	$("#form_hapus").on("submit", (function(e){
-    		e.preventDevaullt();
-	       	$.ajax({
-	       		url: <?php site_url('vendor/delete/')?> + n_vendor,
-	       		type: post,
-	       		data: {nama_vendor:nama_vendor},
-	       		success: function(data){
-	       			alert("data berhasil dihapus");
-	       			$("#modalEdit").modal("hide");
-	       			location.reload();
-	       		}
-    		});
-    	}));
-   	});
+   	// $(document).ready(function(){
+    // 	$("#form_hapus").on("submit", (function(e){
+    // 		e.preventDevaullt();
+	   //     	$.ajax({
+	   //     		url: <?php site_url('vendor/delete/')?> + n_vendor,
+	   //     		type: post,
+	   //     		data: {nama_vendor:nama_vendor},
+	   //     		success: function(data){
+	   //     			alert("data berhasil dihapus");
+	   //     			$("#modalEdit").modal("hide");
+	   //     			location.reload();
+	   //     		}
+    // 		});
+    // 	}));
+   	// });
 
 </script>

@@ -4,14 +4,15 @@ class Vendor_model extends CI_Model
 {
     private $_table = "vendor";
 
+    public $KODE_VENDOR;
     public $nama_vendor;
 
     public function rules()
     {
         return [
-            [
-                'field' => 'naman vendor',
-                'label' => 'nama_vendor',
+            [           
+                'field' => 'nama_vendor',
+                'label' => 'Nama Vendor',
                 'rules' => 'trim|required|is_unique[vendor.nama_vendor]'
             ]
         ];
@@ -24,9 +25,10 @@ class Vendor_model extends CI_Model
     public function update($vendor = null)
     {
         $post = $this->input->post();
-        $this->nama_vendor = $post["nama vendor"];
-        $this->db-set("nama_vendor", $post["nama_vendor"]);
-        $this->db->where("nama_vendor", $post["nama_vendor_1"]);
+        $this->KODE_VENDOR = $post["KODE_VENDOR"];
+        $this->nama_vendor = $post["nama_vendor"];
+        $this->db->set("nama_vendor", $post["nama_vendor"]);
+        $this->db->where("KODE_VENDOR", $post["KODE_VENDOR"]);
         return $this->db->update('vendor');
     }
 
@@ -34,17 +36,18 @@ class Vendor_model extends CI_Model
     public function save()
     {
         $post = $this->input->post();
+        $this->KODE_VENDOR = uniqid();
         $this->nama_vendor = $post["nama_vendor"];
         return $this->db->insert($this->_table, $this);
     }
 
-    public function getById($nama_v)
+    public function getById($kodev)
     {
-        return $this->db->get_where($this->_table, ["nama_vendor" => $nama_v])->row();
+        return $this->db->get_where($this->_table, ["KODE_VENDOR" => $kodev])->row();
     }
 
-    public function delete($nama_v)
+    public function delete($kodev)
     {   
-        return $this->db->delete($this->_table, array("nama_vendor" => $nama_v));
+        return $this->db->delete($this->_table, array("KODE_VENDOR" => $kodev));
     }
 }
