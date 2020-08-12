@@ -58,7 +58,7 @@
 
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 						<td class="text-center">
-							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT;?>" data-jenis="<?php echo $listjenis->jenis;?>"> Edit</button>
+							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT;?>" data-jenis="<?php echo $listjenis->jenis;?>" data-status="<?php echo $listjenis->STATUS;?>"> Edit</button>
 						</a>
 							<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor;?>">Hapus</button> -->
 
@@ -81,7 +81,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Edit Vendor</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Jenis Project</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -89,9 +89,15 @@
 		<form action="<?php site_url('rbb'); ?>" method="post" >
       <div class="modal-body" id="modal-edit">
       	<table style="margin: 8%;">
+      		<div class="notif-warning" id="notif-warning">
+      			<div class="alert-warning">
+      			<STRONG>Jenis Project ini sedang digunakan oleh data PKS</STRONG><br>
+      			Anda yakin ingin mengedit Jenis Project ini?
+      			</div>
+      		</div>
 					<tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
-						Nama Vendor
+						Jenis Project
 						</td>
 						<td style="margin-left: 3px; width: 30%; padding:10px;">
 						<input type="hidden" name="KODE_JENISPROJECT" id="KODE_JENISPROJECT" class="form-control"/>
@@ -162,8 +168,17 @@
    	$(document).on('click', '#editbutton', function(){
    		var n_jenis = $(this).data('jenis');
    		var kode_jenis = $(this).data('id');
+   		var penggunaan = $(this).data('status');
+
    		$(".modal-body #jenis").val(n_jenis);
    		$(".modal-body #KODE_JENISPROJECT").val(kode_jenis);
+
+   		if(penggunaan > 0){
+   			document.getElementById("notif-warning").style.display = "block";
+   		}
+   		else{
+   			document.getElementById("notif-warning").style.display = "none";
+   		}
     	});
 
 

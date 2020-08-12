@@ -56,7 +56,7 @@
 					<td><?php echo $listvendor->STATUS ?></td>
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 						<td class="text-center">
-							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR;?>" data-vendor="<?php echo $listvendor->nama_vendor;?>"> Edit</button>
+							<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR;?>" data-vendor="<?php echo $listvendor->nama_vendor;?>" data-status="<?php echo $listvendor->STATUS;?>"> Edit</button>
 						</a>
 							<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor;?>">Hapus</button> -->
 
@@ -87,6 +87,12 @@
 		<form action="<?php site_url('rbb'); ?>" method="post" >
       <div class="modal-body" id="modal-edit">
       	<table style="margin: 8%;">
+      		<div class="notif-warning" id="notif-warning">
+      			<div class="alert-warning">
+      			<STRONG>Vendor ini sedang digunakan oleh data PKS</STRONG><br>
+      			Anda yakin ingin mengedit Vendor ini?
+      			</div>
+      		</div>
 					<tr>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 						Nama Vendor
@@ -160,11 +166,20 @@
    	$(document).on('click', '#editbutton', function(){
    		var n_vendor = $(this).data('vendor');
    		var kode_vendor = $(this).data('id');
+   		var penggunaan = $(this).data('status');
+
    		$(".modal-body #nama_vendor").val(n_vendor);
    		$(".modal-body #kode_vendor").val(kode_vendor);
-    	});
 
-    // $(document).ready(function(){
+   		if(penggunaan > 0){
+   			document.getElementById("notif-warning").style.display = "block";
+   		}
+   		else{
+   			document.getElementById("notif-warning").style.display = "none";
+   		}
+
+    	});
+	    // $(document).ready(function(){
     // 	$("#form_edit").on("submit", (function(e){
     // 		e.preventDevaullt();
 	   //     	$.ajax({
