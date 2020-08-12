@@ -53,6 +53,14 @@ class Termin_model extends CI_Model
         return $termin;
     }
 
+    public function getRow($no_pks)
+    {
+        $this->db->select('*');
+        $this->db->where('NO_PKS', $no_pks);
+        $this->db->order_by('TERMIN', 'asc');
+        return $this->db->get('termin_pks')->row_array();
+    }
+
     public function save($nopks)
     {
         $post = $this->input->post();

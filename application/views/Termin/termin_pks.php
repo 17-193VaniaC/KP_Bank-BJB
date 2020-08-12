@@ -87,6 +87,10 @@
         <?php endif; ?>
     <?php else : ?>
         <h1>Termin Kosong</h1>
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : ?>
+            <hr>
+            <a href="<?= base_url('Termin/addMore/' . $no_pks . '/' . $baris); ?>">Create</a>
+        <?php endif; ?>
     <?php endif; ?>
     <hr>
     <a href="<?php echo site_url('pks'); ?>">Back</a>

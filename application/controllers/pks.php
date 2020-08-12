@@ -17,6 +17,7 @@ class pks extends CI_Controller
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
         $this->load->model('JProject_model');
+        $this->load->model('Termin_model');
     }
 
     public function index()
@@ -49,7 +50,7 @@ class pks extends CI_Controller
         $this->form_validation->set_rules('tgl_pks', 'Tgl_pks', 'required|trim');
         $this->form_validation->set_rules('nominal_pks', 'Nominal_pks', 'required|trim');
         $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
-        $this->form_validation->set_rules('termin', 'Termin', 'required|trim|less_than_equal_to[12]');
+        $this->form_validation->set_rules('termin', 'Termin', 'trim|less_than_equal_to[12]');
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header.php', $title);
@@ -151,10 +152,42 @@ class pks extends CI_Controller
 
     public function delete($no_pks)
     {
-        $data['pks'] = $this->Pks_model->deleteData($no_pks);
+        // $data['pks'] = $this->Pks_model->deleteData($no_pks);
+        $termin = $this->Termin_model;
+        $data_termin = $termin->getRow($no_pks);
+
+
+        if ($data_termin) {
+            if ($data_termin['STATUS'] == 'UNPAID') {
+
+                // hapus semua termin
+                $hapus_termin = $termin->getAll($no_pks);
+
+                foreach ($hapus_termin as $row) {
+                    $termin->delete($row->KODE_TERMIN);
+                }
+            } else {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> PKS tidak dapat dihapus karena terdapat invoice yang telah dibayar.</div>');
+                redirect('pks');
+            }
+        }
+        $pks = $this->Pks_model;
+
+        // tambah anggaran RBB
+        $data_pks = $pks->getById($no_pks);
+        $rbb = $this->RBB_model;
+        $data_rbb = $rbb->getById($data_pks['KODE_RBB']);
+        $total = $data_rbb->SISA_ANGGARAN + $data_pks['NOMINAL_PKS'];
+
+        $this->db->set('SISA_ANGGARAN', $total);
+        $this->db->where('KODE_RBB', $data_pks['KODE_RBB']);
+        $this->db->update('rbb');
+
+        // hapus PKS
+        $pks->deleteData($no_pks);
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Your data has been deleted.</div>');
-        redirect('pks/index');
+        redirect('pks');
     }
 
     public function search()

@@ -61,8 +61,8 @@ class RBB extends CI_Controller
         if ($validation->run()) {
             $rbb->update();
             $this->session->set_flashdata('success', 'Berhasil disimpan');
-        } 
-        
+        }
+
         $data["rbb"] = $rbb->getById($KODE_RBB);
         if (!$data["rbb"]) show_404();
 

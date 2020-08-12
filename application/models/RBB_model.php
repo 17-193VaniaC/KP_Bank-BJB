@@ -103,6 +103,7 @@ class RBB_model extends CI_Model
     {
         return $this->db->get_where($this->_table, ["KODE_RBB" => $KODERBB])->row();
     }
+
     public function update()
     {
         $post = $this->input->post();
@@ -140,22 +141,23 @@ class RBB_model extends CI_Model
 
         return $response;
     }
-    public function isExist(){
-        $post = $this->input->post();//Take from input
+    public function isExist()
+    {
+        $post = $this->input->post(); //Take from input
         $this->db->where('KODE_RBB', $post["KODE_RBB"]);
         $rbbdata = $this->db->get('rbb')->result();
-        if(count($rbbdata) <1){ //no data found
+        if (count($rbbdata) < 1) { //no data found
             return False;
         }
         return true;
-
     }
-    public function sych(){
-        $post = $this->input->post();//Take from input
+    public function sych()
+    {
+        $post = $this->input->post(); //Take from input
         $this->db->where('KODE_RBB', $post["KODE_RBB"]);
         $rbb = $this->db->get('rbb')->result();
-        $used = $rbb[0]->ANGGARAN-$rbb[0]->SISA_ANGGARAN;
-        if($post["NOMINAL"] < $used){//if the new budget is less than used budget
+        $used = $rbb[0]->ANGGARAN - $rbb[0]->SISA_ANGGARAN;
+        if ($post["NOMINAL"] < $used) { //if the new budget is less than used budget
             return false;
         }
         $new_left = $post["NOMINAL"] - $used;
