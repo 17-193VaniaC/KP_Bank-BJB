@@ -77,8 +77,15 @@ class pks extends CI_Controller
                     'input_user' => $this->input->post('nama_vendor'),
                     'input_date' => date("Y-m-d h:i:s")
                 ];
-
+                //OLAH DATA
                 $this->db->insert('pks', $data);
+                $this->load->model("Vendor_model");
+                $this->load->model("JProject_model");
+                // $v_pks = $this->Pks_model->getVendor($this->input->post('no_pks'));
+                // $jp_pks = $this->Pks_model->getJP($this->input->post('no_pks'));
+
+                $this->Vendor_model->updateStatusAdd();
+                $this->JProject_model->updateStatusAdd();
 
                 // MENGURANGI SISA ANGGARAN RBB
                 $rbb = $this->RBB_model;
@@ -199,7 +206,15 @@ class pks extends CI_Controller
         $data_mutasi['NO_PKS'] = $no_pks;
         $mutasi = $this->MutasiRBB_model;
         $mutasi->save_pks($data_mutasi);
-
+        //TAMBAH N PENGGUNA VENDOR DAN JENIS PROJECT
+        //DAPAT kode vendornya dan kode jenisnya]
+        //load model
+        $this->load->model("Vendor_model");
+        $this->load->model("JProject_model");
+        //ubah status
+        $this->Vendor_model->updateStatusDel();
+        $this->JProject_model->updateStatusDel();
+        
         // HAPUS PKS
         $pks->deleteData($no_pks);
 

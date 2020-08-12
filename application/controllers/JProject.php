@@ -48,16 +48,18 @@ class JProject extends CI_Controller
 
     public function delete($jenis = null)
     {
-        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        if ($data['user']['ROLE'] == 'IT FINANCE') {
-            $jeniss = urldecode($jenis);
-
-            if (!isset($jeniss)) show_404();
-            if ($this->JProject_model->delete($jeniss)) {
-                redirect(site_url('jenis_project'));
-            }
-        } else {
-            redirect('dashboard');
+        // $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        // if ($data['user']['ROLE'] == 'IT FINANCE') {
+        if(empty("jenis")) redirect('jproject');
+        $thisdata = $this->JProject_model->getById($jenis);
+        if($thisdata->STATUS <1){
+            $this->JProject_model->delete($jenis);
+            $this->session->set_flashdata('delete_success', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
         }
+        else{
+            $this->session->set_flashdata('delete_failed', '<div class="alert alert-danger" role="alert"> Your data has been deleted.</div>');
+        }
+            redirect('jproject');
+        // }
     }
 }
