@@ -27,19 +27,23 @@ class Vendor extends CI_Controller
         $validation->set_rules($vendor->rules());
         $var = 0;
         if ($validation->run() == TRUE) {
-            $var = 1;
-            $kode_vendor = $vendor->update();
+            if ($data['user']['ROLE'] == 'IT FINANCE') {
+                $var = 1;
+                $kode_vendor = $vendor->update();
 
-            // ADD LOG
-            $log = $this->Log_model;
-            $data_log['USER'] = $data['user']['NAMA'];
-            $data_log['TABLE_NAME'] = 'vendor';
-            $data_log['KODE_DATA'] = $kode_vendor;
-            $data_log['ACTIVITY'] = 'edit';
-            $log->save($data_log);
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'vendor';
+                $data_log['KODE_DATA'] = $kode_vendor;
+                $data_log['ACTIVITY'] = 'edit';
+                $log->save($data_log);
 
-            $this->session->set_flashdata('success', 'Data berhasil diubah');
-            $data["vendor"] = $this->Vendor_model->getAll();
+                $this->session->set_flashdata('success', 'Data berhasil diubah');
+                $data["vendor"] = $this->Vendor_model->getAll();
+            } else {
+                redirect('vendor');
+            }
         }
 
         $this->load->view('templates/header.php', $title);
@@ -80,30 +84,35 @@ class Vendor extends CI_Controller
             $this->load->view('templates/footer.php');
             redirect('vendor');
         } else {
-            redirect('dashboard');
+            redirect('vendor');
         }
     }
 
     public function delete($vendor = null)
     {
-        if (empty("vendor")) redirect('termin');
-        $thisdata = $this->Vendor_model->getById($vendor);
-        if ($thisdata->STATUS < 1) {
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($data['user']['ROLE'] == 'IT FINANCE') {
+            if (empty("vendor")) redirect('termin');
+            $thisdata = $this->Vendor_model->getById($vendor);
+            if ($thisdata->STATUS < 1) {
 
-            $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-            // ADD LOG
-            $log = $this->Log_model;
-            $data_log['USER'] = $data['user']['NAMA'];
-            $data_log['TABLE_NAME'] = 'vendor';
-            $data_log['KODE_DATA'] = $vendor;
-            $data_log['ACTIVITY'] = 'delete';
-            $log->save($data_log);
+                $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'vendor';
+                $data_log['KODE_DATA'] = $vendor;
+                $data_log['ACTIVITY'] = 'delete';
+                $log->save($data_log);
 
-            $this->Vendor_model->delete($vendor);
-            $this->session->set_flashdata('delete_success', 'Data berhasil dihapus');
+                $this->Vendor_model->delete($vendor);
+                $this->session->set_flashdata('delete_success', 'Data berhasil dihapus');
+            } else {
+                $this->session->set_flashdata('delete_failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+            }
+            redirect('vendor');
         } else {
-            $this->session->set_flashdata('delete_failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+            redirect('vendor');
         }
-        redirect('vendor');
     }
 }

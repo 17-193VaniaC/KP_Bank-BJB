@@ -15,10 +15,13 @@
 				Rencana Bisnis Bank
 			</div>
 			<div class="container-half right">
-				<a href="<?php echo site_url("rbb/add"); ?>">
-					<button class="btn btn-primary"> + Tambah RBB </button>
-				</a>
+				<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+					<a href="<?php echo site_url("rbb/add"); ?>">
+						<button class="btn btn-primary"> + Tambah RBB </button>
+					</a>
+				<?php endif; ?>
 			</div>
+
 		</h3>
 
 		<div class="table-responsive">

@@ -40,9 +40,10 @@ class JProject_model extends CI_Model
         $this->jenis = $post["jenis"];
         $this->db->set("jenis", $post["jenis"]);
         $this->db->where("KODE_JENISPROJECT", $post["KODE_JENISPROJECT"]);
-        return $this->db->update('j_project');
+        $this->db->update('j_project');
+        return $this->KODE_JENISPROJECT;
     }
-    
+
     public function getById($jenis_project)
     {
         return $this->db->get_where($this->_table, ["KODE_JENISPROJECT" => $jenis_project])->row();

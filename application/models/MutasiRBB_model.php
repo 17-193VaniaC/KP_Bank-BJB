@@ -46,7 +46,8 @@ class MutasiRBB_model extends CI_Model
         $this->NOMINAL = $post["NOMINAL"];
         $this->TGL_MUTASI = date('Y-m-d');
         $this->KETERANGAN = $post["KETERANGAN"];
-        return $this->db->insert($this->_table, $this);
+        $this->db->insert($this->_table, $this);
+        return $this->KODE_RBB;
     }
 
     public function save_pks($data)

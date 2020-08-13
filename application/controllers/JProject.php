@@ -25,14 +25,27 @@ class JProject extends CI_Controller
         $jenis = $this->JProject_model;
         $validation = $this->form_validation;
         $validation->set_rules($jenis->rules());
-        
-        $var=0;
+
+        $var = 0;
         if ($validation->run() == TRUE) {
-            $var = 1;
-            $jenis->update();
-            $this->session->set_flashdata('success', 'Data berhasil diubah');
-            $data["jenis"] = $this->JProject_model->getAll();
-        } 
+            if ($data['user']['ROLE'] == 'IT FINANCE') {
+                $var = 1;
+                $kode_jenis = $jenis->update();
+
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'j_project';
+                $data_log['KODE_DATA'] = $kode_jenis;
+                $data_log['ACTIVITY'] = 'edit';
+                $log->save($data_log);
+
+                $this->session->set_flashdata('success', 'Data berhasil diubah');
+                $data["jenis"] = $this->JProject_model->getAll();
+            } else {
+                redirect('JProject');
+            }
+        }
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view("IT_FINANCE/jenis_project", $data);
@@ -62,31 +75,33 @@ class JProject extends CI_Controller
             }
             redirect('jenis_project');
         } else {
-            redirect('dashboard');
+            redirect('JProject');
         }
     }
 
     public function delete($jenis = null)
     {
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        // if ($data['user']['ROLE'] == 'IT FINANCE') {
-        if (empty("jenis")) redirect('jproject');
-        $thisdata = $this->JProject_model->getById($jenis);
-        if ($thisdata->STATUS < 1) {
-            // ADD LOG
-            $log = $this->Log_model;
-            $data_log['USER'] = $data['user']['NAMA'];
-            $data_log['TABLE_NAME'] = 'jenis project';
-            $data_log['KODE_DATA'] = $jenis;
-            $data_log['ACTIVITY'] = 'delete';
-            $log->save($data_log);
+        if ($data['user']['ROLE'] == 'IT FINANCE') {
+            if (empty("jenis")) redirect('jproject');
+            $thisdata = $this->JProject_model->getById($jenis);
+            if ($thisdata->STATUS < 1) {
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'jenis project';
+                $data_log['KODE_DATA'] = $jenis;
+                $data_log['ACTIVITY'] = 'delete';
+                $log->save($data_log);
 
-            $this->JProject_model->delete($jenis);
-            $this->session->set_flashdata('success', 'Your data has been deleted');
+                $this->JProject_model->delete($jenis);
+                $this->session->set_flashdata('success', 'Your data has been deleted');
+            } else {
+                $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+            }
+            redirect('jproject');
         } else {
-            $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+            redirect('Jproject');
         }
-        redirect('jproject');
-        // }
     }
 }

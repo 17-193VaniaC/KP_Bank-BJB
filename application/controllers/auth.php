@@ -6,6 +6,7 @@ class auth extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model("Log_model");
         $this->load->library('form_validation');
         $this->load->library('session');
     }
@@ -80,7 +81,7 @@ class auth extends CI_Controller
             $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
 
             $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.USERNAME]', [
-                'is_unique' => 'This email has already registered!'
+                'is_unique' => 'This username has already registered!'
             ]);
             $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', [
                 'matches' => 'password dont match',
@@ -100,6 +101,15 @@ class auth extends CI_Controller
                     'PASSWORD' => password_hash($this->input->post('password1'), PASSWORD_BCRYPT)
                 ];
                 $this->db->insert('user', $data);
+
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $dataa['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'user';
+                $data_log['KODE_DATA'] = $this->input->post('username');
+                $data_log['ACTIVITY'] = 'register';
+                $log->save($data_log);
+
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your account has been created. Please wait until your account is activated to create your program(s). </div>');
                 redirect('welcome');
             }

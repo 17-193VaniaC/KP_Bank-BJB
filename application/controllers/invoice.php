@@ -23,53 +23,57 @@ class Invoice extends CI_Controller
 
     public function add()
     {
-        $post = $this->input->post();
-        $invoice = $this->Invoice_model;
-        $termin = $this->Termin_model;
-        $pks = $this->Pks_model;
-        $validation = $this->form_validation;
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        $validation->set_rules($invoice->rules());
-        if ($validation->run()) {
-            $invoice->save();
+        if ($data['user']['ROLE'] == 'IT FINANCE') {
+            $post = $this->input->post();
+            $invoice = $this->Invoice_model;
+            $termin = $this->Termin_model;
+            $pks = $this->Pks_model;
+            $validation = $this->form_validation;
+            $validation->set_rules($invoice->rules());
+            if ($validation->run()) {
+                $invoice->save();
 
-            // $termin->hupla();
-            $termin->paid($post["KODE_TERMIN"]);
-            $no_pks = $termin->sisaAnggaran($post['KODE_TERMIN']);
+                // $termin->hupla();
+                $termin->paid($post["KODE_TERMIN"]);
+                $no_pks = $termin->sisaAnggaran($post['KODE_TERMIN']);
 
 
-            $data_pks = $pks->getById($no_pks['NO_PKS']);
+                $data_pks = $pks->getById($no_pks['NO_PKS']);
 
-            $sisa = $data_pks['SISA_ANGGARAN'] - $post['NOMINAL'];
+                $sisa = $data_pks['SISA_ANGGARAN'] - $post['NOMINAL'];
 
-            $this->db->set('sisa_anggaran', $sisa);
-            $this->db->where('no_pks', $no_pks['NO_PKS']);
-            $this->db->update('pks');
+                $this->db->set('sisa_anggaran', $sisa);
+                $this->db->where('no_pks', $no_pks['NO_PKS']);
+                $this->db->update('pks');
 
-            $data_termin = $termin->getById($post["KODE_TERMIN"]);
+                $data_termin = $termin->getById($post["KODE_TERMIN"]);
 
-            $mutasi_pks = $this->MutasiPKS_model;
-            $mutasi_pks->save($data_termin);
+                $mutasi_pks = $this->MutasiPKS_model;
+                $mutasi_pks->save($data_termin);
 
-            // ADD LOG
-            $log = $this->Log_model;
-            $data_log['USER'] = $data['user']['NAMA'];
-            $data_log['TABLE_NAME'] = 'invoice';
-            $data_log['KODE_DATA'] = $this->input->post('INVOICE');
-            $data_log['ACTIVITY'] = 'add';
-            $log->save($data_log);
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'invoice';
+                $data_log['KODE_DATA'] = $this->input->post('INVOICE');
+                $data_log['ACTIVITY'] = 'add';
+                $log->save($data_log);
 
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
-        } else if (!empty($post["nopks"])) {
-            if (count($termin->hasBeenPaid($post["nopks"])) > 0) { //kalau ada data di pks=udah lunas
-                $this->session->set_flashdata('failed', "Invoice PKS sudah lunas");
-            } else { //kalau gak ketemu salah input berarti
-                $this->session->set_flashdata('not_found', "PKS tidak ditemukan");
+                $this->session->set_flashdata('success', 'Berhasil disimpan');
+            } else if (!empty($post["nopks"])) {
+                if (count($termin->hasBeenPaid($post["nopks"])) > 0) { //kalau ada data di pks=udah lunas
+                    $this->session->set_flashdata('failed', "Invoice PKS sudah lunas");
+                } else { //kalau gak ketemu salah input berarti
+                    $this->session->set_flashdata('not_found', "PKS tidak ditemukan");
+                }
+            } else {
+                $this->session->set_flashdata('empty', "Harap masukan Kode ");
             }
+            $this->load->view("Invoice/create_invoice");
         } else {
-            $this->session->set_flashdata('empty', "Harap masukan Kode ");
+            redirect('Invoice');
         }
-        $this->load->view("Invoice/create_invoice");
     }
 
 
