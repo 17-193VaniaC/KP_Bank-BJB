@@ -10,7 +10,7 @@ class Pks_model extends CI_Model
             $this->db->select('*');
             $this->db->join('vendor', 'vendor.KODE_VENDOR = pks.nama_vendor');
             $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
-            $this->db->where("KODE_PKS", $that);
+            $this->db->where("NO_PKS", $that);
             return $this->db->get('pks')->result();
         }
         // Select record

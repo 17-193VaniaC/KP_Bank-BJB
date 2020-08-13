@@ -33,16 +33,16 @@
                         <th>Tahap</th>
                         <th>Nominal bayar</th>
                     </thead>
-                    <?php foreach ($res as $a):?>
+                    <?php foreach ($table as $a):?>
                         <tr>
-                        <td><?php echo $a->KODE_RBB?></td>
-                        <td><?php echo $a->PROGRAN_KERJA?></td>
-                        <td><?php echo $a->ANGGARAB?></td>
-                        <td><?php echo $a->GL?></td>
-                        <td><?php echo $a->NAMA_REK?></td>
-                        <td><?php echo $a->SISA_ANGGARAN?></td>
-                        <?php if( isset($a[0])){
-                          foreach ($a->PKS as $b):
+                        <td><?php echo $a["KODE_RBB"]?></td>
+                        <td><?php echo $a["PROGRAM_KERJA"]?></td>
+                        <td><?php echo $a["ANGGARAN"]?></td>
+                        <td><?php echo $a["GL"]?></td>
+                        <td><?php echo $a["NAMA_REK"]?></td>
+                        <td><?php echo $a["SISA_ANGGARAN"]?></td>
+                        <?php if(isset($a['pks'])){
+                          foreach ($a['pks'] as $b):
                             echo "<td>";
                             echo $b->KODE_PKS;
                             echo "</td><td>";

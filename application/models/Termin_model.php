@@ -120,12 +120,6 @@ class Termin_model extends CI_Model
     {
         $this->db->where('KODE_TERMIN', $kodetermin);
         $this->db->update('termin_pks', array('STATUS' => "PAID"));
-
-        // $this->db->select('NO_PKS');
-        // $this->db->from('termin_pks');
-        // $this->db->where('KODE_TERMIN', $kodetermin);
-
-        // return $this->db->get()->result();
     }
 
 
@@ -140,9 +134,16 @@ class Termin_model extends CI_Model
     }
 
     public function hasBeenPaid($nopks)
-    {
+    {   
         $this->db->where('NO_PKS', $nopks);
+        $this->db->where('STATUS', 'UNPAID');
         return $this->db->get('termin_pks')->result();
+    }
+
+    public function countTermin($nopks)
+    {   
+        $this->db->where('NO_PKS', $nopks);
+        return count($this->db->get('termin_pks')->result());
     }
 
     public function seeThisTermin2($nopks)
