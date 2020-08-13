@@ -1,7 +1,15 @@
 <form class="user" method="post" action="">
     <div class="form-group">
         <label for="tgl_pks">Jenis Project</label>
-        <input type="text" class="form-control form-control-user" id="jenis" name="jenis" value="<?= $pks['JENIS'] ?>">
+        <select class="form-control form-control-user" id="jenis" name="jenis" value="<?= $pks['JENIS'] ?>">
+            <?php foreach ($jenis as $row) : ?>
+                <?php if ($row->KODE_JENISPROJECT == $pks['JENIS']) : ?>
+                    <option value="<?= $row->KODE_JENISPROJECT ?>" selected="selected"><?= $row->jenis ?></option>
+                <?php else : ?>
+                    <option value="<?= $row->KODE_JENISPROJECT ?>"><?= $row->jenis ?></option>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </select>
         <?= form_error('jenis', '<small class="text-danger pl-3">', '</small>'); ?>
     </div>
     <div class="form-group">
@@ -23,10 +31,10 @@
         <label for="tgl_pks">Vendor</label>
         <select class="form-control form-control-user" id="nama_vendor" name="nama_vendor" value="<?= $pks['NAMA_VENDOR'] ?>">
             <?php foreach ($vendor as $row) : ?>
-                <?php if ($row->nama_vendor == $pks['NAMA_VENDOR']) : ?>
-                    <option value="<?= $row->nama_vendor ?>" selected="selected"><?= $row->nama_vendor ?></option>
+                <?php if ($row->KODE_VENDOR == $pks['NAMA_VENDOR']) : ?>
+                    <option value="<?= $row->KODE_VENDOR ?>" selected="selected"><?= $row->nama_vendor ?></option>
                 <?php else : ?>
-                    <option value="<?= $row->nama_vendor ?>"><?= $row->nama_vendor ?></option>
+                    <option value="<?= $row->KODE_VENDOR ?>"><?= $row->nama_vendor ?></option>
                 <?php endif; ?>
             <?php endforeach; ?>
         </select>

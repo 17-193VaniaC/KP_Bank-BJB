@@ -30,7 +30,8 @@ class JProject_model extends CI_Model
         $this->KODE_JENISPROJECT = uniqid();
         $this->jenis = $post["jenis"];
         $this->STATUS = 0;
-        return $this->db->insert($this->_table, $this);
+        $this->db->insert($this->_table, $this);
+        return $this->KODE_JENISPROJECT;
     }
 
     public function getById($jenis_project)
@@ -43,24 +44,25 @@ class JProject_model extends CI_Model
         return $this->db->delete($this->_table, array("KODE_JENISPROJECT" => $jenis_project));
     }
 
-    public function updateStatusDel(){
+    public function updateStatusDel()
+    {
         $post = $this->input->post();
         $this->db->select('STATUS');
         $r = $this->db->get_where('j_project', ['KODE_JENISPROJECT' => $post["jenis"]])->result();
         $RN = $r[0]->STATUS;
-        $RN = $RN-1;
+        $RN = $RN - 1;
         $this->db->set('STATUS', $RN);
         $this->db->where("KODE_JENISPROJECT", $post["jenis"]);
         return $this->db->update('j_project');
-
     }
 
-        public function updateStatusAdd(){
+    public function updateStatusAdd()
+    {
         $post = $this->input->post();
         $this->db->select('STATUS');
         $r = $this->db->get_where('j_project', ['KODE_JENISPROJECT' => $post["jenis"]])->result();
         $RN = $r[0]->STATUS;
-        $RN = $RN+1;
+        $RN = $RN + 1;
         $this->db->set('STATUS', $RN);;
         $this->db->where("KODE_JENISPROJECT", $post["jenis"]);
         return $this->db->update('j_project');

@@ -10,7 +10,7 @@ class Vendor_model extends CI_Model
     public function rules()
     {
         return [
-            [           
+            [
                 'field' => 'nama_vendor',
                 'label' => 'Nama Vendor',
                 'rules' => 'trim|required|is_unique[vendor.nama_vendor]'
@@ -29,7 +29,8 @@ class Vendor_model extends CI_Model
         $this->nama_vendor = $post["nama_vendor"];
         $this->db->set("nama_vendor", $post["nama_vendor"]);
         $this->db->where("KODE_VENDOR", $post["KODE_VENDOR"]);
-        return $this->db->update('vendor');
+        $this->db->update('vendor');
+        return $this->KODE_VENDOR;
     }
 
 
@@ -38,7 +39,8 @@ class Vendor_model extends CI_Model
         $post = $this->input->post();
         $this->KODE_VENDOR = uniqid();
         $this->nama_vendor = $post["nama_vendor"];
-        return $this->db->insert($this->_table, $this);
+        $this->db->insert($this->_table, $this);
+        return $this->KODE_VENDOR;
     }
 
     public function getById($kodev)
@@ -47,32 +49,31 @@ class Vendor_model extends CI_Model
     }
 
     public function delete($kodev)
-    {   
+    {
         return $this->db->delete($this->_table, array("KODE_VENDOR" => $kodev));
     }
 
-    public function updateStatusDel(){
-         $post = $this->input->post();
+    public function updateStatusDel()
+    {
+        $post = $this->input->post();
         $this->db->select('STATUS');
         $r = $this->db->get_where('vendor', ['KODE_VENDOR' => $post["nama_vendor"]])->result();
         $RN = $r[0]->STATUS;
-        $RN = $RN-1;
+        $RN = $RN - 1;
         $this->db->set('STATUS', $RN);
         $this->db->where("KODE_VENDOR",  $post["nama_vendor"]);
         return $this->db->update('vendor');
     }
 
-    public function updateStatusAdd(){
+    public function updateStatusAdd()
+    {
         $post = $this->input->post();
         $this->db->select('STATUS');
         $r = $this->db->get_where('vendor', ['KODE_VENDOR' => $post["nama_vendor"]])->result();
         $RN = $r[0]->STATUS;
-        $RN = $RN+1;
+        $RN = $RN + 1;
         $this->db->set('STATUS', $RN);
         $this->db->where("KODE_VENDOR",  $post["nama_vendor"]);
         return $this->db->update('vendor');
     }
 }
-
-
-

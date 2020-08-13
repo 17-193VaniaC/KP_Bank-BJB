@@ -11,6 +11,7 @@ class JProject extends CI_Controller
             redirect('login');
         }
         $this->load->model("JProject_model");
+        $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
 
@@ -37,7 +38,16 @@ class JProject extends CI_Controller
             $validation->set_rules($jenis->rules());
 
             if ($validation->run() == TRUE) {
-                $jenis->save();
+                $kode_jenis = $jenis->save();
+
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'jenis project';
+                $data_log['KODE_DATA'] = $kode_jenis;
+                $data_log['ACTIVITY'] = 'add';
+                $log->save($data_log);
+
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
             }
             redirect('jenis_project');
@@ -48,18 +58,25 @@ class JProject extends CI_Controller
 
     public function delete($jenis = null)
     {
-        // $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         // if ($data['user']['ROLE'] == 'IT FINANCE') {
-        if(empty("jenis")) redirect('jproject');
+        if (empty("jenis")) redirect('jproject');
         $thisdata = $this->JProject_model->getById($jenis);
-        if($thisdata->STATUS <1){
+        if ($thisdata->STATUS < 1) {
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'jenis project';
+            $data_log['KODE_DATA'] = $jenis;
+            $data_log['ACTIVITY'] = 'delete';
+            $log->save($data_log);
+
             $this->JProject_model->delete($jenis);
             $this->session->set_flashdata('success', 'Your data has been deleted');
-        }
-        else{
+        } else {
             $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
         }
-            redirect('jproject');
+        redirect('jproject');
         // }
     }
 }

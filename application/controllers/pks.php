@@ -136,53 +136,55 @@ class pks extends CI_Controller
         $termin = $this->Termin_model;
         $data_termin = $termin->getRow($no_pks);
         if ($data_termin) {
-            if ($data_termin['STATUS'] == 'UNPAID') {
-                $data['pks'] = $this->Pks_model->getById($no_pks);
-                // $data['no_rbb'] = $this->RBB_model->getKode();
-                $data['vendor'] = $this->Vendor_model->getAll();
+            if ($data_termin['STATUS'] == 'PAID') {
 
-                $this->form_validation->set_rules('jenis', 'Jenis', 'required|trim');
-                $this->form_validation->set_rules('kode_project', 'Kode_project', 'required|trim');
-                $this->form_validation->set_rules('nama_project', 'Nama_project', 'required|trim');
-                $this->form_validation->set_rules('tgl_pks', 'Tgl_pks', 'required|trim');
-                $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
-
-                if ($this->form_validation->run() == false) {
-                    $this->load->view('templates/header.php', $title);
-                    $this->load->view('templates/navbar.php', $data);
-                    $this->load->view('pks/edit', $data);
-                    $this->load->view('templates/footer.php');
-                } else {
-
-                    $jenis = $this->input->post('jenis');
-                    $kode_project = $this->input->post('kode_project');
-                    $nama_project = $this->input->post('nama_project');
-                    $tgl_pks = $this->input->post('tgl_pks');
-                    $nama_vendor = $this->input->post('nama_vendor');
-
-                    $this->db->set('jenis', $jenis);
-                    $this->db->set('kode_project', $kode_project);
-                    $this->db->set('nama_project', $nama_project);
-                    $this->db->set('tgl_pks', $tgl_pks);
-                    $this->db->set('nama_vendor', $nama_vendor);
-                    $this->db->where('no_pks', $no_pks);
-                    $this->db->update('pks');
-
-                    // ADD LOG
-                    $log = $this->Log_model;
-                    $data_log['USER'] = $data['user']['NAMA'];
-                    $data_log['TABLE_NAME'] = 'pks';
-                    $data_log['KODE_DATA'] = $no_pks;
-                    $data_log['ACTIVITY'] = 'edit';
-                    $log->save($data_log);
-
-                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been edited.</div>');
-                    redirect('pks/index');
-                }
-            } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> PKS tidak dapat diedit karena terdapat invoice yang telah dibayar.</div>');
                 redirect('pks');
             }
+        }
+
+        $data['pks'] = $this->Pks_model->getById($no_pks);
+        // $data['no_rbb'] = $this->RBB_model->getKode();
+        $data['vendor'] = $this->Vendor_model->getAll();
+        $data['jenis'] = $this->JProject_model->getAll();
+
+        $this->form_validation->set_rules('jenis', 'Jenis', 'required|trim');
+        $this->form_validation->set_rules('kode_project', 'Kode_project', 'required|trim');
+        $this->form_validation->set_rules('nama_project', 'Nama_project', 'required|trim');
+        $this->form_validation->set_rules('tgl_pks', 'Tgl_pks', 'required|trim');
+        $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header.php', $title);
+            $this->load->view('templates/navbar.php', $data);
+            $this->load->view('pks/edit', $data);
+            $this->load->view('templates/footer.php');
+        } else {
+
+            $jenis = $this->input->post('jenis');
+            $kode_project = $this->input->post('kode_project');
+            $nama_project = $this->input->post('nama_project');
+            $tgl_pks = $this->input->post('tgl_pks');
+            $nama_vendor = $this->input->post('nama_vendor');
+
+            $this->db->set('jenis', $jenis);
+            $this->db->set('kode_project', $kode_project);
+            $this->db->set('nama_project', $nama_project);
+            $this->db->set('tgl_pks', $tgl_pks);
+            $this->db->set('nama_vendor', $nama_vendor);
+            $this->db->where('no_pks', $no_pks);
+            $this->db->update('pks');
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'pks';
+            $data_log['KODE_DATA'] = $no_pks;
+            $data_log['ACTIVITY'] = 'edit';
+            $log->save($data_log);
+
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been edited.</div>');
+            redirect('pks/index');
         }
     }
 
