@@ -15,7 +15,7 @@
 				<?php echo form_error('NOMINAL') ?>
 		</td>
 		<td>
-			<input type="month" name="TGL_TERMIN" placeholder="Tanggal Termin" value="<?= $termin->TGL_TERMIN ?>" />
+			<input type="date" name="TGL_TERMIN" placeholder="Tanggal Termin" value="<?= $termin->TGL_TERMIN ?>" />
 			<?php echo form_error('TGL_TERMIN') ?></td>>
 		<td>
 			<button value="save" type="submit">

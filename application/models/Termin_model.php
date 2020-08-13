@@ -70,7 +70,8 @@ class Termin_model extends CI_Model
         $this->TERMIN = $post["TERMIN"];
         $this->TGL_TERMIN = $post["TGL_TERMIN"];
         $this->STATUS = "UNPAID";
-        return $this->db->insert($this->_table, $this);
+        $this->db->insert($this->_table, $this);
+        return $this->KODE_TERMIN;
     }
 
     public function getById($KODETERMIN)

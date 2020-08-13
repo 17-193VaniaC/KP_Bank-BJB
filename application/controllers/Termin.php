@@ -14,6 +14,7 @@ class Termin extends CI_Controller
 
         $this->load->model("Termin_model");
         $this->load->model("Pks_model");
+        $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
 
@@ -50,7 +51,16 @@ class Termin extends CI_Controller
             $this->load->view("Termin/add_termin_pks", $data);
             $this->load->view('templates/footer.php');
         } else {
-            $data['termin']->save($no_pks);
+            $kode_termin = $data['termin']->save($no_pks);
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'termin_pks';
+            $data_log['KODE_DATA'] = $kode_termin;
+            $data_log['ACTIVITY'] = 'add';
+            $log->save($data_log);
+
             redirect('Termin/Termin_pks/' . $no_pks);
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         }
@@ -58,6 +68,7 @@ class Termin extends CI_Controller
 
     public function add($NOPKS = NULL, $NTERMIN = NULL, $NPAYMENT = NULL)
     {
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if (empty($NOPKS) | empty($NTERMIN) | empty($NPAYMENT)) {
             redirect(site_url('termin/add'));
         }
@@ -66,7 +77,16 @@ class Termin extends CI_Controller
         $validation->set_rules($data['termin']->rules());
 
         if ($validation->run() == TRUE) {
-            $data['termin']->save($NOPKS);
+            $kode_termin = $data['termin']->save($NOPKS);
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'termin_pks';
+            $data_log['KODE_DATA'] = $kode_termin;
+            $data_log['ACTIVITY'] = 'add';
+            $log->save($data_log);
+
             $this->session->set_flashdata('success', 'Berhasil disimpan');
             $NPAYMENT = $NPAYMENT + 1;
         }
@@ -76,7 +96,7 @@ class Termin extends CI_Controller
         $data['nopks'] = $NOPKS;
         $data['ntermin'] = $NTERMIN;;
         $data['npayment'] = $NPAYMENT;
-        echo $NPAYMENT;
+        // echo $NPAYMENT;
         $this->load->view("Termin/add_termin", $data);
     }
 
@@ -101,6 +121,15 @@ class Termin extends CI_Controller
             $this->load->view('templates/footer.php');
         } else {
             $termin->update($KODETERMIN);
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'termin_pks';
+            $data_log['KODE_DATA'] = $KODETERMIN;
+            $data_log['ACTIVITY'] = 'edit';
+            $log->save($data_log);
+
             $this->session->set_flashdata('success', 'Berhasil disimpan');
             redirect('Termin/termin_pks/' . $NO_PKS);
         }
@@ -123,6 +152,7 @@ class Termin extends CI_Controller
 
     public function delete($KODETERMIN, $NO_PKS)
     {
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($KODETERMIN == 0) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Termin yang telah dibayar tidak bisa dihapus! .</div>');
             redirect('Termin/termin_pks/' . $NO_PKS);
@@ -131,6 +161,14 @@ class Termin extends CI_Controller
         if (!isset($KODETERMIN)) show_404();
 
         if ($this->Termin_model->delete($KODETERMIN)) {
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'termin_pks';
+            $data_log['KODE_DATA'] = $KODETERMIN;
+            $data_log['ACTIVITY'] = 'delete';
+            $log->save($data_log);
+
             redirect(site_url('Termin/termin_pks/' . $NO_PKS));
         }
     }

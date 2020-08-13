@@ -11,6 +11,7 @@ class Invoice extends CI_Controller
         $this->load->model("Termin_model");
         $this->load->model("Pks_model");
         $this->load->model("MutasiPKS_model");
+        $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
 
@@ -27,6 +28,7 @@ class Invoice extends CI_Controller
         $termin = $this->Termin_model;
         $pks = $this->Pks_model;
         $validation = $this->form_validation;
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $validation->set_rules($invoice->rules());
         if ($validation->run()) {
             $invoice->save();
@@ -48,6 +50,14 @@ class Invoice extends CI_Controller
 
             $mutasi_pks = $this->MutasiPKS_model;
             $mutasi_pks->save($data_termin);
+
+            // ADD LOG
+            $log = $this->Log_model;
+            $data_log['USER'] = $data['user']['NAMA'];
+            $data_log['TABLE_NAME'] = 'invoice';
+            $data_log['KODE_DATA'] = $this->input->post('INVOICE');
+            $data_log['ACTIVITY'] = 'add';
+            $log->save($data_log);
 
             $this->session->set_flashdata('success', 'Berhasil disimpan');
         } else if (!empty($post["nopks"])) {
