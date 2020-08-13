@@ -10,7 +10,7 @@
                     <th colspan="5">PEMBAYARAN</th>
                 </thead>
                 <thead>
-                        <th >Kode RBB</th>
+                        <th>Kode RBB</th>
                         <th>Program Kerja</th>
                         <th>Anggaran</th>
                         <th>GL</th>
@@ -33,39 +33,29 @@
                         <th>Tahap</th>
                         <th>Nominal bayar</th>
                     </thead>
-                <tbody>
-            <?php foreach ($RBB as $a) : ?>
-                   <tr>
+                    <?php foreach ($res as $a):?>
+                        <tr>
+                        <td><?php echo $a->KODE_RBB?></td>
+                        <td><?php echo $a->PROGRAN_KERJA?></td>
+                        <td><?php echo $a->ANGGARAB?></td>
+                        <td><?php echo $a->GL?></td>
+                        <td><?php echo $a->NAMA_REK?></td>
+                        <td><?php echo $a->SISA_ANGGARAN?></td>
+                        <?php if( isset($a[0])){
+                          foreach ($a->PKS as $b):
+                            echo "<td>";
+                            echo $b->KODE_PKS;
+                            echo "</td><td>";
+                            echo $b->JENIS;
+                            echo "</td>";
+                          endforeach;
+                          }?>
+                      <?php endforeach; ?>
 
-                       <td><?php echo $a->KODE_RBB?></td>
-                       <td>2</td>
-                       <td>3</td>
-                       <td>4</td>
-                       <td>5</td>
-                       <td>6</td>
-            <?php foreach ($PKS as $b) : ?>
-                       <td><?php $b->NO_PKS?></td>
-                       <td>8</td>
-                       <td>9</td>
-                       <td>0</td>
-                       <td>1</td>
-                       <td>2</td>
-                       <td>3</td>
-                       <td>4</td>
-                       <td>5</td>
-                    <!-- <tr> -->
-                <?PHP endforeach; ?>
-                        <TR>
-                       <td>6</td>
-                       <td>7</td>
-                       <td>8</td>
-                       <td>9</td>
-                       <td>0</td>
-                        </TR>
-                   </tr>
-                </tr>
-                <?PHP endforeach; ?>
 
-                </tbody>
-            </table>
-</div>    
+
+
+                        </tr>
+                      </table>
+                    </table>
+                </div></div>

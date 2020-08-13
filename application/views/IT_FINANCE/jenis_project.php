@@ -100,6 +100,7 @@
 						Jenis Project
 						</td>
 						<td style="margin-left: 3px; width: 30%; padding:10px;">
+							
 						<input type="hidden" name="KODE_JENISPROJECT" id="KODE_JENISPROJECT" class="form-control"/>
 						<input type="text" name="jenis" id="jenis" class="form-control" />
 						</td>

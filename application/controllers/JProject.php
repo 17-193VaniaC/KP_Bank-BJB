@@ -22,7 +22,17 @@ class JProject extends CI_Controller
 
         $data['counter'] = 1;
         $data["jenis"] = $this->JProject_model->getAll();
-
+        $jenis = $this->JProject_model;
+        $validation = $this->form_validation;
+        $validation->set_rules($jenis->rules());
+        
+        $var=0;
+        if ($validation->run() == TRUE) {
+            $var = 1;
+            $jenis->update();
+            $this->session->set_flashdata('success', 'Data berhasil diubah');
+            $data["jenis"] = $this->JProject_model->getAll();
+        } 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view("IT_FINANCE/jenis_project", $data);
