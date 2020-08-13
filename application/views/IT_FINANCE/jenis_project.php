@@ -19,7 +19,7 @@
 		
 	
 	<div class="container-half">
-		<h3>Daftar Vendor</h3>
+		<h3>Daftar Jenis Project</h3>
 	</div>
 	<div class="container-half right">
 			<form action="<?php echo site_url('JProject/add') ?>" method="post" class="form-inline justify-content-center">
@@ -39,7 +39,7 @@
 			<thead class="">
 				<tr class="text-center">
 					<th>No</th>
-					<th>Nama Vendor</th>
+					<th>Jenis Project</th>
 					<th>Jumlah penggunaan</th>
 
 					<?php if ($user['ROLE'] == 'IT FINANCE') : ?>

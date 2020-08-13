@@ -63,7 +63,7 @@ input[type=number] {
 						<td style="margin-left: 3px; width: 30%; padding:10px;">
 						 <select class="form-control form-control-user" name="GL">
                         <?php foreach ($gl as $row) : ?>
-                            <option value="<?= $row->KODE_GL ?>"><?= $row->KODE_GL ?></option>
+                            <option value="<?= $row->KODE_GL ?>"><?= $row->KODE_GL ?> | <?PHP echo $row->KATEGORI?> | <?PHP echo $row->NAMA_GL?></option>
                         <?php endforeach; ?>
                     </select>
 									<?php echo form_error('GL', '<small class="text-danger pl-3">', '</small>'); ?>
