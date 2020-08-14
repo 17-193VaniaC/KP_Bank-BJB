@@ -41,9 +41,9 @@
                               $n_colspan = count($bb['invs']) + $n_colspan;
                         }
                   endforeach;
-                  // if($n_colspan == 0){
-                  // 	$n_colspan= 1;
-                  // }
+                        if($n_colspan==0){
+                              $n_colspan = count($a['pks']);
+                        }
             ?>
                   <tr>
                   <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
@@ -65,17 +65,16 @@
 			                        if(!empty($a['pks'])){
 			                              $x=1;
 			                              foreach ($a['pks'] as $b):
-			                                $n_data = count($b);
-			                        if(!empty($b['invs'])){
-			                              $n_colspan = count($b["invs"]);
+			                                 $n_data = count($b);
+                                                   $n_colspan=0;
+			                              if(!empty($b['invs'])){
+  	         		                              $n_colspan = count($b["invs"]);
+      			                        }
 
-			                        }
 			                        
-			                        if($x!=1 & $x<$n_data){
-			                              echo "</tr><tr>";
-			                        }
-			                        // else if($x!=1){
-			                        //       echo "</tr>";}
+			                              if($x!=1 & $x<$n_data){
+      			                              echo "</tr><tr>";
+      			                        }
 			                        ?>
 			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
 			                        else{echo $n_colspan+1;}?>"><?php echo $b["NO_PKS"]?> <?php echo $n_colspan?></td>
@@ -98,7 +97,7 @@
 			                        <?PHP $x=$x+1;?>
 			<!-- ++++++++++++++++++++++++++++++ PEMBAYARAN +++++++++++++++++++++++++++++++= -->
 							                        <?php 
-							                        if(isset($b['invs'])){
+							                        if(!empty($b['invs'])){
 							                              $y=1;
 							                              foreach ($b['invs'] as $c):
 							                                    if($y!=1){
