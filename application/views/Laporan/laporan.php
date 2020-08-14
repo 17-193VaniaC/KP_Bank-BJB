@@ -49,7 +49,7 @@
                   <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
                   else{echo $n_colspan+1;}?>"><?php echo $a["KODE_RBB"]?></td>
                   <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
-                  else{echo $n_colspan+1;}?>"><?php echo $a["PROGRAM_KERJA"]?><?php echo $n_colspan;?></td>
+                  else{echo $n_colspan+1;}?>"><?php echo $a["PROGRAM_KERJA"]?></td>
                   <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
                   else{echo $n_colspan+1;}?>"><?php echo $a["ANGGARAN"]?></td>
                   <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}

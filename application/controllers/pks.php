@@ -120,7 +120,8 @@ class pks extends CI_Controller
                     if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
                         redirect('pks/index');
                     } else {
-                        redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1");
+                        $data['nopks'] = str_replace('/', '_', $data['no_pks']);
+                        redirect('Termin/add/' . $data['nopks'] . "/" . $n_termin . "/1");
                     }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal PKS melebihi sisa anggaran RBB (' . $total . ')</div>');
@@ -147,7 +148,7 @@ class pks extends CI_Controller
                     redirect('pks');
                 }
             }
-
+            $no_pks =str_replace('_', '/', $no_pks);
             $data['pks'] = $this->Pks_model->getById($no_pks);
             // $data['no_rbb'] = $this->RBB_model->getKode();
             $data['vendor'] = $this->Vendor_model->getAll();
@@ -203,6 +204,7 @@ class pks extends CI_Controller
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             $termin = $this->Termin_model;
             $data_termin = $termin->getRow($no_pks);
+            $no_pks = str_replace('_', '/', $no_pks);
 
 
             if ($data_termin) {

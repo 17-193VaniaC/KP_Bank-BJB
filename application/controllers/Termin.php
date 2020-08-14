@@ -32,7 +32,8 @@ class Termin extends CI_Controller
 
     // untuk menambah termin dari halaman termin
     public function addMore($no_pks, $termin)
-    {
+    {   
+        $no_pks = str_replace('_', '/', $no_pks);
         $title['title'] = 'Create Termin';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
@@ -45,7 +46,6 @@ class Termin extends CI_Controller
 
 
             if ($validation->run() == FALSE) {
-
                 $this->load->view('templates/header.php', $title);
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view("Termin/add_termin_pks", $data);
@@ -60,20 +60,22 @@ class Termin extends CI_Controller
                 $data_log['KODE_DATA'] = $kode_termin;
                 $data_log['ACTIVITY'] = 'add';
                 $log->save($data_log);
-
+                $no_pks = str_replace('/', '_', $no_pks);
                 redirect('Termin/Termin_pks/' . $no_pks);
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
             }
         } else {
+            $no_pks = str_replace('/', '_', $no_pks);
             redirect('Termin/Termin_pks/' . $no_pks);
         }
     }
 
-    public function add($NOPKS = NULL, $NTERMIN = NULL, $NPAYMENT = NULL)
-    {
+    public function add($NOPKS = NULL, $NPAYMENT = NULL)
+    {   
+        $NOPKS = str_replace('_', '/', $NOPKS);
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
-            if (empty($NOPKS) | empty($NTERMIN) | empty($NPAYMENT)) {
+            if (empty($NOPKS) |  empty($NPAYMENT)) {
                 redirect(site_url('termin/add'));
             }
             $data['termin'] = $this->Termin_model;
@@ -111,7 +113,7 @@ class Termin extends CI_Controller
     {
         $title['title'] = 'Edit Termin';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-
+        $NO_PKS = str_replace('_', '/', $NO_PKS);
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             if ($KODETERMIN == 0) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Termin yang telah dibayar tidak bisa diubah! .</div>');
@@ -138,7 +140,7 @@ class Termin extends CI_Controller
                 $data_log['KODE_DATA'] = $KODETERMIN;
                 $data_log['ACTIVITY'] = 'edit';
                 $log->save($data_log);
-
+                $NO_PKS = str_replace('/', '_', $NO_PKS);
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
                 redirect('Termin/termin_pks/' . $NO_PKS);
             }
@@ -191,7 +193,7 @@ class Termin extends CI_Controller
 
     // untuk menampilkan termin per pks
     public function Termin_pks($nopks)
-    {
+    {   $nopks = str_replace('_', '/', $nopks);
         $data["termin"] = $this->Termin_model->getAll($nopks);
         $data["pks"] = $this->Pks_model->getById($nopks);
         $title['title'] = 'Termin PKS NO. ' . $nopks;

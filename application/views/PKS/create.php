@@ -1,3 +1,4 @@
+<br><br>
 <div class="row">
     <div class="col-md text-center my-">
         <h2>Create PKS</h2>
@@ -5,7 +6,6 @@
 </div>
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="card">
             <form class="user" method="post" action="<?= base_url('pks/create') ?>">
                 <div class="form-group">
                     <label for="no_pks">Nomor PKS</label>
@@ -76,6 +76,5 @@
                     Create PKS
                 </button>
             </form>
-        </div>
     </div>
 </div>

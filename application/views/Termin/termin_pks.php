@@ -47,9 +47,12 @@
                                 <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                     <td>
                                         <div class="btn-group">
-                                            <?php if ($row->STATUS == 'UNPAID') : ?>
-                                                <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $row->NO_PKS) ?>"><button class="btn btn-success">Edit</button></a>
-                                                <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $row->NO_PKS) ?>"><button class="btn btn-danger">Delete</button></a>
+                                            <?php if ($row->STATUS == 'UNPAID') : 
+                                            $pks_ = str_replace('/', '_', $row->NO_PKS);
+                                            ?>
+
+                                                <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
+                                                <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-danger">Delete</button></a>
                                             <?php else : ?>
                                                 <a href="<?= site_url('Termin/edit/0/' . $row->NO_PKS) ?>"><button class="btn btn-success">Edit</button></a>
                                                 <a href="<?= site_url('Termin/delete/0/' . $row->NO_PKS) ?>"><button class="btn btn-danger">Delete</button></a>
@@ -77,7 +80,7 @@
             <hr>
 
             <!-- redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1"); -->
-            <a href="<?= base_url('Termin/addMore/' . $no_pks . '/' . $baris); ?>">Create</a>
+            <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">Create</a>
         <?php endif; ?>
         <p>Total Nominal Termin: <?= $total ?> dari <?= $pks['NOMINAL_PKS'] ?></p>
         <?php if ($total > $pks['NOMINAL_PKS']) : ?>
@@ -87,9 +90,13 @@
         <?php endif; ?>
     <?php else : ?>
         <h1>Termin Kosong</h1>
-        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : ?>
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : 
+                                            $pks_ = str_replace('/', '_', $row->NO_PKS);
+       
+        ?>
             <hr>
-            <a href="<?= base_url('Termin/addMore/' . $no_pks . '/' . $baris); ?>">Create</a>
+
+            <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">Create</a>
         <?php endif; ?>
     <?php endif; ?>
     <hr>

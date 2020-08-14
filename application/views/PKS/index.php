@@ -2,29 +2,21 @@
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-    <div class="table-responsive">
-        <div class="table-wrapper">
-            <div class="table-title">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <a href="<?= base_url('pks/'); ?>" style="text-decoration: none;"><h2>Daftar <b>PKS</b></h2></a>
-                    </div>
+                    <div class="container-half">
+                        <h1><a href="<?= base_url('pks/'); ?>" style="text-decoration: none;">Daftar <b>PKS</b></a></h1></a>
                         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                             <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">Tambah PKS</a>
                         <?php endif; ?>
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="search-box">
-                                <form method="get" class="form-inline">
-                                    <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" />
+                    </div>
+                    <div class="container-half right">
+                                <form method="get" class="form-inline" style="float: right;">
+                                    <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control"  />
                                     <input class="btn btn-primary" type="submit" name="search" value="Cari">
                                 </form>
-                            </div>
-                        </div>
                     </div>
-                </div>
-            </div>
 
+    <div class="table-responsive">
+        <div class="table-wrapper">
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr class="text-center">
@@ -45,8 +37,9 @@
                 <tbody>
                     <div id="result"></div>
                     <?php foreach ($pks as $row) : ?>
+                                        <?php $id = str_replace('/', '_', $row->NO_PKS);?>
                         <tr>
-                            <td><a href="<?php echo site_url('Termin/termin_pks/' . $row->NO_PKS); ?>"><?= $row->NO_PKS ?></a></td>
+                            <td><a href="<?php echo site_url('Termin/termin_pks/' . $id); ?>"><?= $row->NO_PKS ?></a></td>
                             <td><?= $row->KODE_RBB ?></td>
                             <td><?= $row->jenis ?></td>
                             <td><?= $row->KODE_PROJECT ?></td>
@@ -58,8 +51,8 @@
                             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="<?php echo site_url('pks/edit/' . $row->NO_PKS); ?>"><button class="btn btn-success">Edit</button></a>
-                                        <a href="<?php echo site_url('pks/delete/' . $row->NO_PKS); ?>"><button class="btn btn-danger">Delete</button></a>
+                                        <a href="<?php echo site_url('pks/edit/' . $id); ?>"><button class="btn btn-success">Edit</button></a>
+                                        <a href="<?php echo site_url('pks/delete/' . $id); ?>"><button class="btn btn-danger">Delete</button></a>
                                     </div>
                                 </td>
                             <?php endif; ?>
