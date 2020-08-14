@@ -134,14 +134,14 @@ class Termin_model extends CI_Model
     }
 
     public function hasBeenPaid($nopks)
-    {   
+    {
         $this->db->where('NO_PKS', $nopks);
         $this->db->where('STATUS', 'UNPAID');
         return $this->db->get('termin_pks')->result();
     }
 
     public function countTermin($nopks)
-    {   
+    {
         $this->db->where('NO_PKS', $nopks);
         return count($this->db->get('termin_pks')->result());
     }

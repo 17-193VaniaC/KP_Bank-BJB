@@ -65,7 +65,7 @@ class pks extends CI_Controller
 
                 $total = $data_rbb->SISA_ANGGARAN - $this->input->post('nominal_pks');
 
-                if ($total > 0) {
+                if ($total >= 0) {
                     $data = [
                         'no_pks' => $this->input->post('no_pks'),
                         'kode_rbb' => $this->input->post('kode_rbb'),
@@ -148,7 +148,7 @@ class pks extends CI_Controller
                     redirect('pks');
                 }
             }
-            $no_pks =str_replace('_', '/', $no_pks);
+            $no_pks = str_replace('_', '/', $no_pks);
             $data['pks'] = $this->Pks_model->getById($no_pks);
             // $data['no_rbb'] = $this->RBB_model->getKode();
             $data['vendor'] = $this->Vendor_model->getAll();

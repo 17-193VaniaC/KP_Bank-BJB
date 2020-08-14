@@ -32,7 +32,7 @@ class Termin extends CI_Controller
 
     // untuk menambah termin dari halaman termin
     public function addMore($no_pks, $termin)
-    {   
+    {
         $no_pks = str_replace('_', '/', $no_pks);
         $title['title'] = 'Create Termin';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -71,7 +71,7 @@ class Termin extends CI_Controller
     }
 
     public function add($NOPKS = NULL, $NPAYMENT = NULL)
-    {   
+    {
         $NOPKS = str_replace('_', '/', $NOPKS);
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
@@ -111,6 +111,7 @@ class Termin extends CI_Controller
 
     public function edit($KODETERMIN, $NO_PKS)
     {
+        $NO_PKS = str_replace('/', '_', $NO_PKS);
         $title['title'] = 'Edit Termin';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $NO_PKS = str_replace('_', '/', $NO_PKS);
@@ -193,7 +194,8 @@ class Termin extends CI_Controller
 
     // untuk menampilkan termin per pks
     public function Termin_pks($nopks)
-    {   $nopks = str_replace('_', '/', $nopks);
+    {
+        $nopks = str_replace('_', '/', $nopks);
         $data["termin"] = $this->Termin_model->getAll($nopks);
         $data["pks"] = $this->Pks_model->getById($nopks);
         $title['title'] = 'Termin PKS NO. ' . $nopks;

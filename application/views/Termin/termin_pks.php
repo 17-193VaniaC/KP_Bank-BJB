@@ -8,7 +8,8 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-8">
-                            <h2>Daftar <b>Termin PKS No. <?= $no_pks ?></b></h2>
+                            <?php $pks_ = str_replace('_', '/', $no_pks); ?>
+                            <h2>Daftar <b>Termin PKS No. <?= $pks_ ?></b></h2>
                         </div>
                         <!-- <div class="col-sm-4">
                         <div class="row">
@@ -47,8 +48,8 @@
                                 <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                     <td>
                                         <div class="btn-group">
-                                            <?php if ($row->STATUS == 'UNPAID') : 
-                                            $pks_ = str_replace('/', '_', $row->NO_PKS);
+                                            <?php if ($row->STATUS == 'UNPAID') :
+                                                $pks_ = str_replace('/', '_', $row->NO_PKS);
                                             ?>
 
                                                 <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
@@ -90,9 +91,9 @@
         <?php endif; ?>
     <?php else : ?>
         <h1>Termin Kosong</h1>
-        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : 
-                                            $pks_ = str_replace('/', '_', $row->NO_PKS);
-       
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) :
+            $pks_ = str_replace('/', '_', $no_pks);
+
         ?>
             <hr>
 
