@@ -56,7 +56,7 @@
     </tr>
     <tr>
         <td>    <?php $nopks_= str_replace('/', '_', $nopks)?>
-            <form action="<?php echo site_url("Termin/add/" . $nopks_ . "/" . $npayment) ?>" method="post">
+            <form action="<?php echo site_url('Termin/add/" . $nopks_ . "/" . $n_termin. "/" .$npayment.') ?>" method="post">
                 <input type="number" name="NOMINAL" placeholder="Nominal Termin" class="form-control" />
                 <?php echo form_error('NOMINAL') ?>
         </td>

@@ -32,7 +32,7 @@ class Termin extends CI_Controller
 
     // untuk menambah termin dari halaman termin
     public function addMore($no_pks, $termin)
-    {
+    {   
         $no_pks = str_replace('_', '/', $no_pks);
         $title['title'] = 'Create Termin';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -43,6 +43,8 @@ class Termin extends CI_Controller
 
             $data['no_pks'] = $no_pks;
             $data['termin_ke'] = $termin;
+            $data['gl'] = $this->db->get('gl')->result();
+
 
 
             if ($validation->run() == FALSE) {
@@ -64,20 +66,33 @@ class Termin extends CI_Controller
                 redirect('Termin/Termin_pks/' . $no_pks);
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
             }
-        } else {
+        } 
+        else {
             $no_pks = str_replace('/', '_', $no_pks);
             redirect('Termin/Termin_pks/' . $no_pks);
         }
     }
 
-    public function add($NOPKS = NULL, $NPAYMENT = NULL)
-    {
-        $NOPKS = str_replace('_', '/', $NOPKS);
+    public function getCategoryGL(){
+        $ketegori_ = $this->input->post('KATEGORI',TRUE);
+        // var_dump($kategori_);
+        if($kategori_= 'Maintenance' | $kategori_ = 'Pembayaran rutin bulanan'){
+            $k = "Operating Expense";
+            // echo "string";
+        }
+        else{
+            $k = "Capital Expense";
+        }
+        $data = $this->Termin_model->getGL($k);
+        echo json_encode($data);
+    }
+
+    public function add()
+    {   
+        $NOPKS = str_replace('_', '/', $_GET["NOPKS"]);
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
-            if (empty($NOPKS) |  empty($NPAYMENT)) {
-                redirect(site_url('termin/add'));
-            }
+
             $data['termin'] = $this->Termin_model;
             $validation = $this->form_validation;
             $validation->set_rules($data['termin']->rules());
@@ -94,16 +109,21 @@ class Termin extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
-                $NPAYMENT = $NPAYMENT + 1;
+                $NPAYMENT = $_GET['n'] + 1;
+                $NOPKS = str_replace('_', '/', $_GET["NOPKS"]);
+
+                redirect("Termin/add/" . $NOPKS . "/" . $NTERMIN . "/" .$NPAYMENT );
             }
             if ($NTERMIN < $NPAYMENT) {
+                // var_dump(expression)
                 redirect(site_url('termin'));
             }
-            $data['nopks'] = $NOPKS;
-            $data['ntermin'] = $NTERMIN;;
-            $data['npayment'] = $NPAYMENT;
+            // $data['nopks'] = $NOPKS;
+            // $data['ntermin'] = $NTERMIN;;
+            // $data['npayment'] = $NPAYMENT;
             // echo $NPAYMENT;
-            $this->load->view("Termin/add_termin", $data);
+  
+            $this->load->view("Termin/add_termin/", $data);
         } else {
             redirect('Termin');
         }
@@ -111,8 +131,8 @@ class Termin extends CI_Controller
 
     public function edit($KODETERMIN, $NO_PKS)
     {
-        $NO_PKS = str_replace('/', '_', $NO_PKS);
         $title['title'] = 'Edit Termin';
+
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $NO_PKS = str_replace('_', '/', $NO_PKS);
         if ($data['user']['ROLE'] == 'IT FINANCE') {
@@ -120,8 +140,9 @@ class Termin extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Termin yang telah dibayar tidak bisa diubah! .</div>');
                 redirect('Termin/termin_pks/' . $NO_PKS);
             }
-
             $termin = $this->Termin_model;
+            $KODETERMIN = str_replace('_', '/', $_GET["NOPKS"]);
+
             $data['termin'] = $this->Termin_model->getById($KODETERMIN);
             $validation = $this->form_validation;
             $validation->set_rules($termin->rules());
@@ -194,8 +215,7 @@ class Termin extends CI_Controller
 
     // untuk menampilkan termin per pks
     public function Termin_pks($nopks)
-    {
-        $nopks = str_replace('_', '/', $nopks);
+    {   $nopks = str_replace('_', '/', $nopks);
         $data["termin"] = $this->Termin_model->getAll($nopks);
         $data["pks"] = $this->Pks_model->getById($nopks);
         $title['title'] = 'Termin PKS NO. ' . $nopks;

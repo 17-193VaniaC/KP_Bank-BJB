@@ -8,8 +8,7 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-8">
-                            <?php $pks_ = str_replace('_', '/', $no_pks); ?>
-                            <h2>Daftar <b>Termin PKS No. <?= $pks_ ?></b></h2>
+                            <h2>Daftar <b>Termin PKS No. <?= $no_pks ?></b></h2>
                         </div>
                         <!-- <div class="col-sm-4">
                         <div class="row">
@@ -31,6 +30,8 @@
                             <th>Tanggal Termin</th>
                             <th>Nominal</th>
                             <th>Status</th>
+                            <th>Kategori</th>
+                            <th>GL</th>
                             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                 <th>Action</th>
                             <?php endif; ?>
@@ -38,18 +39,21 @@
                     </thead>
                     <tbody>
                         <div id="result"></div>
-                        <?php foreach ($termin as $row) : ?>
+                        <?php if (isset($termin)):
+                        foreach ($termin as $row) : ?>
                             <tr>
                                 <?php $baris++ ?>
                                 <td><?= $row->TERMIN ?></td>
                                 <td><?= $row->TGL_TERMIN ?></td>
                                 <td><?= $row->NOMINAL ?></td> <?php $total += $row->NOMINAL ?>
                                 <td><?= $row->STATUS ?></td>
+                                <td><?= $row->KATEGORI ?></td>
+                                <td><?= $row->GL ?></td>
                                 <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                     <td>
                                         <div class="btn-group">
-                                            <?php if ($row->STATUS == 'UNPAID') :
-                                                $pks_ = str_replace('/', '_', $row->NO_PKS);
+                                            <?php if ($row->STATUS == 'UNPAID') : 
+                                            $pks_ = str_replace('/', '_', $row->NO_PKS);
                                             ?>
 
                                                 <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
@@ -64,8 +68,10 @@
                                     </td>
                                 <?php endif; ?>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php endforeach; 
+                        endif;?>
                     </tbody>
+
                 </table>
 
                 <!-- <script type="text/javascript">
@@ -91,9 +97,9 @@
         <?php endif; ?>
     <?php else : ?>
         <h1>Termin Kosong</h1>
-        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) :
-            $pks_ = str_replace('/', '_', $no_pks);
-
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : 
+            $pks_ = str_replace('/', '_', $pks["NO_PKS"]);
+       
         ?>
             <hr>
 

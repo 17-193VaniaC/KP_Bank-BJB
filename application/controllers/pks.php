@@ -52,7 +52,6 @@ class pks extends CI_Controller
             $this->form_validation->set_rules('tgl_pks', 'Tgl_pks', 'required|trim');
             $this->form_validation->set_rules('nominal_pks', 'Nominal_pks', 'required|trim');
             $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
-            $this->form_validation->set_rules('termin', 'Termin', 'trim|less_than_equal_to[12]');
 
             if ($this->form_validation->run() == false) {
                 $this->load->view('templates/header.php', $title);
@@ -115,14 +114,14 @@ class pks extends CI_Controller
                     $mutasi->save_pks($data_mutasi);
                     // END
 
-                    $n_termin = $this->input->post('termin');
-                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been created.</div>');
-                    if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
-                        redirect('pks/index');
-                    } else {
-                        $data['nopks'] = str_replace('/', '_', $data['no_pks']);
-                        redirect('Termin/add/' . $data['nopks'] . "/" . $n_termin . "/1");
-                    }
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> PKS baru berhasil dibuat.</div>');
+                    // if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
+                    //     redirect('pks/index');
+                    // } else {
+                    //     $i=1;
+                    //     $a = str_replace('/', '_', $this->input->post('no_pks'));
+                    redirect('pks');
+                    // }
                 } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal PKS melebihi sisa anggaran RBB (' . $total . ')</div>');
                     redirect('pks');
@@ -148,7 +147,7 @@ class pks extends CI_Controller
                     redirect('pks');
                 }
             }
-            $no_pks = str_replace('_', '/', $no_pks);
+            $no_pks =str_replace('_', '/', $no_pks);
             $data['pks'] = $this->Pks_model->getById($no_pks);
             // $data['no_rbb'] = $this->RBB_model->getKode();
             $data['vendor'] = $this->Vendor_model->getAll();

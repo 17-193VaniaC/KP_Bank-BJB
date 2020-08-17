@@ -66,12 +66,12 @@
                     </select>
                     <?= form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="termin">Jumlah termin (optional)</label>
                     <input type="text" class="form-control form-control-user" id="termin" name="termin" placeholder="Kosongkan jika tanpa termin">
                     <?= form_error('termin', '<small class="text-danger pl-3">', '</small>'); ?>
                 </div>
-
+ -->
                 <button type="submit" class="btn btn-info btn-user btn-block">
                     Create PKS
                 </button>

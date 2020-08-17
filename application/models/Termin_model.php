@@ -70,6 +70,8 @@ class Termin_model extends CI_Model
         $this->TERMIN = $post["TERMIN"];
         $this->TGL_TERMIN = $post["TGL_TERMIN"];
         $this->STATUS = "UNPAID";
+        $this->KATEGORI = $post["KATEGORI"];
+        $this->GL = $post["GL"];
         $this->db->insert($this->_table, $this);
         return $this->KODE_TERMIN;
     }
@@ -134,14 +136,14 @@ class Termin_model extends CI_Model
     }
 
     public function hasBeenPaid($nopks)
-    {
+    {   
         $this->db->where('NO_PKS', $nopks);
         $this->db->where('STATUS', 'UNPAID');
         return $this->db->get('termin_pks')->result();
     }
 
     public function countTermin($nopks)
-    {
+    {   
         $this->db->where('NO_PKS', $nopks);
         return count($this->db->get('termin_pks')->result());
     }
@@ -161,5 +163,11 @@ class Termin_model extends CI_Model
         $this->db->order_by('NO_PKS');
         $this->db->limit(4);
         return $this->db->get()->result();
+    }
+    public function getGL($k){
+        $this->db->where('KELOMPOK', $k);
+        return $this->db->get('gl')->result();
+        // var_dump($this->db->get('gl')->result());
+        // die;
     }
 }
