@@ -7,6 +7,9 @@ class Invoice extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        if (!$this->session->userdata('username')) {
+            redirect('login');
+        }
         $this->load->model("Invoice_model");
         $this->load->model("Termin_model");
         $this->load->model("Pks_model");
@@ -17,13 +20,18 @@ class Invoice extends CI_Controller
 
     public function index()
     {
+        $title['title'] = 'Invoice';
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $data["invoice"] = $this->Invoice_model->getAll();
+        $this->load->view("templates/header", $title);
+        $this->load->view("templates/navbar", $data);
         $this->load->view("Invoice/invoice", $data);
+        $this->load->view("templates/footer");
     }
 
     public function add()
     {
-        $title['title'] = 'Invoice';
+        $title['title'] = 'Add Invoice';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             $post = $this->input->post();

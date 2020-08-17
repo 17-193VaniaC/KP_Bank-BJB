@@ -1,30 +1,81 @@
-<?php if ($this->session->flashdata('message')) { ?>
-    <?php echo $this->session->flashdata('message') ?>
-<?php } ?>
-<script src="<?php echo base_url().'assets/js/jquery-3.5.1.min.js'?>" type="text/javascript"></script>
-<script src="<?php echo base_url().'assets/js/jquery-ui.js'?>" type="text/javascript"></script>
-
-
-<div class="search-box">
-    <form method="get">
-            <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" />
-            <input type="text" name="invoice_termin" id="invoice_termin" />
-            <div class="result"></div>
-            <input type="submit" name="search">
+<div style="margin-top: 50px; padding: 25px;">
+    <?php if ($this->session->flashdata('message')) { ?>
+        <?php echo $this->session->flashdata('message') ?>
+    <?php } ?>
+    <div class="container-half">
+        <h1><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none;">Daftar <b>Invoice</b></a></h1></a>
+    </div>
+    <div class="container-half right">
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+            <a href="<?= base_url('Invoice/add'); ?>" class="btn btn-success">Tambah Invoice</a>
+        <?php endif; ?>
+    </div>
+    <!-- <div class="container-half right">
+        <form method="get" class="form-inline" style="float: right;">
+            <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" />
+            <input class="btn btn-primary" type="submit" name="search" value="Cari">
         </form>
+    </div> -->
+
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <table class="table table-striped table-hover table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th>Invoice</th>
+                        <th>Nomor PKS</th>
+                        <th>Tanggal Invoice</th>
+                        <th>Tahap</th>
+                        <th>Nominal Bayar</th>
+                        <th>Sisa Anggaran PKS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <div id="result"></div>
+                    <?php $pks = null;
+                    $sisa = 0 ?>
+                    <?php foreach ($invoice as $row) : ?>
+                        <tr>
+                            <td><?= $row->INVOICE ?></td>
+                            <td><?= $row->NO_PKS ?></td>
+                            <td><?= $row->TGL_INVOICE ?></td>
+                            <td><?= $row->TERMIN ?></td>
+                            <td><?= $row->NOMINAL ?></td>
+
+                            <?php if ($pks == $row->NO_PKS) : ?>
+                                <?php $sisa -= $row->NOMINAL ?>
+                                <td><?= $sisa ?></td>
+                            <?php else : ?>
+                                <?php $pks = $row->NO_PKS;
+                                $sisa = $row->NOMINAL_PKS - $row->NOMINAL ?>
+                                <td><?= $sisa ?></td>
+                            <?php endif; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <!-- <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#searchById").autocomplete({
+                        source: "<?php echo site_url('pks/search/?'); ?>"
+                    });
+                });
+            </script> -->
+
+            <!-- CALON PAGING  -->
+            <!-- <div class="clearfix">
+                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
+                </ul>
+            </div> -->
+        </div>
+    </div>
 </div>
-
-<hr>
-<a href="<?= base_url('Invoice/add'); ?>">Create</a>
-<script type="text/javascript">
-$(document).ready(function(){
-        $( "#searchById" ).autocomplete({
-            source: "<?php echo site_url('Termin/search/?');?>"
-
-            select: function (event, ui) {
-                    $('[name="title"]').val(ui.item.label); 
-                    $('[name="description"]').val(ui.item.description); 
-                }
-        });
-});
-</script>
