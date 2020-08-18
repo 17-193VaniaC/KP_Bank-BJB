@@ -49,6 +49,7 @@
         <div class="dropdown-content">
             <a href="<?php echo site_url('rbb');?>">Daftar RBB</a>
             <a href="<?php echo site_url('rbb/add');?>">Tambah RBB</a>
+            <a href="<?php echo site_url('mutasi_rbb/Penyesuaian_RBB');?>">Penyesuaian RBB</a>
         </div>
 </div>
 <div class="dropdown">
@@ -72,9 +73,7 @@
                 <?= $user['NAMA'] ?>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
+                <!-- <div class="dropdown-divider"></div> -->
                 <a class="dropdown-item" href="<?= base_url('auth/logout'); ?>"><img src="<?php echo base_url() . 'assets/image/logout.png' ?>" style="width: 15px;"><b> Logout</b></a>
             </div>
         </div>

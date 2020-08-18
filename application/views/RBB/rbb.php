@@ -10,9 +10,9 @@
 		<?php if ($this->session->flashdata('message')) { ?>
 			<?php echo $this->session->flashdata('message') ?>
 		<?php } ?>
-		<h3>
 			<div class="container-half">
-				Rencana Bisnis Bank
+		<h2 style="color: #204d95;">
+				Rencana Bisnis Bank</h2>
 			</div>
 			<div class="container-half right">
 				<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
