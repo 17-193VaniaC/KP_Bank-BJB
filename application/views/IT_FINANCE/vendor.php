@@ -25,14 +25,10 @@
 
 
 	<div class="container-half right">
-		<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
 				<input type="text" name="nama_vendor" placeholder="Nama Vendor" class="form-control" /><br>
 				<input type="submit" name="btn" value="Tambah vendor" class="btn btn-primary" />
 			</form>
-		<?php endif; ?>
-
-		<!-- <small class="text-danger" style="text-align: center;"><?php echo form_error('nama_vendor'); ?></small> -->
 	</div>
 	<br><br>
 
@@ -62,7 +58,7 @@
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="text-center">
 								<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>
-								</a>
+								
 								<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor; ?>">Hapus</button> -->
 
 								<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
@@ -78,10 +74,55 @@
 			</table>
 		</div>
 	</div>
+<!-- 
+	<button data-target="#modalHupla" data-toggle="modal">AAAAAAA</button>
+	
 
+	<div class="modal fade" id="modalEdit" role="dialog">
+    <div class="modal-dialog">
+     -->
+      <!-- Modal content-->
+ <!--      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ -->
 
+<!-- </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalEdit">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Vendor</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>  
+ -->
 	<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
-	<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -120,7 +161,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 
 
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++ Modal hapus ++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -154,20 +194,21 @@
         <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">
 		<button class="btn btn-danger">Hapus</button></a> -->
 <!--  <a href="<?php echo site_url('vendor/edit/' . $listvendor->nama_vendor) ?>""><button class="btn btn-success">Ubah</button></a> -->
-</div>
-</form>
-</div>
+<!-- </div>
 </div>
 </div>
+</div> -->
 
-<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-	</div>
-	</div>
-<?php endif; ?>
-</div>
-
+<!-- <?php if ($user['ROLE'] == 'IT FINANCE') : ?> -->
+	<!-- /div>
+	</div> -->
+<!-- <?php endif; ?> -->
+<!-- </div> -->
 
 
+<script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
+<script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(document).on('click', '#editbutton', function() {
