@@ -19,18 +19,22 @@
             <input type="text" name="TERMIN" value="<?php echo $termin_ke ?>" readonly  class="form-control" />
             <?php echo form_error('TERMIN') ?></td>
         <td>
-            <select class="form-control" name="KATEGORI" id="kategori">
+            <select class="form-control" name="KATEGORI" id="KATEGORI">
                 <option value="Pengadaan">Pengadaan</option>
                 <option value="Maintenance">Maintenance</option>
                 <option value="Waranty">Waranty</option>
                 <option value="License">License</option>
                 <option value="Pembayaran Rutin Bulanan">Pembayaran Rutin Bulanan</option>
             </select>
+            <?php echo form_error('KATEGORI') ?>
+
         </td>
         <td>
             <select class="form-control form-control-user" name="GL" id="GL">
 
-                    </select>
+            </select>
+            <?php echo form_error('GL') ?>
+
         </td> 
         <td>
             <button value="save" type="submit" class="btn btn-primary">
@@ -49,7 +53,7 @@
 <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript">
         $(document).ready(function(){
-            $('#kategori').change(function(){ 
+            $('#KATEGORI').change(function(){ 
                 var kategori=$(this).val();
                 $.ajax({
                     url : "<?php echo site_url('termin/getCategoryGL');?>",

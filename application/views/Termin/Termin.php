@@ -31,7 +31,7 @@
 				<td><?php echo $listtermin->STATUS; ?></td>
 				<td><?php echo $listtermin->KATEGORI; ?></td>
 				<td><?php echo $listtermin->GL; ?></td>
-				<td><a href="<?php echo site_url('termin/edit/' . $listtermin->KODE_TERMIN) ?>" class="btn btn-primary">Edit</a>
+				<td><a href="<?php echo site_url('termin/edit2/' . $listtermin->KODE_TERMIN) ?>" class="btn btn-primary">Edit</a>
 					<a href="<?php echo site_url('termin/delete/' . $listtermin->KODE_TERMIN) ?>" class="btn btn-danger"> Hapus</a>
 				</td>
 			</tr>

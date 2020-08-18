@@ -23,17 +23,51 @@
 		<td>
 		<td>
             <select class="form-control" name="KATEGORI" id="kategori">
-                <option value="Pengadaan">Pengadaan</option>
-                <option value="Maintenance">Maintenance</option>
-                <option value="Waranty">Waranty</option>
-                <option value="License">License</option>
-                <option value="Pembayaran Rutin Bulanan">Pembayaran Rutin Bulanan</option>
+                <?php 
+                if ($termin->KATEGORI == 'Pengadaan'){	
+                	echo "<option value='Pengadaan' selected='selected'>Pengadaan</option>";
+                } 
+                else{
+                	echo "<option value='Pengadaan'>Pengadaan</option>";
+                }
+                if($termin->KATEGORI == 'Maintenance'){
+                	echo "<option value='Maintenance' selected='selected'>Maintenance</option>";
+                }
+                else{
+                	echo "<option value='Maintenance'>Maintenance</option>";
+                }
+                if($termin->KATEGORI == 'Waranty'){
+                	echo "<option value='Waranty' selected='selected'>Waranty</option>";
+                }
+                else{
+                	echo "<option value='Waranty'>Waranty</option>";
+                }
+                if($termin->KATEGORI == 'License'){
+                	echo "<option value='License' selected='selected'>License</option>";
+                } 
+                else{
+                	echo "<option value='License'>License</option>";
+                }
+                if($termin->KATEGORI == 'Pembayaran Rutin Bulanan'){
+                	echo "<option value='Pembayaran Rutin Bulanan'  selected='selected' >Pembayaran Rutin Bulanan</option>";
+                }
+                else{
+                	echo "<option value='Pembayaran Rutin Bulanan'>Pembayaran Rutin Bulanan</option>";
+                }
+                	?>
+                }
             </select>
         </td>
         <td>
             <select class="form-control form-control-user" name="GL" id="GL">
-
-                    </select>
+            <?php foreach ($GL_ as $row) : ?>
+		        <?php if ($row->KODE_GL == $termin->GL ): ?>
+                    <option value="<?= $row->KODE_GL ?>" selected="selected"><?php echo $row->KODE_GL; echo " | "; echo $row->NAMA_GL;?></option>
+                <?php else : ?>
+                    <option value="<?= $row->KODE_GL ?>"><?php echo $row->KODE_GL; echo " | "; echo $row->NAMA_GL;?></option>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            </select>
         </td> 
 		<td>
 			<button value="save" type="submit" class='btn btn-primary'>

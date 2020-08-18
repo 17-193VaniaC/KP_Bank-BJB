@@ -74,64 +74,66 @@ class Termin extends CI_Controller
     }
 
     public function getCategoryGL(){
-        $ketegori_ = $this->input->post('KATEGORI',TRUE);
+
+        $kategori_y = $this->input->post('KATEGORI',TRUE);
         // var_dump($kategori_);
-        if($kategori_= 'Maintenance' | $kategori_ = 'Pembayaran rutin bulanan'){
+        if(!strncmp($kategori_y, "Maintenance", 7) || !strncmp('Pembayaran rutin bulanan', $kategori_y, 7)){
             $k = "Operating Expense";
-            // echo "string";
+            // echo strcmp($kategori_y, "Maintenance");
         }
         else{
             $k = "Capital Expense";
+            // redirect('pks');
         }
         $data = $this->Termin_model->getGL($k);
         echo json_encode($data);
     }
 
-    public function add()
-    {   
-        $NOPKS = str_replace('_', '/', $_GET["NOPKS"]);
-        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        if ($data['user']['ROLE'] == 'IT FINANCE') {
+    // public function add()
+    // {   
+    //     $NOPKS = str_replace('_', '/', $_GET["NOPKS"]);
+    //     $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+    //     if ($data['user']['ROLE'] == 'IT FINANCE') {
 
-            $data['termin'] = $this->Termin_model;
-            $validation = $this->form_validation;
-            $validation->set_rules($data['termin']->rules());
+    //         $data['termin'] = $this->Termin_model;
+    //         $validation = $this->form_validation;
+    //         $validation->set_rules($data['termin']->rules());
 
-            if ($validation->run() == TRUE) {
-                $kode_termin = $data['termin']->save($NOPKS);
+    //         if ($validation->run() == TRUE) {
+    //             $kode_termin = $data['termin']->save($NOPKS);
 
-                // ADD LOG
-                $log = $this->Log_model;
-                $data_log['USER'] = $data['user']['NAMA'];
-                $data_log['TABLE_NAME'] = 'termin_pks';
-                $data_log['KODE_DATA'] = $kode_termin;
-                $data_log['ACTIVITY'] = 'add';
-                $log->save($data_log);
+    //             // ADD LOG
+    //             $log = $this->Log_model;
+    //             $data_log['USER'] = $data['user']['NAMA'];
+    //             $data_log['TABLE_NAME'] = 'termin_pks';
+    //             $data_log['KODE_DATA'] = $kode_termin;
+    //             $data_log['ACTIVITY'] = 'add';
+    //             $log->save($data_log);
 
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
-                $NPAYMENT = $_GET['n'] + 1;
-                $NOPKS = str_replace('_', '/', $_GET["NOPKS"]);
+    //             $this->session->set_flashdata('success', 'Berhasil disimpan');
+    //             $NPAYMENT = $_GET['n'] + 1;
+    //             $NOPKS = str_replace('_', '/', $_GET["NOPKS"]);
 
-                redirect("Termin/add/" . $NOPKS . "/" . $NTERMIN . "/" .$NPAYMENT );
-            }
-            if ($NTERMIN < $NPAYMENT) {
-                // var_dump(expression)
-                redirect(site_url('termin'));
-            }
-            // $data['nopks'] = $NOPKS;
-            // $data['ntermin'] = $NTERMIN;;
-            // $data['npayment'] = $NPAYMENT;
-            // echo $NPAYMENT;
+    //             redirect("Termin/add/" . $NOPKS . "/" . $NTERMIN . "/" .$NPAYMENT );
+    //         }
+    //         if ($NTERMIN < $NPAYMENT) {
+    //             // var_dump(expression)
+    //             redirect(site_url('termin'));
+    //         }
+    //         // $data['nopks'] = $NOPKS;
+    //         // $data['ntermin'] = $NTERMIN;;
+    //         // $data['npayment'] = $NPAYMENT;
+    //         // echo $NPAYMENT;
   
-            $this->load->view("Termin/add_termin/", $data);
-        } else {
-            redirect('Termin');
-        }
-    }
+    //         $this->load->view("Termin/add_termin/", $data);
+    //     } else {
+    //         redirect('Termin');
+    //     }
+    // }
 
-    public function edit($KODETERMIN)
+    public function edit($KODETERMIN, $KODE_PKS)
     {   
-        $NO_PKS = str_replace('/', '_', $KODETERMIN);
+        $NO_PKS = str_replace('/', '_', $KODE_PKS);
         $title['title'] = 'Edit Termin';
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -145,6 +147,7 @@ class Termin extends CI_Controller
             // $KODETERMIN = str_replace('_', '/', $_GET["NOPKS"]);
 
             $data['termin'] = $this->Termin_model->getById($KODETERMIN);
+            $data['GL_'] = $this->db->get('GL')->result();
             $validation = $this->form_validation;
             $validation->set_rules($termin->rules());
 
@@ -187,6 +190,62 @@ class Termin extends CI_Controller
         }
     }
 
+  public function edit2($KODETERMIN)
+    {   
+        $title['title'] = 'Edit Termin';
+
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($data['user']['ROLE'] == 'IT FINANCE') {
+            if ($KODETERMIN == 0) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Termin yang telah dibayar tidak bisa diubah! .</div>');
+                redirect('Termin/');
+            }
+            $termin = $this->Termin_model;
+            // $KODETERMIN = str_replace('_', '/', $_GET["NOPKS"]);
+
+            $data['termin'] = $this->Termin_model->getById($KODETERMIN);
+            $data['GL_'] = $this->db->get('GL')->result();
+            $validation = $this->form_validation;
+            $validation->set_rules($termin->rules());
+
+            if ($this->form_validation->run() == false) {
+                $this->load->view('templates/header.php', $title);
+                $this->load->view('templates/navbar.php', $data);
+                $this->load->view('Termin/edit_termin', $data);
+                $this->load->view('templates/footer.php');
+            } else {
+                $termin->update($KODETERMIN);
+
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'termin_pks';
+                $data_log['KODE_DATA'] = $KODETERMIN;
+                $data_log['ACTIVITY'] = 'edit';
+                $log->save($data_log);
+                // $NO_PKS = str_replace('/', '_', $NO_PKS);
+                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                redirect('Termin/');
+            }
+
+            // if (!isset($KODETERMIN)) redirect('rbb');
+
+            // $termin = $this->Termin_model;
+            // $validation = $this->form_validation;
+            // $validation->set_rules($termin->rules());
+
+            // if ($validation->run()) {
+            //     $termin->update();
+            //     $this->session->set_flashdata('success', 'Berhasil disimpan');
+            // }
+
+            // $data["termin"] = $termin->getById($KODETERMIN);
+            // if (!$data["termin"]) show_404();
+            // $this->load->view("Termin/edit_termin", $data);
+        } else {
+            redirect('Termin');
+        }
+    }
     public function delete($KODETERMIN, $NO_PKS)
     {
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();

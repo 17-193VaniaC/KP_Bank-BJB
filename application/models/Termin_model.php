@@ -10,24 +10,30 @@ class Termin_model extends CI_Model
     public $TGL_TERMIN;
     public $NOMINAL;
     public $STATUS;
+    public $KATEGORI;
+    public $GL;
 
     public function rules() //for adding new termin
     {
         return [
-
-            // [
-            //     'field' => 'TERMIN',
-            //     'label' => 'TERMIN',
-            //     'rules' => 'required'
-            // ],
+            [
+                'field' => 'GL',
+                'label' => 'GL',
+                'rules' => 'required'
+            ],
+            [
+                'field' => 'KATEGORI',
+                'label' => 'Kategori',
+                'rules' => 'required'
+            ],
             [
                 'field' => 'TGL_TERMIN',
-                'label' => 'TGL_TERMIN',
+                'label' => 'Tanggal Termin',
                 'rules' => 'required'
             ],
             [
                 'field' => 'NOMINAL',
-                'label' => 'NOMINAL',
+                'label' => 'Nominal',
                 'rules' => 'required'
             ]
         ];
@@ -92,6 +98,9 @@ class Termin_model extends CI_Model
 
         $this->db->set('NOMINAL', $post["NOMINAL"]);
         $this->db->set('TGL_TERMIN', $post["TGL_TERMIN"]);
+        $this->db->set('KATEGORI', $post["KATEGORI"]);
+        $this->db->set('GL', $post["GL"]);
+
         $this->db->where('KODE_TERMIN', $kode_termin);
         $this->db->update($this->_table);
 
@@ -165,7 +174,7 @@ class Termin_model extends CI_Model
         return $this->db->get()->result();
     }
     public function getGL($k){
-        $this->db->where('KELOMPOK', $k);
+        $this->db->where('KELOMPOK =',$k);
         return $this->db->get('gl')->result();
         // var_dump($this->db->get('gl')->result());
         // die;
