@@ -129,8 +129,9 @@ class Termin extends CI_Controller
         }
     }
 
-    public function edit($KODETERMIN, $NO_PKS)
-    {
+    public function edit($KODETERMIN)
+    {   
+        $NO_PKS = str_replace('/', '_', $KODETERMIN);
         $title['title'] = 'Edit Termin';
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -141,7 +142,7 @@ class Termin extends CI_Controller
                 redirect('Termin/termin_pks/' . $NO_PKS);
             }
             $termin = $this->Termin_model;
-            $KODETERMIN = str_replace('_', '/', $_GET["NOPKS"]);
+            // $KODETERMIN = str_replace('_', '/', $_GET["NOPKS"]);
 
             $data['termin'] = $this->Termin_model->getById($KODETERMIN);
             $validation = $this->form_validation;
