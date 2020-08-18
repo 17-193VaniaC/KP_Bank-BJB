@@ -17,10 +17,18 @@ class Laporan extends CI_Controller
 
 
    public function index(){
+<<<<<<< HEAD
         $title['title'] = 'Laporan';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $res= $this->Laporan_model->getData();
         $data['table'] = $res;
+=======
+       $title['title'] = 'Laporan';
+        $data["RBB"] = $this->RBB_model->getAll();
+        $data["PKS"] = $this->PKS_model->getAll();
+        $data["Pembayaran"] = $this->Invoice_model->getAll();
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+>>>>>>> parent of 078636e... JProject updated
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view('Laporan/laporan', $data);

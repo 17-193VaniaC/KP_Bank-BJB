@@ -79,6 +79,7 @@
 	</div>
 
 
+<<<<<<< HEAD
 	<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
 	<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -120,6 +121,47 @@
 			</div>
 		</div>
 	</div>
+=======
+<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
+<div class="modal" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Jenis Project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+		<form action="" method="post" >
+      <div class="modal-body" id="modal-edit">
+      	<table style="margin: 8%;">
+      		<div class="notif-warning" id="notif-warning">
+      			<div class="alert-warning">
+      			<STRONG>Jenis Project ini sedang digunakan oleh data PKS</STRONG><br>
+      			Anda yakin ingin mengedit Jenis Project ini?
+      			</div>
+      		</div>
+					<tr>
+						<td style="margin-left: 3px; width: 20%; padding:10px;">
+						Jenis Project
+						</td>
+						<td style="margin-left: 3px; width: 30%; padding:10px;">
+						<input type="hidden" name="KODE_JENISPROJECT" id="KODE_JENISPROJECT" class="form-control"/>
+						<input type="text" name="jenis" id="jenis" class="form-control" />
+						</td>
+					</tr>
+					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>			
+					</tr>
+				</table>
+		    </div>
+	    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+        <input type="submit" name="btn" value="Edit" class="btn btn-primary" />
+		</form>
+      </div>
+    </div>
+  </div>
+>>>>>>> parent of 078636e... JProject updated
 </div>
 
 
