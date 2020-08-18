@@ -74,11 +74,6 @@ class RBB_model extends CI_Model
         return $this->db->get($this->_table)->result();
     }
 
-    public function getPagination($limit, $start)
-    {
-        return $this->db->get($this->_table, $limit, $start)->result();
-    }
-
     public function save()
     {
         $post = $this->input->post();
