@@ -1,5 +1,5 @@
 </div> <!-- END CONTAINER -->
-<footer id="footer" class="sticky-footer bg-white" role="content-info" style="flex-shrink: none;">
+<footer id="footer" class="bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto"><br>
             <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span><br><br>
@@ -9,9 +9,7 @@
     <div class="bluefooter"></div>
     <div class="lightbluefooter"></div>
     <div class="yellowfooter"></div>
-
 </footer>
-<!-- Footer -->
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -21,8 +19,9 @@
 <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
 
-<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+<!-- <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> -->
 
 <script>
