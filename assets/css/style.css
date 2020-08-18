@@ -1,3 +1,4 @@
+
 label{
     font-weight: bold;
 }
@@ -26,7 +27,9 @@ html, body{
 .page-title{
     margin-top: 50px;
 }
-
+.front-dashboard{
+  background-image: url('../assets/image/bg.jpg');
+}
 footer {
    position: absolute;
    left: 0;
@@ -41,6 +44,15 @@ footer {
     width:100%;
     background-color:rgb(41, 115, 151);
  } */
+
+ .dashboard-bg{
+    background-image: url('../image/bg.jpg');
+    background-color: black;
+ }
+
+.jumbotron{
+    padding: 5px;
+ }
 
 /*footer bawah*/
  .bluefooter{
@@ -132,3 +144,17 @@ footer {
     padding: 5px;
  }
 
+/*dashboard*/
+.dash-menu{
+    text-decoration: none;
+    /*background-color: #b5c8e1;*/
+    width: 200px;
+    height: 150px;
+    text-align: center;
+    color: black;
+    border: 1px solid white;
+}
+
+.row a{
+  text-decoration: none;
+}

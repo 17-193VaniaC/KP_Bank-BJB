@@ -13,7 +13,9 @@
 			<td>Status</td>
 			<td>Kategori</td>
 			<td>GL</td>
+            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 			<td>Opsi</td>
+		<?php endif;?>
 		</thead>
 		<?php foreach ($termin as $listtermin) : ?>
 			<tr>
@@ -24,6 +26,7 @@
 				<td><?php echo $listtermin->STATUS; ?></td>
 				<td><?php echo $listtermin->KATEGORI; ?></td>
 				<td><?php echo $listtermin->GL; ?></td>
+            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 				<td>
 					<?php if ($listtermin->STATUS == 'UNPAID') : 
                         $pks_ = str_replace('/', '_', $listtermin->NO_PKS);?>
@@ -35,6 +38,8 @@
                                 <a href="<?= site_url('Termin/delete/0/' . $pks_) ?>"><button class="btn btn-danger">Delete</button></a>
                     <?php endif; ?>
 				</td>
+                    <?php endif; ?>
+				
 			</tr>
 		<?php endforeach;  ?>
 

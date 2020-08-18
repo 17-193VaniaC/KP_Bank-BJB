@@ -1,11 +1,12 @@
-<div style="margin-top: 50px; padding: 25px;">
+<div style="margin-top: 50px; padding: 25px;"> 
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
+    <!-- <div class="container-xl"> -->
     <div class="container-half">
-        <h1><a href="<?= base_url('pks/'); ?>" style="text-decoration: none;">Daftar <b>PKS</b></a></h1></a>
+        <h2><a href="<?= base_url('pks/'); ?>" style="text-decoration: none; color: black;">Daftar <b>PKS</b></a></h2></a>
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-            <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">Tambah PKS</a>
+           <p> <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">+ Tambah PKS</a></p>
         <?php endif; ?>
     </div>
     <div class="container-half right">
@@ -14,23 +15,23 @@
             <input class="btn btn-primary" type="submit" name="search" value="Cari">
         </form>
     </div>
-
+<!-- </div> -->
     <div class="table-responsive">
         <div class="table-wrapper">
             <table class="table table-striped table-hover table-bordered">
-                <thead>
+                <thead  style="background-color: #204d95; color: white;">
                     <tr class="text-center">
-                        <th>Nomor PKS</th>
-                        <th>Kode RBB</th>
-                        <th>Jenis</th>
-                        <th>Kode Project</th>
-                        <th>Nama Project</th>
-                        <th>tanggal PKS</th>
-                        <th>Nominal PKS</th>
-                        <th>Sisa Anggaran</th>
-                        <th>Nama Vendor</th>
+                        <td>Nomor PKS</td>
+                        <td>Kode RBB</td>
+                        <td>Jenis</td>
+                        <td>Kode Project</td>
+                        <td>Nama Project</td>
+                        <td>tanggal PKS</td>
+                        <td>Nominal PKS</td>
+                        <td>Sisa Anggaran</td>
+                        <td>Nama Vendor</td>
                         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                            <th>Action</th>
+                            <td>Action</td>
                         <?php endif; ?>
                     </tr>
                 </thead>
@@ -39,7 +40,7 @@
                     <?php foreach ($pks as $row) : ?>
                         <?php $id = str_replace('/', '_', $row->NO_PKS); ?>
                         <tr>
-                            <td><a href="<?php echo site_url('Termin/termin_pks/' . $id); ?>"><?= $row->NO_PKS ?></a></td>
+                            <td><a href="<?php echo site_url('Termin/termin_pks/' . $id); ?>" style="text-decoration: none;"><?= $row->NO_PKS ?></a></td>
                             <td><?= $row->KODE_RBB ?></td>
                             <td><?= $row->jenis ?></td>
                             <td><?= $row->KODE_PROJECT ?></td>
@@ -52,7 +53,7 @@
                                 <td>
                                     <div class="btn-group">
                                         <a href="<?php echo site_url('pks/edit/' . $id); ?>"><button class="btn btn-primary">Edit</button></a>
-                                        <a href="<?php echo site_url('pks/delete/' . $id); ?>" style="margin-left: 3px;"><button class="btn btn-danger">Delete</button></a>
+                                        <a href="<?php echo site_url('pks/delete/' . $id); ?>" style="margin-left: 3px;"><button class="btn btn-danger">Hapus</button></a>
                                     </div>
                                 </td>
                             <?php endif; ?>

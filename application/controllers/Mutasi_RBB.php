@@ -70,7 +70,7 @@ class Mutasi_RBB extends CI_Controller
             $this->load->view("Mutasi_RBB/add_mutasi_rbb", $mutasi_rbb);
             $this->load->view('templates/footer.php');
         } else {
-            redirect('Mutasi_RBB');
+            redirect('dashboard');
         }
     }
 }
