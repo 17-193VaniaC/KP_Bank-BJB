@@ -1,4 +1,5 @@
-<div class="container-xl" style="margin-top: 20px; min-height: 80vh">
+<div class="container-xl" style="margin-top: 50px;">
+<!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
 		echo "<div class='alert alert-success'>";
@@ -17,17 +18,16 @@
 		?>
 	<?php } ?>
 
-
+<br>
 	<div class="container-half">
-		<h3>Daftar Vendor</h3>
+		<h2>Daftar Vendor</h2>
 	</div>
-
 
 	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 		<div class="container-half right">
-			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
-				<input type="text" name="nama_vendor" placeholder="Nama Vendor" class="form-control" /><br>
-				<input type="submit" name="btn" value="Tambah vendor" class="btn btn-primary" />
+			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline" style="float: right;">
+				<input type="text" name="nama_vendor" placeholder="Nama Vendor Baru" class="form-control" />
+				<input type="submit" name="btn" value="+ Tambah vendor" class="btn btn-success" />
 			</form>
 		</div>
 		<br><br>
@@ -38,13 +38,13 @@
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<table class="table table-striped table-hover table-bordered">
-				<thead class="">
+				<thead style="background-color: #204d95; color: white;">
 					<tr class="text-center">
-						<th>No</th>
-						<th>Nama Vendor</th>
-						<th>Jumlah penggunaan</th>
+						<td>No</td>
+						<td>Nama Vendor</td>
+						<td>Jumlah penggunaan</td>
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<th class="table-option-row">Opsi</th>
+							<td class="table-option-row">Opsi</td>
 						<?php endif; ?>
 					</tr>
 				</thead><?php $counter = 1; ?>
@@ -57,7 +57,7 @@
 						<td><?php echo $listvendor->nama_vendor ?></td>
 						<td><?php echo $listvendor->STATUS ?></td>
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<td class="text-center">
+							<td class="table-option-row">
 								<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>
 
 								<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor; ?>">Hapus</button> -->

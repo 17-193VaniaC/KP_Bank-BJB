@@ -1,3 +1,4 @@
+
 <?php if ($this->session->flashdata('message')) { ?>
     <?php echo $this->session->flashdata('message') ?>
 <?php } ?>
@@ -5,7 +6,7 @@
 
 <div class="jumbotron text-center"><br><br>
     <h3>Selamat datang di </h3>
-        <h1>Sistem Informasi Finansial Bank BJB</h1>
+        <h2>Sistem Informasi Finansial Bank BJB</h2>
 </div>
 
 <div class="container">

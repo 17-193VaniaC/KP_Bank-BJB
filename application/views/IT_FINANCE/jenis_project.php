@@ -1,4 +1,4 @@
-<div class="container-xl" style="margin-top: 20px; min-height: 80vh">
+<div class="container-xl" style="margin-top: 50px;">
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
 		echo "<div class='alert alert-success'>";
@@ -16,15 +16,15 @@
 		echo "</div>";
 		?>
 	<?php } ?>
-
+<br>
 	<div class="container-half">
-		<h3>Daftar Jenis Project</h3>
+		<h2>Daftar Jenis Project</h2>
 	</div>
 	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 		<div class="container-half right">
-			<form action="<?php echo site_url('JProject/add') ?>" method="post" class="form-inline justify-content-center">
-				<input type="text" name="jenis" placeholder="Jenis Project" class="form-control" /><br>
-				<input type="submit" name="btn" value="Tambah Jenis Project" class="btn btn-primary" />
+			<form action="<?php echo site_url('JProject/add') ?>" method="post" class="form-inline" style="float: right;">
+				<input type="text" name="jenis" placeholder="Jenis Project Baru" class="form-control" /><br>
+				<input type="submit" name="btn" value="+ Tambah Jenis Project" class="btn btn-success" />
 			</form>
 		</div>
 		<br><br>
@@ -34,14 +34,14 @@
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<table class="table table-striped table-hover table-bordered">
-				<thead class="">
+				<thead style="background-color: #204d95; color: white;">
 					<tr class="text-center">
-						<th>No</th>
-						<th>Jenis Project</th>
-						<th>Jumlah penggunaan</th>
+						<td>No</td>
+						<td>Jenis Project</td>
+						<td>Jumlah penggunaan</td>
 
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<th class="table-option-row">Opsi</th>
+							<td class="table-option-row">Opsi</td>
 						<?php endif; ?>
 					</tr>
 				</thead><?php $counter = 1; ?>

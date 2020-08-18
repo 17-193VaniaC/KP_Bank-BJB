@@ -1,13 +1,13 @@
-<div style="margin-top: 50px; padding: 25px;">
+<br><div class="container-xl" style="margin-top: 50px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
     <div class="container-half">
-        <h1><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none;">Daftar <b>Invoice</b></a></h1></a>
+        <h2><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none; color: black;">Daftar Invoice</a></h2></a>
     </div>
     <div class="container-half right">
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-            <a href="<?= base_url('Invoice/add'); ?>" class="btn btn-success">Tambah Invoice</a>
+            <a href="<?= base_url('Invoice/add'); ?>" class="btn btn-success">+ Tambah Invoice</a>
         <?php endif; ?>
     </div>
     <!-- <div class="container-half right">
@@ -20,14 +20,14 @@
     <div class="table-responsive">
         <div class="table-wrapper">
             <table class="table table-striped table-hover table-bordered">
-                <thead>
+                <thead style="background-color: #204d95; color: white;">
                     <tr class="text-center">
-                        <th>Invoice</th>
-                        <th>Nomor PKS</th>
-                        <th>Tanggal Invoice</th>
-                        <th>Tahap</th>
-                        <th>Nominal Bayar</th>
-                        <th>Sisa Anggaran PKS</th>
+                        <td>Invoice</td>
+                        <td>Nomor PKS</td>
+                        <td>Tanggal Invoice</td>
+                        <td>Tahap</td>
+                        <td>Nominal Bayar</td>
+                        <td>Sisa Anggaran PKS</td>
                     </tr>
                 </thead>
                 <tbody>
