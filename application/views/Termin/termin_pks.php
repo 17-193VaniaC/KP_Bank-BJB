@@ -98,7 +98,7 @@
     <?php else : ?>
         <h1>Termin Kosong</h1>
         <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : 
-            $pks_ = str_replace('/', '_', $pks["NO_PKS"]);
+            $pks_ = str_replace('/', '_', $no_pks);
        
         ?>
             <hr>
