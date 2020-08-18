@@ -22,15 +22,29 @@ class Pks_model extends CI_Model
         $response = $q->result();
         return $response;
     }
-    public function showData(){
+
+    public function getPagination($limit, $start)
+    {
+        $response = array();
+
+        $this->db->select('*');
+        $this->db->join('vendor', 'vendor.KODE_VENDOR = pks.nama_vendor');
+        $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
+        $q = $this->db->get('pks', $limit, $start);
+
+        $response = $q->result();
+        return $response;
+    }
+
+    public function showData()
+    {
         $this->db->select('*');
         $this->db->join('vendor', 'vendor.KODE_VENDOR = pks.nama_vendor');
         $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
 
         $q = $this->db->get('pks');
         $response = $q->result();
-         return $response;
-
+        return $response;
     }
 
     public function getByRBB($kode_rbb)
@@ -52,9 +66,8 @@ class Pks_model extends CI_Model
     }
 
     function deleteData($no_pks)
-    {   
+    {
         $this->db->delete('pks', array('No_PKS' => $no_pks));
-
     }
 
     public function seeThisPKS($nopks)
@@ -65,13 +78,15 @@ class Pks_model extends CI_Model
         return $this->db->get('pks')->result();
     }
 
-    public function getVendor($nopks){
+    public function getVendor($nopks)
+    {
         $this->db->select('VENDOR');
         $this->db->where("NO_PKS", $nopks);
         return $this->db->get()->result();
     }
 
-    public function getJP($nopks){
+    public function getJP($nopks)
+    {
         $this->db->select('JENIS_PROJECT');
         $this->db->where("NO_PKS", $nopks);
         return $this->db->get()->result();

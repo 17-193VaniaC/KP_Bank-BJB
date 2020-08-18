@@ -1,14 +1,15 @@
+</div> <!-- END CONTAINER -->
 <footer id="footer" class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto"><br>
             <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span><br><br>
-    </div>
         </div>
-        	
-        <div class="bluefooter"></div>
-        <div class="lightbluefooter"></div>
-        <div class="yellowfooter"></div>
-</div> <!-- END CONTAINER -->
+    </div>
+
+    <div class="bluefooter"></div>
+    <div class="lightbluefooter"></div>
+    <div class="yellowfooter"></div>
+
 </footer>
 <!-- Footer -->
 

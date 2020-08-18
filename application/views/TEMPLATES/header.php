@@ -24,4 +24,4 @@
 </head>
 
 <body>
-    <div id="content-wrapper" class="d-flex flex-column">
+    <div id="content" class="d-flex flex-column">

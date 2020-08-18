@@ -1,19 +1,19 @@
-<div  style="margin-top: 50px; padding: 25px;">
+<div style="margin-top: 50px; padding: 25px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-                    <div class="container-half">
-                        <h1><a href="<?= base_url('pks/'); ?>" style="text-decoration: none;">Daftar <b>PKS</b></a></h1></a>
-                        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                            <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">Tambah PKS</a>
-                        <?php endif; ?>
-                    </div>
-                    <div class="container-half right">
-                                <form method="get" class="form-inline" style="float: right;">
-                                    <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control"  />
-                                    <input class="btn btn-primary" type="submit" name="search" value="Cari">
-                                </form>
-                    </div>
+    <div class="container-half">
+        <h1><a href="<?= base_url('pks/'); ?>" style="text-decoration: none;">Daftar <b>PKS</b></a></h1></a>
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+            <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">Tambah PKS</a>
+        <?php endif; ?>
+    </div>
+    <div class="container-half right">
+        <form method="get" class="form-inline" style="float: right;">
+            <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" />
+            <input class="btn btn-primary" type="submit" name="search" value="Cari">
+        </form>
+    </div>
 
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -37,7 +37,7 @@
                 <tbody>
                     <div id="result"></div>
                     <?php foreach ($pks as $row) : ?>
-                                        <?php $id = str_replace('/', '_', $row->NO_PKS);?>
+                        <?php $id = str_replace('/', '_', $row->NO_PKS); ?>
                         <tr>
                             <td><a href="<?php echo site_url('Termin/termin_pks/' . $id); ?>"><?= $row->NO_PKS ?></a></td>
                             <td><?= $row->KODE_RBB ?></td>
@@ -60,7 +60,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-         
+
             <script type="text/javascript">
                 $(document).ready(function() {
                     $("#searchById").autocomplete({
@@ -81,6 +81,12 @@
                     <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
                 </ul>
             </div> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <!--Tampilkan pagination-->
+            <?php echo $pagination; ?>
         </div>
     </div>
 </div>
