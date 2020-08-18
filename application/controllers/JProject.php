@@ -24,6 +24,7 @@ class JProject extends CI_Controller
         $data["jenis"] = $this->JProject_model->getAll();
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $jenis = $this->JProject_model;
         $validation = $this->form_validation;
         $validation->set_rules($jenis->rules());
@@ -48,6 +49,9 @@ class JProject extends CI_Controller
                 redirect('JProject');
             }
         }
+=======
+
+>>>>>>> parent of 078636e... JProject updated
 =======
 
 >>>>>>> parent of 078636e... JProject updated
