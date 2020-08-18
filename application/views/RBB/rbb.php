@@ -40,7 +40,7 @@
 					</thead>
 					<?php foreach ($rbb as $listrbb) : ?>
 						<tr>
-							<td><a href="<?php echo site_url('')?>"><?php echo $listrbb->KODE_RBB; ?></a></td>
+							<td><a href="<?php echo site_url('') ?>"><?php echo $listrbb->KODE_RBB; ?></a></td>
 							<td><?php echo $listrbb->PROGRAM_KERJA; ?></td>
 							<td><?php echo $listrbb->ANGGARAN; ?></td>
 							<td><?php echo $listrbb->GL; ?></td>
@@ -56,6 +56,12 @@
 					<?php endforeach;  ?>
 
 				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<!--Tampilkan pagination-->
+				<?php echo $pagination; ?>
 			</div>
 		</div>
 	</div>

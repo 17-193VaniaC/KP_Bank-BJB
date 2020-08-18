@@ -1,4 +1,4 @@
-<div class="container-xl" style="margin-top: 20px;">
+<div class="container-xl" style="margin-top: 20px; min-height: 80vh">
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
 		echo "<div class='alert alert-success'>";
@@ -20,13 +20,15 @@
 	<div class="container-half">
 		<h3>Daftar Jenis Project</h3>
 	</div>
-	<div class="container-half right">
+	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+		<div class="container-half right">
 			<form action="<?php echo site_url('JProject/add') ?>" method="post" class="form-inline justify-content-center">
 				<input type="text" name="jenis" placeholder="Jenis Project" class="form-control" /><br>
 				<input type="submit" name="btn" value="Tambah Jenis Project" class="btn btn-primary" />
 			</form>
-	</div>
-	<br><br>
+		</div>
+		<br><br>
+	<?php endif; ?>
 
 	<!-- ##############################################TABEL VENDOR######################################################## -->
 	<div class="table-responsive">
@@ -71,52 +73,47 @@
 		</div>
 	</div>
 
-<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
-<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Edit Jenis Project</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-		<form action="" method="post" >
-      <div class="modal-body" id="modal-edit">
-      	<table style="margin: 8%;">
-      		<div class="notif-warning" id="notif-warning">
-      			<div class="alert-warning">
-      			<STRONG>Jenis Project ini sedang digunakan oleh data PKS</STRONG><br>
-      			Anda yakin ingin mengedit Jenis Project ini?
-      			</div>
-      		</div>
-					<tr>
-						<td style="margin-left: 3px; width: 20%; padding:10px;">
-						Jenis Project
-						</td>
-						<td style="margin-left: 3px; width: 30%; padding:10px;">
-						<input type="hidden" name="KODE_JENISPROJECT" id="KODE_JENISPROJECT" class="form-control"/>
-						<input type="text" name="jenis" id="jenis" class="form-control" />
-						</td>
-					</tr>
-					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>			
-					</tr>
-				</table>
-		    </div>
-	    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <input type="submit" name="btn" value="Edit" class="btn btn-primary" />
-		</form>
-      </div>
-    </div>
-  </div>
+	<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
+	<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Edit Jenis Project</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="" method="post">
+					<div class="modal-body" id="modal-edit">
+						<table style="margin: 8%;">
+							<div class="notif-warning" id="notif-warning">
+								<div class="alert-warning">
+									<STRONG>Jenis Project ini sedang digunakan oleh data PKS</STRONG><br>
+									Anda yakin ingin mengedit Jenis Project ini?
+								</div>
+							</div>
+							<tr>
+								<td style="margin-left: 3px; width: 20%; padding:10px;">
+									Jenis Project
+								</td>
+								<td style="margin-left: 3px; width: 30%; padding:10px;">
+									<input type="hidden" name="KODE_JENISPROJECT" id="KODE_JENISPROJECT" class="form-control" />
+									<input type="text" name="jenis" id="jenis" class="form-control" />
+								</td>
+							</tr>
+							<tr>
+								<td style="margin-left: 3px; width: 30%; padding:10px;"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+						<input type="submit" name="btn" value="Edit" class="btn btn-primary" />
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
-
-<script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
-<script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(document).on('click', '#editbutton', function() {
 		var n_jenis = $(this).data('jenis');

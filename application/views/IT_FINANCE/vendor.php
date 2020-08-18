@@ -1,4 +1,4 @@
-<div class="container-xl" style="margin-top: 20px;">
+<div class="container-xl" style="margin-top: 20px; min-height: 80vh">
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
 		echo "<div class='alert alert-success'>";
@@ -23,14 +23,15 @@
 	</div>
 
 
-
-	<div class="container-half right">
+	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+		<div class="container-half right">
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline justify-content-center">
 				<input type="text" name="nama_vendor" placeholder="Nama Vendor" class="form-control" /><br>
 				<input type="submit" name="btn" value="Tambah vendor" class="btn btn-primary" />
 			</form>
-	</div>
-	<br><br>
+		</div>
+		<br><br>
+	<?php endif; ?>
 
 
 	<!-- ##############################################TABEL VENDOR######################################################## -->
@@ -58,7 +59,7 @@
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="text-center">
 								<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>
-								
+
 								<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor; ?>">Hapus</button> -->
 
 								<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
@@ -74,15 +75,15 @@
 			</table>
 		</div>
 	</div>
-<!-- 
+	<!-- 
 	<button data-target="#modalHupla" data-toggle="modal">AAAAAAA</button>
 	
 
 	<div class="modal fade" id="modalEdit" role="dialog">
     <div class="modal-dialog">
      -->
-      <!-- Modal content-->
- <!--      <div class="modal-content">
+	<!-- Modal content-->
+	<!--      <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Modal Header</h4>
@@ -99,7 +100,7 @@
   </div>
  -->
 
-<!-- </div>
+	<!-- </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="modalEdit">
   <div class="modal-dialog" role="document">
@@ -161,6 +162,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 
 
 <!--+++++++++++++++++++++++++++++++++++++++++++++++++++ Modal hapus ++++++++++++++++++++++++++++++++++++++++++++++++++++-->
@@ -200,7 +202,7 @@
 </div> -->
 
 <!-- <?php if ($user['ROLE'] == 'IT FINANCE') : ?> -->
-	<!-- /div>
+<!-- /div>
 	</div> -->
 <!-- <?php endif; ?> -->
 <!-- </div> -->
