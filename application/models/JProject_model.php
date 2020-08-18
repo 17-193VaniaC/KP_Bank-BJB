@@ -36,6 +36,7 @@ class JProject_model extends CI_Model
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function update($jenis = null)
     {
         $post = $this->input->post();
@@ -46,6 +47,8 @@ class JProject_model extends CI_Model
         $this->db->update('j_project');
         return $this->KODE_JENISPROJECT;
     }
+=======
+>>>>>>> parent of 078636e... JProject updated
 =======
 >>>>>>> parent of 078636e... JProject updated
 =======
