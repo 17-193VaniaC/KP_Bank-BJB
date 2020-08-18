@@ -22,7 +22,7 @@
 						</td><td style="margin-left: 3px; width: 30%; padding:10px;">
 							 <select class="form-control form-control-user" name="GL" value="<?php echo $rbb->GL ?>">
 		                        <?php foreach ($gl as $row) : ?>
-		                            <option value="<?= $row->KODE_GL ?>"><?= $row->KODE_GL ?></option>
+		                            <option value="<?= $row->KODE_GL ?>"><?php echo $row->KODE_GL; echo " | " ; echo $row->NAMA_GL;?></option>
 		                        <?php endforeach; ?>
 		                    </select>
 									<?php echo form_error('GL') ?>
@@ -39,7 +39,7 @@
 					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>
 						<td style="margin-left: 3px; width: 20%; padding:10px;">
 							<button value="save" type="submit" class="btn btn-success">
-								Ubah
+								Simpan
 							</button>
 							<a href="<?php echo site_url("rbb");?>" class="btn btn-secondary">
 								Batal

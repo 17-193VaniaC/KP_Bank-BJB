@@ -3,8 +3,9 @@
 <?php } ?>
 
 
-<div class="jumbotron text-center">
-    <h1>Selamat datang di BJB</h1>
+<div class="jumbotron text-center"><br><br>
+    <h3>Selamat datang di </h3>
+        <h1>Sistem Informasi Finansial Bank BJB</h1>
 </div>
 
 <div class="container">
