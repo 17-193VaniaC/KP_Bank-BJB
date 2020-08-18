@@ -31,8 +31,16 @@
 				<td><?php echo $listtermin->STATUS; ?></td>
 				<td><?php echo $listtermin->KATEGORI; ?></td>
 				<td><?php echo $listtermin->GL; ?></td>
-				<td><a href="<?php echo site_url('termin/edit2/' . $listtermin->KODE_TERMIN) ?>" class="btn btn-primary">Edit</a>
-					<a href="<?php echo site_url('termin/delete/' . $listtermin->KODE_TERMIN) ?>" class="btn btn-danger"> Hapus</a>
+				<td>
+					<?php if ($listtermin->STATUS == 'UNPAID') : 
+                        $pks_ = str_replace('/', '_', $listtermin->NO_PKS);?>
+                                <a href="<?= site_url('Termin/edit/' . $listtermin->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
+                                <a href="<?= site_url('Termin/delete/' . $listtermin->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-danger">Delete</button></a>
+                    <?php else : 
+                        $pks_ = str_replace('/', '_', $listtermin->NO_PKS);?>
+                                <a href="<?= site_url('Termin/edit/0/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
+                                <a href="<?= site_url('Termin/delete/0/' . $pks_) ?>"><button class="btn btn-danger">Delete</button></a>
+                    <?php endif; ?>
 				</td>
 			</tr>
 		<?php endforeach;  ?>

@@ -137,7 +137,7 @@ class Termin extends CI_Controller
         $title['title'] = 'Edit Termin';
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        $NO_PKS = str_replace('_', '/', $NO_PKS);
+        // $NO_PKS = str_replace('_', '/', $NO_PKS);
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             if ($KODETERMIN == 0) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Termin yang telah dibayar tidak bisa diubah! .</div>');
