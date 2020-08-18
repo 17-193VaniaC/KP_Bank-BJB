@@ -57,6 +57,7 @@
         <div class="dropdown-content">
             <a href="<?php echo site_url('pks');?>">Daftar PKS</a>
             <a href="<?php echo site_url('pks/create');?>">Tambah PKS</a>
+            <a href="<?php echo site_url('termin');?>">Daftar Termin PKS</a>
         </div>
 </div>
 <div class="dropdown">

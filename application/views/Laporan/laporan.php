@@ -4,12 +4,12 @@
 <div class="table-responsive">
       <table class="table table-striped table-hover table-bordered">
             <table class="table table-striped table-hover table-bordered">
-            <thead>
-                  <th colspan="7" >RENCANA BISNIS BANK</th>
-                  <th colspan="9">PERJANJIAN KERJASAMA</th>
-                  <th colspan="4">PEMBAYARAN</th>
+            <thead style="background-color: #204d95; color: white;">
+                  <td colspan="7" >RENCANA BISNIS BANK</td>
+                  <td colspan="9">PERJANJIAN KERJASAMA</td>
+                  <td colspan="4">PEMBAYARAN</td>
             </thead>
-            <thead>
+            <thead style="background-color:  #b5c8e1; color: black;">
                   <th>Kode RBB</th>
                   <th>Program Kerja</th>
                   <th>Anggaran</th>

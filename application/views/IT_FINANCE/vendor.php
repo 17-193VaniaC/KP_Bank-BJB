@@ -58,12 +58,12 @@
 						<td><?php echo $listvendor->STATUS ?></td>
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">
-								<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>
+								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>
 
 								<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor; ?>">Hapus</button> -->
 
 								<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
-								<a class="btn btn-danger" href="<?php echo site_url('vendor/delete/' . $listvendor->KODE_VENDOR); ?>" onclick="return confirm('Are you sure?')">Hapus</a>
+								<a class="btn btn-danger" href="<?php echo site_url('vendor/delete/' . $listvendor->KODE_VENDOR); ?>" onclick="return confirm('Hapus data vendor?')">Hapus</a>
 
 								<!-- <button class="btn btn-danger" onclick="comfirm('are you sure?')" >Hapus</button> -->
 								<!-- </a> -->

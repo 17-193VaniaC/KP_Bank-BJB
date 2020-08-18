@@ -1,12 +1,11 @@
-
 <?php if ($this->session->flashdata('message')) { ?>
     <?php echo $this->session->flashdata('message') ?>
 <?php } ?>
 
 
-<div class="jumbotron text-center"><br><br>
+<div class="jumbotron text-center" style="background-image: url(base_url('../assets/image/bg.jpg');)?>"><br>
     <h3>Selamat datang di </h3>
-        <h2>Sistem Informasi Finansial Bank BJB</h2>
+        <h1>Sistem Informasi Finansial Bank BJB</h1>
 </div>
 
 <div class="container">
