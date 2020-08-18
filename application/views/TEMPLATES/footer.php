@@ -1,5 +1,5 @@
 </div> <!-- END CONTAINER -->
-<footer id="footer" class="sticky-footer bg-white">
+<footer id="footer" class="sticky-footer bg-white" role="content-info" style="flex-shrink: none;">
     <div class="container my-auto">
         <div class="copyright text-center my-auto"><br>
             <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span><br><br>

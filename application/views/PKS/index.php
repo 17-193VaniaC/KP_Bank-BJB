@@ -51,8 +51,8 @@
                             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="<?php echo site_url('pks/edit/' . $id); ?>"><button class="btn btn-success">Edit</button></a>
-                                        <a href="<?php echo site_url('pks/delete/' . $id); ?>"><button class="btn btn-danger">Delete</button></a>
+                                        <a href="<?php echo site_url('pks/edit/' . $id); ?>"><button class="btn btn-primary">Edit</button></a>
+                                        <a href="<?php echo site_url('pks/delete/' . $id); ?>" style="margin-left: 3px;"><button class="btn btn-danger">Delete</button></a>
                                     </div>
                                 </td>
                             <?php endif; ?>
