@@ -1,4 +1,5 @@
 <div class="container-xl" style="margin-top: 50px;">
+<!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
 		echo "<div class='alert alert-success'>";
@@ -16,19 +17,22 @@
 		echo "</div>";
 		?>
 	<?php } ?>
+
 <br>
 	<div class="container-half">
 		<h2>Daftar Jenis Project</h2>
 	</div>
+
 	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 		<div class="container-half right">
-			<form action="<?php echo site_url('JProject/add') ?>" method="post" class="form-inline" style="float: right;">
-				<input type="text" name="jenis" placeholder="Jenis Project Baru" class="form-control" /><br>
+			<form action="<?php echo site_url('jproject/add') ?>" method="post" class="form-inline" style="float: right;">
+				<input type="text" name="jproject" placeholder="Nama Jenis Project Baru" class="form-control" />
 				<input type="submit" name="btn" value="+ Tambah Jenis Project" class="btn btn-success" />
 			</form>
 		</div>
 		<br><br>
 	<?php endif; ?>
+
 
 	<!-- ##############################################TABEL VENDOR######################################################## -->
 	<div class="table-responsive">
@@ -38,8 +42,7 @@
 					<tr class="text-center">
 						<td>No</td>
 						<td>Jenis Project</td>
-						<td>Jumlah penggunaan</td>
-
+						<!-- <td>Jumlah penggunaan</td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">Opsi</td>
 						<?php endif; ?>
@@ -51,19 +54,12 @@
 						<td class="text-center">
 							<?= $counter++ ?>
 						</td>
-						<td><?php echo $listjenis->jenis ?></td>
-						<td><?php echo $listjenis->STATUS ?></td>
-
+						<td><?php echo $listjenis->jenis; ?></td>
+						<!-- <td><?php echo $listjenis->STATUS; ?></td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<td class="text-center">
-								<button id="editbutton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT; ?>" data-jenis="<?php echo $listjenis->jenis; ?>" data-status="<?php echo $listjenis->STATUS; ?>"> Edit</button>
-								<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor; ?>">Hapus</button> -->
-
-								<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
-								<a class="btn btn-danger" href="<?php echo site_url('JProject/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Are you sure?')">Hapus</a>
-
-								<!-- <button class="btn btn-danger" onclick="comfirm('are you sure?')" >Hapus</button> -->
-								<!-- </a> -->
+							<td class="table-option-row">
+								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT; ?>" data-vendor="<?php echo $listjenis->jenis; ?>" data-status="<?php echo $listjenis->STATUS; ?>"> Edit</button>
+								<a class="btn btn-danger" href="<?php echo site_url('vendor/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Hapus data vendor?')">Hapus</a>
 							</td>
 						<?php endif; ?>
 					</tr>
@@ -78,7 +74,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Edit Jenis Project</h5>
+					<h5 class="modal-title" id="exampleModalLongTitle">Edit Vendor</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -97,8 +93,8 @@
 									Jenis Project
 								</td>
 								<td style="margin-left: 3px; width: 30%; padding:10px;">
-									<input type="hidden" name="KODE_JENISPROJECT" id="KODE_JENISPROJECT" class="form-control" />
-									<input type="text" name="jenis" id="jenis" class="form-control" />
+									<input type="hidden" name="KODE_JENISPROJECT" id="kode_jenis" class="form-control" />
+									<input type="text" name="jenis" id="nama_jenis" class="form-control" />
 								</td>
 							</tr>
 							<tr>
@@ -114,19 +110,25 @@
 		</div>
 	</div>
 </div>
+
+<script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
+<script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
+<script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(document).on('click', '#editbutton', function() {
-		var n_jenis = $(this).data('jenis');
+		var n_jenis = $(this).data('vendor');
 		var kode_jenis = $(this).data('id');
 		var penggunaan = $(this).data('status');
 
-		$(".modal-body #jenis").val(n_jenis);
-		$(".modal-body #KODE_JENISPROJECT").val(kode_jenis);
+		$(".modal-body #nama_jenis").val(n_jenis);
+		$(".modal-body #kode_jenis").val(kode_jenis);
 
 		if (penggunaan > 0) {
 			document.getElementById("notif-warning").style.display = "block";
 		} else {
 			document.getElementById("notif-warning").style.display = "none";
 		}
+
 	});
 </script>

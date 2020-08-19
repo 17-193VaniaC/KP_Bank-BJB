@@ -119,11 +119,11 @@
                 <img src="<?php echo base_url('assets/image/report.png');?>" class="symbol-menu" style="width: 55px;">
                 Laporan Gabungan
         </a>
-        <a href="<?= base_url('pks'); ?>" class="hupla">
+        <a href="<?= base_url('vendor'); ?>" class="hupla">
                 <img src="<?php echo base_url('assets/image/vendor.png');?>" class="symbol-menu" style="width: 60px;">
                 Vendor
         </a>
-        <a href="<?= base_url('invoice'); ?>" class="hupla">
+        <a href="<?= base_url('JProject'); ?>" class="hupla">
                 <img src="<?php echo base_url('assets/image/project.png');?>" class="symbol-menu" style="width: 60px;">
                 Jenis Project
         </a>

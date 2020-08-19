@@ -27,7 +27,7 @@
 		<div class="container-half right">
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline" style="float: right;">
 				<input type="text" name="nama_vendor" placeholder="Nama Vendor Baru" class="form-control" />
-				<input type="submit" name="btn" value="+ Tambah vendor" class="btn btn-success" />
+				<input type="submit" name="btn" value="+ Tambah Vendor" class="btn btn-success" />
 			</form>
 		</div>
 		<br><br>
@@ -42,7 +42,7 @@
 					<tr class="text-center">
 						<td>No</td>
 						<td>Nama Vendor</td>
-						<td>Jumlah penggunaan</td>
+						<!-- <td>Jumlah penggunaan</td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">Opsi</td>
 						<?php endif; ?>
@@ -55,7 +55,7 @@
 							<?= $counter++ ?>
 						</td>
 						<td><?php echo $listvendor->nama_vendor ?></td>
-						<td><?php echo $listvendor->STATUS ?></td>
+						<!-- <td><?php echo $listvendor->STATUS ?></td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">
 								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>

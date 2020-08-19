@@ -24,9 +24,9 @@
                   <th>Nama Project</th>
                   <th>tanggal PKS</th>
                   <th>Nominal PKS</th>
+                  <th>Nama Vendor</th>
                   <th>Mutasi PKS</th>
                   <th>Sisa Anggaran</th>
-                  <th>Nama Vendor</th>
           <!-- INVOICE -->
                   <th>Invoice</th>
                   <th>Tahap</th>
@@ -58,12 +58,11 @@
                   else{echo $n_colspan+1;}?>"><?php echo $a["GL"]?></td>
                   <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
                   else{echo $n_colspan+1;}?>"><?php echo $a["NAMA_REK"]?></td>
-                  <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
-                  else{echo $n_colspan+1;}?>"><?php echo $a['Mutasi']?></td>
-                  <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
-                  else{echo $n_colspan+1;}?>"><?php echo $a["SISA_ANGGARAN"]?></td>
+
  <!-- +++++++++++++++++++++++ PKS +++++++++++++++++++++++++++++ -->
                   <?php 
+                  $Mutasi_rbb=0;
+                  $Sisa_rbb = $a["ANGGARAN"];
 			                        if(!empty($a['pks'])){
 			                              $x=1;
 			                              foreach ($a['pks'] as $b):
@@ -75,9 +74,15 @@
 			                              if($x!=1 & $x<$n_data){
       			                              echo "</tr><tr>";
       			                        }
+                                          $Mutasi_rbb = $Mutasi_rbb+$b['NOMINAL_PKS'];
+                                          $Sisa_rbb = $Sisa_rbb-$b['NOMINAL_PKS'];
 			                        ?>
+                                          <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
+                                          else{echo $n_colspan+1;}?>"><?php echo $Mutasi_rbb;?></td>
+                                          <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
+                                          else{echo $n_colspan+1;}?>"><?php echo $Sisa_rbb;?></td>
 			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
-			                        else{echo $n_colspan+1;}?>"><?php echo $b["NO_PKS"]?> <?php echo $n_colspan?></td>
+			                        else{echo $n_colspan+1;}?>"><?php echo $b["NO_PKS"]?></td>
 			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
 			                        else{echo $n_colspan+1;}?>"><?php echo $b["jenis"]?></td>
 			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
@@ -89,20 +94,26 @@
 			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
 			                        else{echo $n_colspan+1;}?>"><?php echo $b["NOMINAL_PKS"]?></td>
 			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
-			                        else{echo $n_colspan+1;}?>"><?php echo $b['Mutasi']?></td>
-			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
-			                        else{echo $n_colspan+1;}?>"><?php echo $b["SISA_ANGGARAN"]?></td>
-			                        <td rowspan="<?php if($n_colspan!=0){echo $n_colspan;}
 			                        else{echo $n_colspan+1;}?>"><?php echo $b["nama_vendor"]?></td>
-			                        <?PHP $x=$x+1;?>
+
+			                        <?PHP $x=$x+1;
+                                                $Mutasi_pks=0;
+                                                $Sisa_pks = $b["NOMINAL_PKS"];
+                                          ?>
 			<!-- ++++++++++++++++++++++++++++++ PEMBAYARAN +++++++++++++++++++++++++++++++= -->
 							                        <?php 
 							                        if(!empty($b['invs'])){
-							                              $y=1;
-							                              foreach ($b['invs'] as $c):
-							                                    if($y!=1){
-							                                        echo "<tr>";
-							                                    }?>
+                                                                        $y=1;
+                                                                        foreach ($b['invs'] as $c):
+                                                                              if($y!=1){
+                                                                                  echo "<tr>";
+                                                                              }
+                                                                        $Mutasi_pks = $Mutasi_pks+$c['NOMINAL'];
+                                                                        $Sisa_pks = $Sisa_pks-$c["NOMINAL"];
+                                                                              ?>
+
+                                                                              <td ><?php echo $Mutasi_pks;?></td>
+                                                                              <td ><?php echo $Sisa_pks;?></td>
 							                                    <td ><?php echo $c["INVOICE"]?></td>
 							                                    <td ><?php echo $c["TERMIN"]?></td>  
 							                                    <td ><?php echo $c["NOMINAL"]?></td>
@@ -112,7 +123,9 @@
 							                              endforeach;
 							                        }
 							                        else{
-							                              echo "<td>-</td><td>-</td><td>-</td><td>-</td>";
+							                              echo "<td>-</td><td>";
+                                                                        echo $b['NOMINAL_PKS'];
+                                                                        echo "</td><td>-</td><td>-</td><td>-</td><td>-</td>";
 							                        }?>
 							                        </tr>
 							                  <?php
