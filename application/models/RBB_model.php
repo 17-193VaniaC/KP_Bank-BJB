@@ -16,19 +16,19 @@ class RBB_model extends CI_Model
         return [
             [
                 'field' => 'KODE_RBB',
-                'label' => 'KODE_RBB',
+                'label' => 'Kode RBB',
                 'rules' => 'required|is_unique[rbb.KODE_RBB]'
             ],
 
             [
                 'field' => 'PROGRAM_KERJA',
-                'label' => 'PROGRAM_KERJA',
+                'label' => 'Progran Kerja',
                 'rules' => 'required'
             ],
 
             [
                 'field' => 'ANGGARAN',
-                'label' => 'ANGGARAN',
+                'label' => 'Nominal Anggaran',
                 'rules' => 'required'
             ],
 
@@ -40,7 +40,7 @@ class RBB_model extends CI_Model
 
             [
                 'field' => 'NAMA_REK',
-                'label' => 'NAMA_REK',
+                'label' => 'Nama Rekening',
                 'rules' => 'required'
             ]
         ];
@@ -51,7 +51,7 @@ class RBB_model extends CI_Model
         return [
             [
                 'field' => 'PROGRAM_KERJA',
-                'label' => 'PROGRAM_KERJA',
+                'label' => 'Program Kerja',
                 'rules' => 'required'
             ],
 
@@ -63,7 +63,7 @@ class RBB_model extends CI_Model
 
             [
                 'field' => 'NAMA_REK',
-                'label' => 'NAMA_REK',
+                'label' => 'Nama Rekening',
                 'rules' => 'required'
             ]
         ];

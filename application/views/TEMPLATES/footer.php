@@ -1,8 +1,8 @@
 </div> <!-- END CONTAINER -->
 <footer id="footer" class="bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto"><br>
-            <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span><br><br>
+    <div class="container bg-white" style="height: 50px; width: 100%;">
+        <div class="copyright text-center">
+            <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span>
         </div>
     </div>
 
@@ -17,6 +17,7 @@
 
 <script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
 <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
+<script src="<?php echo base_url() . 'assets/js/bootstrap.js' ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

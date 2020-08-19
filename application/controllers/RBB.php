@@ -87,6 +87,7 @@ class RBB extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
+                redirect('RBB');
             }
 
             $this->load->view('templates/header.php', $title);

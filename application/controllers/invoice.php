@@ -80,6 +80,7 @@ class Invoice extends CI_Controller
             $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
             $this->load->view("Invoice/create_invoice", $data);
+            $this->load->view('templates/footer.php', $data);
         } else {
             redirect('Invoice');
         }

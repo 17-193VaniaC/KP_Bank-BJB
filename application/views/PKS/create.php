@@ -1,80 +1,138 @@
-<br><br>
-<div class="row">
-    <div class="col-md text-center my-">
-        <h2>Create PKS</h2>
-    </div>
-</div>
-<div class="row justify-content-center">
-    <div class="col-md-6">
-            <form class="user" method="post" action="<?= base_url('pks/create') ?>">
-                <div class="form-group">
-                    <label for="no_pks">Nomor PKS</label>
-                    <input type="text" class="form-control form-control-user" id="no_pks" name="no_pks" placeholder="Nomor PKS...">
-                    <?= form_error('no_pks', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
+<div class="row  h-100">
+    <div class="col" style="background-color: #e3e4e6;">
+        <div class="container" style="min-height: 100%;">
+            <div class="row justify-content-center" style="margin-top: 50px;">
+                <div class="col-lg-9">
+                    <!-- FLASH MESSAGE -->
+                    <?php if ($this->session->flashdata('success')) { ?>
+                        <?php
+                        echo "<div class='alert alert-success'>";
+                        echo $this->session->flashdata('success');
+                        echo "</div>";
+                        ?>
+                    <?php } ?>
+                    <?php if ($this->session->flashdata('failed')) { ?>
+                        <?php
+                        echo $this->session->flashdata('failed');
+                        echo "<strong>Gagal</strong>";
+                        echo "</div>";
+                        ?>
+                    <?php } ?>
+                    <!-- END FLASH MESSAGE -->
+                    <div class="card o-hidden border-0 shadow-lg my-5" style="background-color: #fff;">
+                        <div class="card-body pb-20">
+                            <div class="row justify-content-center" style="margin-top: 20px;">
+                                <div class="col-lg">
+                                    <div class="text-center">
+                                        <h2>Create PKS</h2>
+                                    </div>
+                                    <form class="user" method="post" action="<?= base_url('pks/create') ?>">
+                                        <table style="margin-top: 20px; width: 100%">
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="no_pks">Nomor PKS</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <input type="text" class="form-control form-control-user" id="no_pks" name="no_pks" placeholder="Nomor PKS">
+                                                    <small class="text-danger"><?php echo form_error('no_pks') ?></small>
+                                                </td>
 
-                <div class="form-group">
-                    <label for="kode_rbb">Kode RBB</label>
-                    <select class="form-control form-control-user" id="kode_rbb" name="kode_rbb">
-                        <?php foreach ($no_rbb as $row) : ?>
-                            <option value="<?= $row->KODE_RBB ?>"><?= $row->KODE_RBB ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <?= form_error('kode_rbb', '<small class="text-danger pl-3">', '</small>'); ?>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="kode_rbb">Kode RBB</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <select class="form-control form-control-user" id="kode_rbb" name="kode_rbb">
+                                                        <?php foreach ($no_rbb as $row) : ?>
+                                                            <option value="<?= $row->KODE_RBB ?>"><?= $row->KODE_RBB ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <small class="text-danger"><?php echo form_error('kode_rbb') ?></small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="jenis">Jenis</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 30%; padding-top:20px; padding-right: 20px">
+                                                    <select class="form-control form-control-user" id="jenis" name="jenis">
+                                                        <?php foreach ($jenis as $row) : ?>
+                                                            <option value="<?= $row->KODE_JENISPROJECT ?>"><?= $row->jenis ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <small class="text-danger"><?php echo form_error('jenis') ?></small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="kode_project">Kode Project</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <input type="text" class="form-control form-control-user" id="kode_project" name="kode_project" placeholder="Kode project">
+                                                    <small class="text-danger"><?php echo form_error('kode_project') ?></small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="nama_project">Nama Project</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <input type="text" class="form-control form-control-user" id="nama_project" name="nama_project" placeholder="Nama project">
+                                                    <small class="text-danger"><?php echo form_error('nama_project') ?></small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="tgl_pks">Tanggal PKS</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <input type="date" class="form-control form-control-user" id="tgl_pks" name="tgl_pks" placeholder="Tanggal PKS">
+                                                    <small class="text-danger"><?php echo form_error('tgl_pks') ?></small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="nominal_pks">Nominal PKS</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <input type="number" class="form-control form-control-user" id="nominal_pks" name="nominal_pks" placeholder="Nominal pks">
+                                                    <small class="text-danger"><?php echo form_error('nominal_pks') ?></small>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-right" style="margin-left: 3px; width: 20%; padding-top:20px; padding-right: 20px">
+                                                    <label for="nama_vendor">Nama Vendor</label>
+                                                </td>
+                                                <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
+                                                    <select class="form-control form-control-user" id="nama_vendor" name="nama_vendor">
+                                                        <?php foreach ($vendor as $row) : ?>
+                                                            <option value="<?= $row->KODE_VENDOR ?>"><?= $row->nama_vendor ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <small class="text-danger"><?php echo form_error('nama_vendor') ?></small>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div class="row mx-1" style="float:right; margin-top : 3%;">
+                                            <div class="col">
+                                                <button value="save" type="submit" class="btn btn-success">
+                                                    Simpan
+                                                </button>
+                                            </div>
+                                            <div class="col">
+                                                <a href="<?php echo site_url("pks"); ?>" s class="btn btn-secondary">
+                                                    Batal
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="jenis">Jenis</label>
-                    <select class="form-control form-control-user" id="jenis" name="jenis">
-                        <?php foreach ($jenis as $row) : ?>
-                            <option value="<?= $row->KODE_JENISPROJECT ?>"><?= $row->jenis ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <?= form_error('jenis', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-
-                <!-- <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="jenis" name="jenis" placeholder="jenis...">
-                    <?= form_error('jenis', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div> -->
-                <div class="form-group">
-                    <label for="kode_project">Kode Project</label>
-                    <input type="text" class="form-control form-control-user" id="kode_project" name="kode_project" placeholder="Kode project...">
-                    <?= form_error('kode_project', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-                <div class="form-group">
-                    <label for="nama_project">Nama Project</label>
-                    <input type="text" class="form-control form-control-user" id="nama_project" name="nama_project" placeholder="Nama project...">
-                    <?= form_error('nama_project', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-                <div class="form-group">
-                    <label for="tgl_pks">Tanggal PKS</label>
-                    <input type="date" class="form-control form-control-user" id="tgl_pks" name="tgl_pks" placeholder="Tanggal PKS...">
-                    <?= form_error('tgl_pks', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-                <div class="form-group">
-                    <label for="nominal_pks">Nominal PKS</label>
-                    <input type="number" class="form-control form-control-user" id="nominal_pks" name="nominal_pks" placeholder="Nominal pks...">
-                    <?= form_error('nominal_pks', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-                <div class="form-group">
-                    <label for="nama_vendor">Nama Vendor</label>
-                    <select class="form-control form-control-user" id="nama_vendor" name="nama_vendor">
-                        <?php foreach ($vendor as $row) : ?>
-                            <option value="<?= $row->KODE_VENDOR ?>"><?= $row->nama_vendor ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                    <?= form_error('nama_vendor', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
-                <!-- <div class="form-group">
-                    <label for="termin">Jumlah termin (optional)</label>
-                    <input type="text" class="form-control form-control-user" id="termin" name="termin" placeholder="Kosongkan jika tanpa termin">
-                    <?= form_error('termin', '<small class="text-danger pl-3">', '</small>'); ?>
-                </div>
- -->
-                <button type="submit" class="btn btn-info btn-user btn-block">
-                    Create PKS
-                </button>
-            </form>
+            </div>
+        </div>
     </div>
 </div>

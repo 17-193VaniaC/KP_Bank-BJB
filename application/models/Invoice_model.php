@@ -14,19 +14,19 @@ class Invoice_model extends CI_Model
         return [
             [
                 'field' => 'INVOICE',
-                'label' => 'INVOICE',
+                'label' => 'Invoice',
                 'rules' => 'required|is_unique[pembayaran.INVOICE]'
             ],
 
             [
                 'field' => 'KODE_TERMIN',
-                'label' => 'KODE_TERMIN',
+                'label' => 'Kode Termin',
                 'rules' => 'required'
             ],
 
             [
                 'field' => 'TGL_INVOICE',
-                'label' => 'TGL_INVOICE',
+                'label' => 'Tanggal Invoice',
                 'rules' => 'required'
             ]
 
@@ -38,7 +38,7 @@ class Invoice_model extends CI_Model
         return $this->db->query('SELECT pembayaran.INVOICE, termin_pks.NO_PKS, pembayaran.TGL_INVOICE, termin_pks.TERMIN, termin_pks.NOMINAL, pks.NOMINAL_PKS
         FROM termin_pks, pembayaran, pks
         WHERE termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN AND termin_pks.NO_PKS = pks.NO_PKS
-        ORDER BY pks.TGL_PKS, termin_pks.TERMIN')->result();
+        ORDER BY pks.TGL_PKS, termin_pks.TERMIN ASC')->result();
     }
 
     public function save()

@@ -14,7 +14,7 @@
 
     <!-- Custom CSS -->
     <!-- <link href="<?= base_url('assets/'); ?>css/style.css" rel="stylesheet" type="text/css"> -->
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/style.css">
 
     <!-- Bootstrap CSS -->
     <link href="<?= base_url('assets/'); ?>css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -25,4 +25,4 @@
 </head>
 
 <body>
-    <!-- <div id="content" class="d-flex flex-column" style="min-height: 90vh;"> -->
+    <div id="content" class="d-flex flex-column" style="min-height: 92vh; width:100%">
