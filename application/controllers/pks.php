@@ -60,6 +60,7 @@ class pks extends CI_Controller
 
         $hupla = $this->input->get('searchById');
         $data['pks'] = $this->Pks_model->getPagination($config["per_page"], $data['page']);
+        $data['pks'] = $this->Pks_model->getAll($hupla);
 
         $data['pagination'] = $this->pagination->create_links();
 
@@ -239,20 +240,21 @@ class pks extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             $termin = $this->Termin_model;
-            $data_termin = $termin->getRow($no_pks);
             $no_pks = str_replace('_', '/', $no_pks);
+            $data_termin = $termin->getRow($no_pks);
 
 
             if ($data_termin) {
                 if ($data_termin['STATUS'] == 'UNPAID') {
-
+                    redirect('rbb');
                     // HAPUS TERMIN
                     $hapus_termin = $termin->getAll($no_pks);
-
                     foreach ($hapus_termin as $row) {
-                        $termin->delete($row->KODE_TERMIN);
+                        // $termin->delete($row->KODE_TERMIN);
                     }
-                } else {
+                redirect('vendor');
+                } 
+                else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> PKS tidak dapat dihapus karena terdapat invoice yang telah dibayar.</div>');
                     redirect('pks');
                 }
@@ -287,9 +289,10 @@ class pks extends CI_Controller
             // HAPUS PKS
             $pks->deleteData($no_pks);
 
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Your data has been deleted.</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus.</div>');
             redirect('pks');
-        } else {
+        } 
+        else {
             redirect('pks');
         }
     }
@@ -300,8 +303,8 @@ class pks extends CI_Controller
             $res = $this->Pks_model->seeThisPKS($_GET['term']);
             if (count($res) > 0) {
                 foreach ($res as $reskey)
-                    $arr_res[] = $reskey->NO_PKS;
-                echo json_encode($arr_res);
+                    $varch[] = $reskey->NO_PKS;
+                echo json_encode($varch);
             }
         }
     }

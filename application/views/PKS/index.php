@@ -1,22 +1,25 @@
+
 <div style="margin-top: 50px; padding: 25px;"> 
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-    <!-- <div class="container-xl"> -->
+    <!-- <div class="container-xl"> -->        
     <div class="container-half">
-        <h2><a href="<?= base_url('pks/'); ?>" style="text-decoration: none; color: black;">Daftar <b>PKS</b></a></h2></a>
+        <h2><a href="<?= base_url('pks/'); ?>" style="text-decoration: none; color: black;">Daftar <b>PKS</b></a></h2>
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
            <p> <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">+ Tambah PKS</a></p>
         <?php endif; ?>
     </div>
-    <div class="container-half right">
-        <form method="get" class="form-inline" style="float: right;">
-            <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" />
-            <input class="btn btn-primary" type="submit" name="search" value="Cari">
+    <div class="container-half right" >
+        <div class="form-group">
+        <form method="get" class="form-inline" style="float: left;">
+            <input type="text" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">Search</button>
         </form>
+        </div>
     </div>
-<!-- </div> -->
-    <div class="table-responsive">
+     <div class="table-responsive">
         <div class="table-wrapper">
             <table class="table table-striped table-hover table-bordered">
                 <thead  style="background-color: #204d95; color: white;">
@@ -31,7 +34,7 @@
                         <td>Sisa Anggaran</td>
                         <td>Nama Vendor</td>
                         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                            <td>Action</td>
+                            <td>Opsi</td>
                         <?php endif; ?>
                     </tr>
                 </thead>
@@ -61,7 +64,10 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
+            <script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
+            <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
+            <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
+            <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
             <script type="text/javascript">
                 $(document).ready(function() {
                     $("#searchById").autocomplete({

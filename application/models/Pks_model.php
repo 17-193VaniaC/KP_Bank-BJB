@@ -74,7 +74,7 @@ class Pks_model extends CI_Model
     {
         $this->db->like('NO_PKS', $nopks, 'after');
         $this->db->order_by('INPUT_DATE');
-        $this->db->limit(4);
+        $this->db->limit(5);
         return $this->db->get('pks')->result();
     }
 

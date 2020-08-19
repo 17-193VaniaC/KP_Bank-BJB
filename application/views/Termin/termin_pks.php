@@ -2,13 +2,29 @@
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-    <?php if ($termin) : ?>
+    <?php if ($termin) : 
+            $pks_ = str_replace('/', '_', $no_pks);?>
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-8">
                             <h2>Daftar <b>Termin PKS No. <?= $no_pks ?></b></h2>
+                        </div>
+                        <div class="container-half right" style="width: auto; right: 0;">
+        <?php if (isset($termin)):
+                foreach ($termin as $row) : 
+                    $baris++;
+                    $total += $row->NOMINAL;
+                endforeach;
+                    ?>
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13 && $total < $pks["NOMINAL_PKS"]): ?>
+                    <a href="<?php echo base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
+                        <button class="btn btn-success"> + Tambah Termin </button>
+                    </a>                           
+        <?php endif; $baris=0; $total=0;?>
+        <?php endif; ?>
+
                         </div>
                         <!-- <div class="col-sm-4">
                         <div class="row">
@@ -86,13 +102,7 @@
             </script> -->
             </div>
         </div>
-        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : ?>
-            <hr>
-
-            <!-- redirect('Termin/add/' . $data['no_pks'] . "/" . $n_termin . "/1"); -->
-            <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">Create</a>
-        <?php endif; ?>
-        <p>Total Nominal Termin: <?= $total ?> dari <?= $pks['NOMINAL_PKS'] ?></p>
+        <p><b>Anggaran PKS yang digunakan:</b> <?= $total ?> dari <?= $pks['NOMINAL_PKS'] ?></p>
         <?php if ($total > $pks['NOMINAL_PKS']) : ?>
             <div class="alert alert-warning" role="alert">
                 Total nominal termin melebihi nominal PKS! Harap cek kembali!
@@ -101,15 +111,14 @@
     <?php else : ?>
         <h1>Termin Kosong</h1>
         <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : 
-            $pks_ = str_replace('/', '_', $no_pks);
-       
-        ?>
-            <hr>
-
-            <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">Create</a>
+            $pks_ = str_replace('/', '_', $no_pks);?>
+                <hr>
+                    <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
+                        <button class="btn btn-success"> + Tambah Termin </button>
+                    </a>
         <?php endif; ?>
     <?php endif; ?>
     <hr>
-    <a href="<?php echo site_url('pks'); ?>">Back</a>
+    <a href="<?php echo site_url('pks'); ?>" class="btn btn-info">Kembali</a>
 
 </div>
