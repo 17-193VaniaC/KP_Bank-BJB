@@ -250,9 +250,8 @@ class pks extends CI_Controller
                     // HAPUS TERMIN
                     $hapus_termin = $termin->getAll($no_pks);
                     foreach ($hapus_termin as $row) {
-                        // $termin->delete($row->KODE_TERMIN);
+                         $termin->delete($row->KODE_TERMIN);
                     }
-                redirect('vendor');
                 } 
                 else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> PKS tidak dapat dihapus karena terdapat invoice yang telah dibayar.</div>');
