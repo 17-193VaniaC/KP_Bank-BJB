@@ -71,7 +71,7 @@ class auth extends CI_Controller
 
     public function registration()
     {
-        $title['title'] = 'Register Account';
+        $title['title'] = 'Registrasi Akun';
         $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($dataa['user']['ROLE'] == 'IT FINANCE') {
             // if ($this->session->userdata('email')) {

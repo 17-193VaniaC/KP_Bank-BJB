@@ -15,7 +15,7 @@
  }
  .hupla{
     margin-left: auto;
-    padding: 10px;
+    padding: 15px;
     color: white;
     width: 23%;
     background-color: rgba(0,0,0,0.7);
@@ -23,7 +23,7 @@
 
 </style>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css');?>">
-<div style="background-image: url('<?php echo base_url('assets/image/bg.jpg');?>'); color: white; text-align: center;"><br>
+<div style="background-image: url('<?php echo base_url('assets/image/bg2.jpeg');?>'); color: white; text-align: center; background-size: cover; "><br>
    <br><br><br> <h3>Selamat datang di </h3>
         <h2>Sistem Informasi Finansial Bank BJB</h2>
         <br><br><br><br><br><br>
@@ -42,7 +42,7 @@
         </a>
         <a href="<?= base_url('pks'); ?>" class="jumbotron">
             <div style="width: 30%; float: left;">
-                <img src="<?php echo base_url('assets/image/plan.png');?>" class="symbol-menu" style="width: 60px;">
+                <img src="<?php echo base_url('assets/image/agreement.png');?>" class="symbol-menu" style="width: 60px;">
             </div><div>
                 <b>PKS</b><br>
                 Perjanjian Kerjasama
@@ -116,19 +116,19 @@
     </div></div> -->
     <div class="row" style="width: 100%; padding: auto;">
         <a href="<?= base_url('laporan'); ?>" class="hupla">
-                <img src="<?php echo base_url('assets/image/report.png');?>" class="symbol-menu" style="width: 55px;">
+                <img src="<?php echo base_url('assets/image/report.png');?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
                 Laporan Gabungan
         </a>
         <a href="<?= base_url('vendor'); ?>" class="hupla">
-                <img src="<?php echo base_url('assets/image/vendor.png');?>" class="symbol-menu" style="width: 60px;">
+                <img src="<?php echo base_url('assets/image/vendor.png');?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                 Vendor
         </a>
         <a href="<?= base_url('JProject'); ?>" class="hupla">
-                <img src="<?php echo base_url('assets/image/project.png');?>" class="symbol-menu" style="width: 60px;">
+                <img src="<?php echo base_url('assets/image/jp.png');?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                 Jenis Project
         </a>
         <a href="<?= base_url('register'); ?>" class="hupla">
-                <img src="<?php echo base_url('assets/image/add_account.png');?>" class="symbol-menu" style="width: 45px;">
+                <img src="<?php echo base_url('assets/image/add_account.png');?>" class="symbol-menu" style="width: 40px; margin-right: 15px;">
                 Tambah Akun
         </a>
     </div>

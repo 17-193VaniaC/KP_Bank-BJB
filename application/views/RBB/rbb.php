@@ -1,5 +1,5 @@
-<body><br>
-	<div class="container-xl" style="margin-top: 50px;">
+<br><br><br>
+	<div class="container-xl" style=":margin-top 50px;">
 		<?php if ($this->session->flashdata('message')) { ?>
 			<?php echo $this->session->flashdata('message') ?>
 		<?php } ?>
@@ -37,7 +37,7 @@
 							<td><?php echo $listrbb->SISA_ANGGARAN; ?></td>
 							<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 								<td class="table-option-row">
-									<a href="<?php echo site_url('rbb/edit/' . $listrbb->KODE_RBB) ?>""><button class=" btn btn-primary">Edit</button></a>
+									<a href="<?php echo site_url('rbb/edit/' . $listrbb->KODE_RBB) ?>""><button class=" btn btn-info">Edit</button></a>
 									<a href=" <?php echo site_url('rbb/delete/' . $listrbb->KODE_RBB) ?>""><button class=" btn btn-danger">Hapus</button></a>
 								</td>
 							<?php endif; ?>

@@ -24,16 +24,17 @@
                 </div>
 
                 <table class="table table-striped table-hover table-bordered">
-                    <thead>
+                    <thead style="background-color: #204d95; color: white;">
+                    
                         <tr class="text-center">
-                            <th>Termin</th>
-                            <th>Tanggal Termin</th>
-                            <th>Nominal</th>
-                            <th>Status</th>
-                            <th>Kategori</th>
-                            <th>GL</th>
+                            <td>Termin</td>
+                            <td>Tanggal Termin</td>
+                            <td>Nominal</td>
+                            <td>Status</td>
+                            <td>Kategori</td>
+                            <td>GL</td>
                             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                                <th>Action</th>
+                                <td class="table-option-row">Opsi</td>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -51,18 +52,18 @@
                                 <td><?= $row->GL ?></td>
                                 <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
                                     <td>
-                                        <div class="btn-group">
+                                        <div  class="table-option-row">
                                             <?php if ($row->STATUS == 'UNPAID') : 
                                             $pks_ = str_replace('/', '_', $row->NO_PKS);
                                             ?>
 
-                                                <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
-                                                <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-danger">Delete</button></a>
+                                                <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-info">Edit</button></a>
+                                                <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-danger">Hapus</button></a>
                                             <?php else : 
                                                     $pks_ = str_replace('/', '_', $row->NO_PKS);?>
 
-                                                <a href="<?= site_url('Termin/edit/0/' . $pks_) ?>"><button class="btn btn-success">Edit</button></a>
-                                                <a href="<?= site_url('Termin/delete/0/' . $pks_) ?>"><button class="btn btn-danger">Delete</button></a>
+                                                <a href="<?= site_url('Termin/edit/0/' . $pks_) ?>"><button class="btn btn-info" style="">Edit</button></a>
+                                                <a href="<?= site_url('Termin/delete/0/' . $pks_) ?>"><button class="btn btn-danger">Hapus</button></a>
                                             <?php endif; ?>
                                             <!-- <a href="<?php echo site_url('pks/edit/' . $row->NO_PKS); ?>"><button class="btn btn-success">Edit</button></a>
                                             <a href="<?php echo site_url('pks/delete/' . $row->NO_PKS); ?>"><button class="btn btn-danger">Delete</button></a> -->
