@@ -54,22 +54,30 @@
         <button class="dropbtn" disabled>RBB</button>
         <div class="dropdown-content">
             <a href="<?php echo site_url('rbb'); ?>">Daftar RBB</a>
+            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
             <a href="<?php echo site_url('rbb/add'); ?>">Tambah RBB</a>
             <a href="<?php echo site_url('mutasi_rbb/Penyesuaian_RBB'); ?>">Penyesuaian RBB</a>
+            <?php endif;?>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn" disabled>PKS</button>
         <div class="dropdown-content">
             <a href="<?php echo site_url('pks'); ?>">Daftar PKS</a>
+              <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
             <a href="<?php echo site_url('pks/create'); ?>">Tambah PKS</a>
+            <?php endif;?>
+            <a href="<?php echo site_url('termin'); ?>">Daftar Termin PKS</a>
+
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn" disabled>Invoice</button>
         <div class="dropdown-content">
             <a href="<?php echo site_url('Invoice'); ?>">Daftar Invoice</a>
+            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
             <a href="<?php echo site_url('Invoice/add'); ?>">Invoice Baru</a>
+            <?php endif;?>
         </div>
     </div>
 

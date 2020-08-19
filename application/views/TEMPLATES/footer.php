@@ -1,8 +1,8 @@
 </div> <!-- END CONTAINER -->
 <footer id="footer" class="bg-white">
-    <div class="container bg-white" style="height: 50px; width: 100%;">
+    <div class="container bg-white" style="margin-top: 20px; margin-bottom: 20px; width: 100%;">
         <div class="copyright text-center">
-            <strong><span>Copyright &copy; Bank BJB <?= date('Y'); ?></span></strong>
+            <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span>
         </div>
     </div>
 
