@@ -3,19 +3,8 @@
         <div class="row justify-content-center" style="margin-top: 100px;">
             <div class="col-lg-9">
                 <!-- FLASH MESSAGE -->
-                <?php if ($this->session->flashdata('success')) { ?>
-                    <?php
-                    echo "<div class='alert alert-success'>";
-                    echo $this->session->flashdata('success');
-                    echo "</div>";
-                    ?>
-                <?php } ?>
-                <?php if ($this->session->flashdata('failed')) { ?>
-                    <?php
-                    echo $this->session->flashdata('failed');
-                    echo "<strong>Gagal</strong>";
-                    echo "</div>";
-                    ?>
+                <?php if ($this->session->flashdata('message')) { ?>
+                    <?php echo $this->session->flashdata('message') ?>
                 <?php } ?>
                 <!-- END FLASH MESSAGE -->
                 <div class="card o-hidden border-0 shadow-lg my-5" style="background-color: #fff;">

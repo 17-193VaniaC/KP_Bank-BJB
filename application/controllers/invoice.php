@@ -70,6 +70,7 @@ class Invoice extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
+                redirect('Invoice');
             } else if (!empty($post["nopks"])) {
                 if (count($termin->hasBeenPaid($post["nopks"])) < 1) { //kalau ada data di pks=udah lunas
                     $this->session->set_flashdata('failed', "Invoice PKS sudah lunas");

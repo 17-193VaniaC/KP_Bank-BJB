@@ -52,9 +52,7 @@ class Termin extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view("Termin/add_termin_pks", $data);
                 $this->load->view('templates/footer.php');
-            } 
-
-            else {
+            } else {
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($data['no_pks']);
 
@@ -169,18 +167,28 @@ class Termin extends CI_Controller
                 $this->load->view('Termin/edit_termin', $data);
                 $this->load->view('templates/footer.php');
             } else {
-                $termin->update($KODETERMIN);
+                $pks = $this->Pks_model;
+                $data_PKS = $pks->getById($KODE_PKS);
+                if ($data_PKS['SISA_ANGGARAN'] < $this->input->post('NOMINAL')) {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
+                    $this->load->view('templates/header.php', $title);
+                    $this->load->view('templates/navbar.php', $data);
+                    $this->load->view('Termin/edit_termin', $data);
+                    $this->load->view('templates/footer.php');
+                } else {
+                    $termin->update($KODETERMIN);
 
-                // ADD LOG
-                $log = $this->Log_model;
-                $data_log['USER'] = $data['user']['NAMA'];
-                $data_log['TABLE_NAME'] = 'termin_pks';
-                $data_log['KODE_DATA'] = $KODETERMIN;
-                $data_log['ACTIVITY'] = 'edit';
-                $log->save($data_log);
-                $NO_PKS = str_replace('/', '_', $NO_PKS);
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan</div>');
-                redirect('Termin/termin_pks/' . $NO_PKS);
+                    // ADD LOG
+                    $log = $this->Log_model;
+                    $data_log['USER'] = $data['user']['NAMA'];
+                    $data_log['TABLE_NAME'] = 'termin_pks';
+                    $data_log['KODE_DATA'] = $KODETERMIN;
+                    $data_log['ACTIVITY'] = 'edit';
+                    $log->save($data_log);
+                    $NO_PKS = str_replace('/', '_', $NO_PKS);
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan</div>');
+                    redirect('Termin/termin_pks/' . $NO_PKS);
+                }
             }
 
             // if (!isset($KODETERMIN)) redirect('rbb');
