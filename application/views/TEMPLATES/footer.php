@@ -2,7 +2,7 @@
 <footer id="footer" class="bg-white">
     <div class="container bg-white" style="height: 50px; width: 100%;">
         <div class="copyright text-center">
-            <span>Copyright &copy; Bank BJB <?= date('Y'); ?></span>
+            <strong><span>Copyright &copy; Bank BJB <?= date('Y'); ?></span></strong>
         </div>
     </div>
 
