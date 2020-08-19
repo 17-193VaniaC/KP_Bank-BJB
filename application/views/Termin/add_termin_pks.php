@@ -7,7 +7,7 @@
                     <?php echo $this->session->flashdata('message') ?>
                 <?php } ?>
                 <!-- END FLASH MESSAGE -->
-                <div class="card o-hidden border-0 shadow-lg my-5" style="background-color: #fff;">
+                <div class="card o-hidden border-0 shadow-lg my-5" style="background-color: #fff; margin-top: 0;">
                     <div class="card-body pb-20">
                         <div class="row justify-content-center" style="margin-top: 20px;">
                             <div class="col-lg">
