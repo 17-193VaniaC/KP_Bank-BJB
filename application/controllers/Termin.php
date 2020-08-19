@@ -52,12 +52,13 @@ class Termin extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view("Termin/add_termin_pks", $data);
                 $this->load->view('templates/footer.php');
-            } else {
+            } 
 
+            else {
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($data['no_pks']);
 
-                if ($data_PKS['SISA_ANGGARAN'] > $this->input->post('SISA_ANGGARAN')) {
+                if ($data_PKS['SISA_ANGGARAN'] < $this->input->post('NOMINAL')) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
