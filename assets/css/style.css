@@ -31,7 +31,7 @@ html, body{
   background-image: url('../assets/image/bg.jpg');
 }
 footer {
-   position: absolute;
+   /*position: absolute;*/
    left: 0;
    right: 0;
    bottom: 0;
@@ -51,8 +51,10 @@ footer {
  }
 
 .jumbotron{
-    padding: 5px;
+    padding: 15px;
+    min-height: 90px;
  }
+
 
 /*footer bawah*/
  .bluefooter{
@@ -101,7 +103,6 @@ footer {
     float: right;
 
 }
-
 
  /* Jenis project */
  .row-container{
