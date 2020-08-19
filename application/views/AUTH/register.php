@@ -1,12 +1,12 @@
-<body class="bg-gradient-primary">
-
+<!-- <body class="bg-gradient-primary"> -->
+<div class="col h-100" style="background-color: #e3e4e6;">
     <div class="container">
 
         <?php if ($this->session->flashdata('message')) { ?>
             <?php echo $this->session->flashdata('message') ?>
         <?php } ?>
         <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" style="margin-top: 100px;">
 
             <div class="col-xl-7 col-lg-7 col-md-7">
 
@@ -63,3 +63,4 @@
         </div>
 
     </div>
+</div>

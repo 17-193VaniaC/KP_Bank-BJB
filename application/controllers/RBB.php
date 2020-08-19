@@ -123,6 +123,7 @@ class RBB extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
+                redirect('rbb');
             }
 
             $data["rbb"] = $rbb->getById($KODE_RBB);

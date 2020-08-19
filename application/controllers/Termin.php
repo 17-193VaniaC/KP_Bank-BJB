@@ -32,7 +32,7 @@ class Termin extends CI_Controller
 
     // untuk menambah termin dari halaman termin
     public function addMore($no_pks, $termin)
-    {   
+    {
         $no_pks = str_replace('_', '/', $no_pks);
         $title['title'] = 'Create Termin';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -53,35 +53,46 @@ class Termin extends CI_Controller
                 $this->load->view("Termin/add_termin_pks", $data);
                 $this->load->view('templates/footer.php');
             } else {
-                $kode_termin = $data['termin']->save($no_pks);
 
-                // ADD LOG
-                $log = $this->Log_model;
-                $data_log['USER'] = $data['user']['NAMA'];
-                $data_log['TABLE_NAME'] = 'termin_pks';
-                $data_log['KODE_DATA'] = $kode_termin;
-                $data_log['ACTIVITY'] = 'add';
-                $log->save($data_log);
-                $no_pks = str_replace('/', '_', $no_pks);
-                redirect('Termin/Termin_pks/' . $no_pks);
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                $pks = $this->Pks_model;
+                $data_PKS = $pks->getById($data['no_pks']);
+
+                if ($data_PKS['SISA_ANGGARAN'] > $this->input->post('SISA_ANGGARAN')) {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
+                    $this->load->view('templates/header.php', $title);
+                    $this->load->view('templates/navbar.php', $data);
+                    $this->load->view("Termin/add_termin_pks", $data);
+                    $this->load->view('templates/footer.php');
+                } else {
+                    $kode_termin = $data['termin']->save($no_pks);
+
+                    // ADD LOG
+                    $log = $this->Log_model;
+                    $data_log['USER'] = $data['user']['NAMA'];
+                    $data_log['TABLE_NAME'] = 'termin_pks';
+                    $data_log['KODE_DATA'] = $kode_termin;
+                    $data_log['ACTIVITY'] = 'add';
+                    $log->save($data_log);
+                    $no_pks = str_replace('/', '_', $no_pks);
+                    redirect('Termin/Termin_pks/' . $no_pks);
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil disimpan</div>');
+                }
             }
-        } 
-        else {
+        } else {
             $no_pks = str_replace('/', '_', $no_pks);
             redirect('Termin/Termin_pks/' . $no_pks);
         }
     }
 
-    public function getCategoryGL(){
+    public function getCategoryGL()
+    {
 
-        $kategori_y = $this->input->post('KATEGORI',TRUE);
+        $kategori_y = $this->input->post('KATEGORI', TRUE);
         // var_dump($kategori_);
-        if(!strncmp($kategori_y, "Maintenance", 7) || !strncmp('Pembayaran rutin bulanan', $kategori_y, 7)){
+        if (!strncmp($kategori_y, "Maintenance", 7) || !strncmp('Pembayaran rutin bulanan', $kategori_y, 7)) {
             $k = "Operating Expense";
             // echo strcmp($kategori_y, "Maintenance");
-        }
-        else{
+        } else {
             $k = "Capital Expense";
             // redirect('pks');
         }
@@ -124,7 +135,7 @@ class Termin extends CI_Controller
     //         // $data['ntermin'] = $NTERMIN;;
     //         // $data['npayment'] = $NPAYMENT;
     //         // echo $NPAYMENT;
-  
+
     //         $this->load->view("Termin/add_termin/", $data);
     //     } else {
     //         redirect('Termin');
@@ -132,7 +143,7 @@ class Termin extends CI_Controller
     // }
 
     public function edit($KODETERMIN, $KODE_PKS)
-    {   
+    {
         $NO_PKS = str_replace('/', '_', $KODE_PKS);
         $title['title'] = 'Edit Termin';
 
@@ -167,7 +178,7 @@ class Termin extends CI_Controller
                 $data_log['ACTIVITY'] = 'edit';
                 $log->save($data_log);
                 $NO_PKS = str_replace('/', '_', $NO_PKS);
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan</div>');
                 redirect('Termin/termin_pks/' . $NO_PKS);
             }
 
@@ -190,8 +201,8 @@ class Termin extends CI_Controller
         }
     }
 
-  public function edit2($KODETERMIN)
-    {   
+    public function edit2($KODETERMIN)
+    {
         $title['title'] = 'Edit Termin';
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -224,7 +235,7 @@ class Termin extends CI_Controller
                 $data_log['ACTIVITY'] = 'edit';
                 $log->save($data_log);
                 // $NO_PKS = str_replace('/', '_', $NO_PKS);
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan</div>');
                 redirect('Termin/');
             }
 
@@ -275,7 +286,8 @@ class Termin extends CI_Controller
 
     // untuk menampilkan termin per pks
     public function Termin_pks($nopks)
-    {   $nopks = str_replace('_', '/', $nopks);
+    {
+        $nopks = str_replace('_', '/', $nopks);
         $data["termin"] = $this->Termin_model->getAll($nopks);
         $data["pks"] = $this->Pks_model->getById($nopks);
         $title['title'] = 'Termin PKS NO. ' . $nopks;
