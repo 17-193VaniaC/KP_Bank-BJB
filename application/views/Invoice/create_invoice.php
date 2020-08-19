@@ -1,3 +1,4 @@
+<div class="row">
 <div class="col h-100" style="background-color: #e3e4e6;">
     <div class="container" style="min-height: 100%;">
         <div class="row justify-content-center" style="margin-top: 100px;">
@@ -103,6 +104,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="<?php echo base_url() . 'assets/js/bootstrap.js' ?>" type="text/javascript"></script>

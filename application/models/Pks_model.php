@@ -91,6 +91,4 @@ class Pks_model extends CI_Model
         $this->db->where("NO_PKS", $nopks);
         return $this->db->get()->result();
     }
-
-    // public function countPKSthi
 }
