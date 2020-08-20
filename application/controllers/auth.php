@@ -110,7 +110,7 @@ class auth extends CI_Controller
                 $data_log['ACTIVITY'] = 'register';
                 $log->save($data_log);
 
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your account has been created. Please wait until your account is activated to create your program(s). </div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun berhasil dibuat. </div>');
                 redirect('welcome');
             }
         } elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {

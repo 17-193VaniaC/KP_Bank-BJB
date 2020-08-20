@@ -73,8 +73,12 @@ class JProject extends CI_Controller
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
             }
+            else {
+                $this->session->set_flashdata('failed', 'Data yang dimasukan kosong atau sudah ada');
+            }
             redirect('jenis_project');
-        } else {
+        } 
+        else {
             redirect('dashboard');
         }
     }
@@ -95,7 +99,7 @@ class JProject extends CI_Controller
             $log->save($data_log);
 
             $this->JProject_model->delete($jenis);
-            $this->session->set_flashdata('success', 'Your data has been deleted');
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
         } else {
             $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
         }

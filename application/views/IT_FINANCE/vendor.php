@@ -1,4 +1,4 @@
-<div class="container-xl" style="margin-top: 50px;">
+<br>	<br>	<div class="container-xl" style="margin-top: 50px;">
 <!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
@@ -56,6 +56,7 @@
 						</td>
 						<td><?php echo $listvendor->nama_vendor ?></td>
 						<!-- <td><?php echo $listvendor->STATUS ?></td> -->
+						
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">
 								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>

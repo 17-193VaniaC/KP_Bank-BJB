@@ -75,7 +75,8 @@ class Vendor extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
-            } else {
+            } 
+            else {
                 $this->session->set_flashdata('failed', 'Data yang dimasukan kosong atau sudah ada');
             }
 
@@ -106,9 +107,9 @@ class Vendor extends CI_Controller
                 $log->save($data_log);
 
                 $this->Vendor_model->delete($vendor);
-                $this->session->set_flashdata('delete_success', 'Data berhasil dihapus');
+                $this->session->set_flashdata('success', 'Data berhasil dihapus');
             } else {
-                $this->session->set_flashdata('delete_failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+                $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
             }
             redirect('vendor');
         } else {

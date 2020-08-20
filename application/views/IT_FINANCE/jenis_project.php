@@ -1,4 +1,4 @@
-<div class="container-xl" style="margin-top: 50px;">
+<br>	<br>	<div class="container-xl" style="margin-top: 50px;">
 <!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
@@ -26,7 +26,7 @@
 	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 		<div class="container-half right">
 			<form action="<?php echo site_url('jproject/add') ?>" method="post" class="form-inline" style="float: right;">
-				<input type="text" name="jproject" placeholder="Nama Jenis Project Baru" class="form-control" />
+				<input type="text" name="jenis" placeholder="Nama Jenis Project Baru" class="form-control" />
 				<input type="submit" name="btn" value="+ Tambah Jenis Project" class="btn btn-success" />
 			</form>
 		</div>
@@ -34,7 +34,7 @@
 	<?php endif; ?>
 
 
-	<!-- ##############################################TABEL VENDOR######################################################## -->
+	<!-- ##############################################TABEL JENIS######################################################## -->
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<table class="table table-striped table-hover table-bordered">
@@ -58,8 +58,8 @@
 						<!-- <td><?php echo $listjenis->STATUS; ?></td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">
-								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT; ?>" data-vendor="<?php echo $listjenis->jenis; ?>" data-status="<?php echo $listjenis->STATUS; ?>"> Edit</button>
-								<a class="btn btn-danger" href="<?php echo site_url('vendor/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Hapus data vendor?')">Hapus</a>
+								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT; ?>" data-jenis="<?php echo $listjenis->jenis; ?>" data-status="<?php echo $listjenis->STATUS; ?>"> Edit</button>
+								<a class="btn btn-danger" href="<?php echo site_url('jproject/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Hapus data jenis project?')">Hapus</a>
 							</td>
 						<?php endif; ?>
 					</tr>
@@ -117,7 +117,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 	$(document).on('click', '#editbutton', function() {
-		var n_jenis = $(this).data('vendor');
+		var n_jenis = $(this).data('jenis');
 		var kode_jenis = $(this).data('id');
 		var penggunaan = $(this).data('status');
 
