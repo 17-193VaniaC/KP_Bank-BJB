@@ -40,10 +40,14 @@ class Invoice extends CI_Controller
             $pks = $this->Pks_model;
             $validation = $this->form_validation;
             $validation->set_rules($invoice->rules());
-            if ($validation->run()) {
-                $invoice->save();
 
-                // $termin->hupla();
+            if ($validation->run()) {
+                if (count($termin->hasntBeenPaid($post["nopks"])) < 1) { //kalau ada data di pks=udah lunas
+                    $this->session->set_flashdata('failed', "Invoice PKS sudah lunas");
+                    redirect('invoice/add');
+                } 
+                
+                $invoice->save();
                 $termin->paid($post["KODE_TERMIN"]);
                 $no_pks = $termin->sisaAnggaran($post['KODE_TERMIN']);
 
@@ -69,21 +73,20 @@ class Invoice extends CI_Controller
                 $data_log['ACTIVITY'] = 'add';
                 $log->save($data_log);
 
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                $this->session->set_flashdata('message', 'Berhasil disimpan');
                 redirect('Invoice');
-            } else if (!empty($post["nopks"])) {
-                if (count($termin->hasBeenPaid($post["nopks"])) < 1) { //kalau ada data di pks=udah lunas
-                    $this->session->set_flashdata('failed', "Invoice PKS sudah lunas");
-                } else { //kalau gak ketemu salah input berarti
-                    $this->session->set_flashdata('not_found', "PKS tidak ditemukan");
-                }
             }
+
+            if(empty($this->input->post('termin')) && !empty($this->input->post('nopks'))){
+                    $this->session->set_flashdata('message', "Invoice PKS sudah lunas atau tidak ditemukan");
+                    redirect('Invoice/add');   
+            }
+
+            
             $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
             $this->load->view("Invoice/create_invoice", $data);
             $this->load->view('templates/footer.php', $data);
-        } else {
-            redirect('Invoice');
         }
     }
 

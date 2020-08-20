@@ -11,11 +11,11 @@
                     echo "</div>";
                     ?>
                 <?php } ?>
-                <?php if ($this->session->flashdata('failed')) { ?>
+                <?php if ($this->session->flashdata('message')) { ?>
                     <?php
                     echo "<div class='alert alert-danger' >";
                     echo "<strong>Gagal</strong><br>";
-                    echo $this->session->flashdata('failed');
+                    echo $this->session->flashdata('message');
                     echo "</div>";
                     ?>
                 <?php } ?>
@@ -44,9 +44,8 @@
                                             </td>
                                             <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
                                                 <input type="text" name="nopks" onkeyup="isi_otomatis()" id="NOPKS" class="form-control" />
-                                                <small class="text-danger"><?php echo form_error('INVOICE') ?></small>
+                                                <!-- <small class="text-danger"><?php echo form_error('INVOICE') ?></small> -->
                                             </td>
-
                                         </tr>
                                         <input type="hidden" name="KODE_TERMIN" id="kodetermin" class="form-control" readonly>
                                         <tr>
@@ -71,7 +70,8 @@
                                             </td>
                                             <td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
                                                 <input type="text" name="INVOICE" class="form-control" />
-                                                <?php echo form_error('INVOICE', '<small class="text-danger pl-3">', '</small>'); ?>
+                                                <small class="text-danger"><?php echo form_error('INVOICE') ?></small>
+
                                             </td>
                                         </tr>
                                         <tr>

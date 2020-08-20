@@ -1,7 +1,11 @@
-<br><div class="container-xl" style="margin-top: 50px;">
-    <?php if ($this->session->flashdata('message')) { ?>
-        <?php echo $this->session->flashdata('message') ?>
+<br>    <br>    <div class="container-xl" style="margin-top: 50px;">
+    <?php if ($this->session->flashdata('message')) {
+        echo "<div class='alert alert-success'>";
+        echo $this->session->flashdata('message');
+        echo "</div>";
+        ?>
     <?php } ?>
+    
     <div class="container-half">
         <h2><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none; color: black;">Daftar Invoice</a></h2></a>
     </div>
