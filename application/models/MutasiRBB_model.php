@@ -15,19 +15,19 @@ class MutasiRBB_model extends CI_Model
         return [
             [
                 'field' => 'KODE_RBB',
-                'label' => 'KODE_RBB',
+                'label' => 'Kode RBB',
                 'rules' => 'required'
             ],
 
             [
                 'field' => 'KETERANGAN',
-                'label' => 'KETERANGAN',
+                'label' => 'Keterangan',
                 'rules' => 'required'
             ],
 
             [
                 'field' => 'NOMINAL',
-                'label' => 'NOMINAL',
+                'label' => 'Nominal',
                 'rules' => 'required'
             ]
         ];

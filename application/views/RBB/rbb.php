@@ -1,8 +1,11 @@
-<br><br><br>
 	<div class="container-xl" style=":margin-top 50px;">
-		<?php if ($this->session->flashdata('message')) { ?>
-			<?php echo $this->session->flashdata('message') ?>
-		<?php } ?>
+<br><br><br><br>	
+	<?php if ($this->session->flashdata('message')) {
+        echo "<div class='alert alert-success'>";
+        echo $this->session->flashdata('message');
+        echo "</div>";
+        ?>
+    <?php } ?>
 			<div class="container-half">
 			<h2>Rencana Bisnis Bank</h2>
 			</div>

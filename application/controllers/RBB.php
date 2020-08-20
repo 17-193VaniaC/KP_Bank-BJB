@@ -86,7 +86,7 @@ class RBB extends CI_Controller
                 $data_log['ACTIVITY'] = 'add';
                 $log->save($data_log);
 
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                $this->session->set_flashdata('message', 'Berhasil disimpan');
                 redirect('RBB');
             }
 

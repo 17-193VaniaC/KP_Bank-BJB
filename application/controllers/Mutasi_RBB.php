@@ -25,7 +25,7 @@ class Mutasi_RBB extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
-        $this->load->view("Mutasi_RBB/mutasi_rbb", $data);
+        $this->load->view("Mutasi_RBB/add_mutasi_rbb", $data);
         $this->load->view('templates/footer.php');
     }
 
@@ -42,12 +42,13 @@ class Mutasi_RBB extends CI_Controller
 
             if ($validation->run() == TRUE) {
                 if ($rbb->isExist() == FALSE) {
-                    $this->session->set_flashdata('failed', 'Mutasi RBB tidak ditemukan');
-                    $this->load->view("Mutasi_RBB/add_mutasi_rbb", $mutasi_rbb);
+                    $this->session->set_flashdata('failed', 'RBB tidak ditemukan');
+                    redirect('mutasi_rbb/Penyesuaian_RBB');
+                
                 }
                 if ($rbb->sych() == FALSE) {
-                    $this->session->set_flashdata('failed', 'Anggaran baru kurang dari nominal PKS');
-                    $this->load->view("Mutasi_RBB/add_mutasi_rbb", $mutasi_rbb);
+                    $this->session->set_flashdata('failed', 'Anggaran baru kurang dari total PKS');
+                    redirect('mutasi_rbb/Penyesuaian_RBB');
                 }
                 $kode_rbb = $mutasi_rbb->save();
 

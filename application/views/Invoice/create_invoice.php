@@ -1,5 +1,5 @@
-<div class="row">
-<div class="col h-100" style="background-color: #e3e4e6;">
+<div style="background-color: #e3e4e6;">
+<div class="col h-100" >
     <div class="container" style="min-height: 100%;">
         <div class="row justify-content-center" style="margin-top: 100px;">
             <div class="col-lg-9">

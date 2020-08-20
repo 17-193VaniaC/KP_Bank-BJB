@@ -1,4 +1,5 @@
-<div class="col h-100" style="background-color: #e3e4e6;">
+<div  style="background-color: #e3e4e6;">
+    <div class="col">
 	<div class="container" style="min-height: 100%;">
 		<div class="row justify-content-center" style="margin-top: 100px;">
 			<div class="col-lg-9">
@@ -12,8 +13,9 @@
 				<?php } ?>
 				<?php if ($this->session->flashdata('failed')) { ?>
 					<?php
+					echo "<div class='alert alert-danger'>";
+					echo "<strong>Gagal</strong><br>";
 					echo $this->session->flashdata('failed');
-					echo "<strong>Gagal</strong>";
 					echo "</div>";
 					?>
 				<?php } ?>
@@ -42,7 +44,7 @@
 												<label for="NOMINAL">Nominal Penyesuaian RBB</label>
 											</td>
 											<td class="text-left" style="margin-left: 3px; width: 80%; padding-top:20px; padding-right: 20px">
-												<input type="number" class="form-control form-control-user" name="NOMINAL" placeholder="Nominal Anggaran" />
+												<input type="number" class="form-control form-control-user" name="NOMINAL" placeholder="Nominal Anggaran Baru" />
 												<small class="text-danger"><?php echo form_error('NOMINAL') ?></small>
 											</td>
 										</tr>
@@ -76,4 +78,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div></div>
