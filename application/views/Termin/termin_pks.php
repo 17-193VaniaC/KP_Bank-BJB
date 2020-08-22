@@ -1,9 +1,9 @@
-<div class="container-xl" style="margin-top: 50px;">
+<div class="container-xl" style="margin-top: 100px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-    <?php if ($termin) : 
-            $pks_ = str_replace('/', '_', $no_pks);?>
+    <?php if ($termin) :
+        $pks_ = str_replace('/', '_', $no_pks); ?>
         <div class="table-responsive">
             <div class="table-wrapper">
                 <div class="table-title">
@@ -12,18 +12,20 @@
                             <h2>Daftar <b>Termin PKS No. <?= $no_pks ?></b></h2>
                         </div>
                         <div class="container-half right" style="width: auto; right: 0;">
-        <?php if (isset($termin)):
-                foreach ($termin as $row) : 
-                    $baris++;
-                    $total += $row->NOMINAL;
-                endforeach;
-                    ?>
-        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13 && $total < $pks["NOMINAL_PKS"]): ?>
-                    <a href="<?php echo base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
-                        <button class="btn btn-success"> + Tambah Termin </button>
-                    </a>                           
-        <?php endif; $baris=0; $total=0;?>
-        <?php endif; ?>
+                            <?php if (isset($termin)) :
+                                foreach ($termin as $row) :
+                                    $baris++;
+                                    $total += $row->NOMINAL;
+                                endforeach;
+                            ?>
+                                <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13 && $total < $pks["NOMINAL_PKS"]) : ?>
+                                    <a href="<?php echo base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
+                                        <button class="btn btn-success"> + Tambah Termin </button>
+                                    </a>
+                                <?php endif;
+                                $baris = 0;
+                                $total = 0; ?>
+                            <?php endif; ?>
 
                         </div>
                         <!-- <div class="col-sm-4">
@@ -39,9 +41,9 @@
                     </div>
                 </div>
 
-                <table class="table table-striped table-hover table-bordered">
+                <table class="table table-striped table-hover table-bordered" style="margin-top: 20px;">
                     <thead style="background-color: #204d95; color: white;">
-                    
+
                         <tr class="text-center">
                             <td>Termin</td>
                             <td>Tanggal Termin</td>
@@ -56,39 +58,39 @@
                     </thead>
                     <tbody>
                         <div id="result"></div>
-                        <?php if (isset($termin)):
-                        foreach ($termin as $row) : ?>
-                            <tr>
-                                <?php $baris++ ?>
-                                <td><?= $row->TERMIN ?></td>
-                                <td><?= $row->TGL_TERMIN ?></td>
-                                <td><?= $row->NOMINAL ?></td> <?php $total += $row->NOMINAL ?>
-                                <td><?= $row->STATUS ?></td>
-                                <td><?= $row->KATEGORI ?></td>
-                                <td><?= $row->GL ?></td>
-                                <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                                    <td>
-                                        <div  class="table-option-row">
-                                            <?php if ($row->STATUS == 'UNPAID') : 
-                                            $pks_ = str_replace('/', '_', $row->NO_PKS);
-                                            ?>
+                        <?php if (isset($termin)) :
+                            foreach ($termin as $row) : ?>
+                                <tr>
+                                    <?php $baris++ ?>
+                                    <td><?= $row->TERMIN ?></td>
+                                    <td><?= $row->TGL_TERMIN ?></td>
+                                    <td><?= $row->NOMINAL ?></td> <?php $total += $row->NOMINAL ?>
+                                    <td><?= $row->STATUS ?></td>
+                                    <td><?= $row->KATEGORI ?></td>
+                                    <td><?= $row->GL ?></td>
+                                    <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+                                        <td>
+                                            <div class="table-option-row">
+                                                <?php if ($row->STATUS == 'UNPAID') :
+                                                    $pks_ = str_replace('/', '_', $row->NO_PKS);
+                                                ?>
 
-                                                <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-info">Edit</button></a>
-                                                <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-danger">Hapus</button></a>
-                                            <?php else : 
-                                                    $pks_ = str_replace('/', '_', $row->NO_PKS);?>
+                                                    <a href="<?= site_url('Termin/edit/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-info">Edit</button></a>
+                                                    <a href="<?= site_url('Termin/delete/' . $row->KODE_TERMIN . '/' . $pks_) ?>"><button class="btn btn-danger">Hapus</button></a>
+                                                <?php else :
+                                                    $pks_ = str_replace('/', '_', $row->NO_PKS); ?>
 
-                                                <a href="<?= site_url('Termin/edit/0/' . $pks_) ?>"><button class="btn btn-info" style="">Edit</button></a>
-                                                <a href="<?= site_url('Termin/delete/0/' . $pks_) ?>"><button class="btn btn-danger">Hapus</button></a>
-                                            <?php endif; ?>
-                                            <!-- <a href="<?php echo site_url('pks/edit/' . $row->NO_PKS); ?>"><button class="btn btn-success">Edit</button></a>
+                                                    <a href="<?= site_url('Termin/edit/0/' . $pks_) ?>"><button class="btn btn-info" style="">Edit</button></a>
+                                                    <a href="<?= site_url('Termin/delete/0/' . $pks_) ?>"><button class="btn btn-danger">Hapus</button></a>
+                                                <?php endif; ?>
+                                                <!-- <a href="<?php echo site_url('pks/edit/' . $row->NO_PKS); ?>"><button class="btn btn-success">Edit</button></a>
                                             <a href="<?php echo site_url('pks/delete/' . $row->NO_PKS); ?>"><button class="btn btn-danger">Delete</button></a> -->
-                                        </div>
-                                    </td>
-                                <?php endif; ?>
-                            </tr>
-                        <?php endforeach; 
-                        endif;?>
+                                            </div>
+                                        </td>
+                                    <?php endif; ?>
+                                </tr>
+                        <?php endforeach;
+                        endif; ?>
                     </tbody>
 
                 </table>
@@ -110,12 +112,12 @@
         <?php endif; ?>
     <?php else : ?>
         <h1>Termin Kosong</h1>
-        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) : 
-            $pks_ = str_replace('/', '_', $no_pks);?>
-                <hr>
-                    <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
-                        <button class="btn btn-success"> + Tambah Termin </button>
-                    </a>
+        <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13) :
+            $pks_ = str_replace('/', '_', $no_pks); ?>
+            <hr>
+            <a href="<?= base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
+                <button class="btn btn-success"> + Tambah Termin </button>
+            </a>
         <?php endif; ?>
     <?php endif; ?>
     <hr>

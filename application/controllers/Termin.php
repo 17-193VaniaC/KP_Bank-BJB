@@ -73,8 +73,8 @@ class Termin extends CI_Controller
                     $data_log['ACTIVITY'] = 'add';
                     $log->save($data_log);
                     $no_pks = str_replace('/', '_', $no_pks);
-                    redirect('Termin/Termin_pks/' . $no_pks);
                     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil disimpan</div>');
+                    redirect('Termin/Termin_pks/' . $no_pks);
                 }
             }
         } else {
@@ -144,6 +144,7 @@ class Termin extends CI_Controller
     public function edit($KODETERMIN, $KODE_PKS)
     {
         $NO_PKS = str_replace('/', '_', $KODE_PKS);
+        $NOPKS = str_replace('_', '/', $KODE_PKS);
         $title['title'] = 'Edit Termin';
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -168,14 +169,16 @@ class Termin extends CI_Controller
                 $this->load->view('templates/footer.php');
             } else {
                 $pks = $this->Pks_model;
-                $data_PKS = $pks->getById($KODE_PKS);
+                $data_PKS = $pks->getById($NOPKS);
                 if ($data_PKS['SISA_ANGGARAN'] < $this->input->post('NOMINAL')) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
                     $this->load->view('Termin/edit_termin', $data);
                     $this->load->view('templates/footer.php');
-                } else {
+                } else if ($data_PKS['SISA_ANGGARAN'] > $this->input->post('NOMINAL')) {
+                    var_dump('masuk');
+                    die;
                     $termin->update($KODETERMIN);
 
                     // ADD LOG
@@ -286,6 +289,7 @@ class Termin extends CI_Controller
                 $data_log['ACTIVITY'] = 'delete';
                 $log->save($data_log);
 
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus</div>');
                 redirect(site_url('Termin/termin_pks/' . $NO_PKS));
             }
         } else {
