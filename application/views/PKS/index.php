@@ -1,4 +1,4 @@
-
+<br>
 <div style="margin-top: 50px; padding: 25px;"> 
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
@@ -12,7 +12,7 @@
     </div>
     <div class="container-half right" >
         <div class="form-group">
-        <form method="get" class="form-inline" style="float: left;">
+        <form method="get" class="form-inline" style="float: right;">
             <input type="text" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">Search</button>

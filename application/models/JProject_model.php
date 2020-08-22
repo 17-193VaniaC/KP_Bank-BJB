@@ -54,15 +54,15 @@ class JProject_model extends CI_Model
         return $this->db->delete($this->_table, array("KODE_JENISPROJECT" => $jenis_project));
     }
 
-    public function updateStatusDel()
+    public function updateStatusDel($jenis_project)
     {
         $post = $this->input->post();
         $this->db->select('STATUS');
-        $r = $this->db->get_where('j_project', ['KODE_JENISPROJECT' => $post["jenis"]])->result();
+        $r = $this->db->get_where('j_project', ['KODE_JENISPROJECT' => $jenis_project])->result();
         $RN = $r[0]->STATUS;
         $RN = $RN - 1;
         $this->db->set('STATUS', $RN);
-        $this->db->where("KODE_JENISPROJECT", $post["jenis"]);
+        $this->db->where("KODE_JENISPROJECT", $jenis_project);
         return $this->db->update('j_project');
     }
 
@@ -75,6 +75,17 @@ class JProject_model extends CI_Model
         $RN = $RN + 1;
         $this->db->set('STATUS', $RN);;
         $this->db->where("KODE_JENISPROJECT", $post["jenis"]);
+        return $this->db->update('j_project');
+    }
+
+    public function updateStatusDelEd($prevId)
+    {
+        $this->db->select('STATUS');
+        $r = $this->db->get_where('j_project', ['KODE_JENISPROJECT' => $prevId])->result();
+        $RN = $r[0]->STATUS;
+        $RN = $RN - 1;
+        $this->db->set('STATUS', $RN);;
+        $this->db->where("KODE_JENISPROJECT", $prevId);
         return $this->db->update('j_project');
     }
 }

@@ -82,14 +82,14 @@ class pks extends CI_Controller
             $dataa['vendor'] = $this->Vendor_model->getAll();
             $dataa['jenis'] = $this->JProject_model->getAll();
 
-            $this->form_validation->set_rules('no_pks', 'No_pks', 'required|trim|is_unique[pks.no_pks]');
-            $this->form_validation->set_rules('kode_rbb', 'Kode_rbb', 'required|trim');
+            $this->form_validation->set_rules('no_pks', 'No. PKS', 'required|trim|is_unique[pks.no_pks]');
+            $this->form_validation->set_rules('kode_rbb', 'Kode RBB', 'required|trim');
             $this->form_validation->set_rules('jenis', 'Jenis', 'required|trim');
-            $this->form_validation->set_rules('kode_project', 'Kode_project', 'required|trim');
-            $this->form_validation->set_rules('nama_project', 'Nama_project', 'required|trim');
-            $this->form_validation->set_rules('tgl_pks', 'Tgl_pks', 'required|trim');
-            $this->form_validation->set_rules('nominal_pks', 'Nominal_pks', 'required|trim');
-            $this->form_validation->set_rules('nama_vendor', 'Nama_vendor', 'required|trim');
+            $this->form_validation->set_rules('kode_project', 'Kode Project', 'required|trim');
+            $this->form_validation->set_rules('nama_project', 'Nama Project', 'required|trim');
+            $this->form_validation->set_rules('tgl_pks', 'Tgl. PKS', 'required|trim');
+            $this->form_validation->set_rules('nominal_pks', 'Nominal PKS', 'required|trim');
+            $this->form_validation->set_rules('nama_vendor', 'Nama Vendor', 'required|trim');
 
             if ($this->form_validation->run() == false) {
                 $this->load->view('templates/header.php', $title);
@@ -211,6 +211,20 @@ class pks extends CI_Controller
                 $tgl_pks = $this->input->post('tgl_pks');
                 $nama_vendor = $this->input->post('nama_vendor');
 
+                $prevdata = $this->Pks_model->getById($no_pks);
+                // var_dump($prevdata["NAMA_VENDOR"]);
+                // var_dump($nama_vendor);
+                // die;
+                if($prevdata["NAMA_VENDOR"] != $nama_vendor){
+                    $this->Vendor_model->updateStatusAdd();
+                    $this->Vendor_model->updateStatusDelEd($prevdata['NAMA_VENDOR']);
+                }
+
+                if($prevdata["JENIS"] != $jenis){
+                    $this->JProject_model->updateStatusAdd();
+                    $this->JProject_model->updateStatusDelEd($prevdata['JENIS']);
+                }
+
                 $this->db->set('jenis', $jenis);
                 $this->db->set('kode_project', $kode_project);
                 $this->db->set('nama_project', $nama_project);
@@ -248,7 +262,6 @@ class pks extends CI_Controller
 
             if ($data_termin) {
                 if ($data_termin['STATUS'] == 'UNPAID') {
-                    redirect('rbb');
                     // HAPUS TERMIN
                     $hapus_termin = $termin->getAll($no_pks);
                     foreach ($hapus_termin as $row) {
@@ -267,7 +280,6 @@ class pks extends CI_Controller
             $rbb = $this->RBB_model;
             $data_rbb = $rbb->getById($data_pks['KODE_RBB']);
             $total = $data_rbb->SISA_ANGGARAN + $data_pks['NOMINAL_PKS'];
-
             $this->db->set('SISA_ANGGARAN', $total);
             $this->db->where('KODE_RBB', $data_pks['KODE_RBB']);
             $this->db->update('rbb');
@@ -286,8 +298,13 @@ class pks extends CI_Controller
             $data_log['KODE_DATA'] = $no_pks;
             $data_log['ACTIVITY'] = 'delete';
             $log->save($data_log);
-
+            
             // HAPUS PKS
+            $prevdata = $this->Pks_model->getById($no_pks);
+
+            $this->Vendor_model->updateStatusDel($prevdata["NAMA_VENDOR"]);
+            $this->JProject_model->updateStatusDel($prevdata["JENIS"]);
+
             $pks->deleteData($no_pks);
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus.</div>');

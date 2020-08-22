@@ -1,4 +1,4 @@
-<br>	<br>	<div class="container-xl" style="margin-top: 50px;">
+<br>	<div class="container-xl" style="margin-top: 50px;">
 <!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
