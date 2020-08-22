@@ -202,7 +202,8 @@ class pks extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view('pks/edit', $data);
                 $this->load->view('templates/footer.php');
-            } else {
+            } 
+            else {
 
                 $jenis = $this->input->post('jenis');
                 $kode_project = $this->input->post('kode_project');
@@ -218,6 +219,7 @@ class pks extends CI_Controller
                 $this->db->where('no_pks', $no_pks);
                 $this->db->update('pks');
 
+
                 // ADD LOG
                 $log = $this->Log_model;
                 $data_log['USER'] = $data['user']['NAMA'];
@@ -226,7 +228,7 @@ class pks extends CI_Controller
                 $data_log['ACTIVITY'] = 'edit';
                 $log->save($data_log);
 
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Congratulation! Your program has been edited.</div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diubah</div>');
                 redirect('pks/index');
             }
         } else {
