@@ -1,6 +1,5 @@
-<div >
-      <br><br>
-<H2 style="text-align: center;">Laporan Gabungan</H2>
+<br><br>
+<H2 style="text-align: center;"><BR><BR>Laporan Gabungan</H2>
 <div class="table-responsive">
       <table class="table table-striped table-hover table-bordered">
             <table class="table table-striped table-hover table-bordered">
@@ -139,4 +138,5 @@
                   <?php endforeach; ?>
             </tr>
       </table>
-</div></div>
+</div>
+</div>
