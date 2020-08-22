@@ -1,11 +1,9 @@
-<br>    <br>    <div class="container-xl" style="margin-top: 50px;">
-    <?php if ($this->session->flashdata('message')) {
-        echo "<div class='alert alert-success'>";
-        echo $this->session->flashdata('message');
-        echo "</div>";
-        ?>
+<br> <br>
+<div class="container-xl" style="margin-top: 50px;">
+    <?php if ($this->session->flashdata('message')) { ?>
+        <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-    
+
     <div class="container-half">
         <h2><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none; color: black;">Daftar Invoice</a></h2></a>
     </div>
@@ -58,28 +56,6 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
-            <!-- <script type="text/javascript">
-                $(document).ready(function() {
-                    $("#searchById").autocomplete({
-                        source: "<?php echo site_url('pks/search/?'); ?>"
-                    });
-                });
-            </script> -->
-
-            <!-- CALON PAGING  -->
-            <!-- <div class="clearfix">
-                <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                <ul class="pagination">
-                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                </ul>
-            </div> -->
         </div>
     </div>
 </div>

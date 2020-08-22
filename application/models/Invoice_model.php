@@ -38,7 +38,7 @@ class Invoice_model extends CI_Model
         return $this->db->query('SELECT pembayaran.INVOICE, termin_pks.NO_PKS, pembayaran.TGL_INVOICE, termin_pks.TERMIN, termin_pks.NOMINAL, pks.NOMINAL_PKS
         FROM termin_pks, pembayaran, pks
         WHERE termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN AND termin_pks.NO_PKS = pks.NO_PKS
-        ORDER BY pks.TGL_PKS, termin_pks.TERMIN ASC')->result();
+        ORDER BY termin_pks.NO_PKS, termin_pks.TERMIN ASC')->result();
     }
 
     public function save()

@@ -43,12 +43,11 @@ class Invoice extends CI_Controller
 
             if ($validation->run()) {
                 if (count($termin->hasntBeenPaid($post["nopks"])) < 1) { //kalau ada data di pks=udah lunas
-                    $this->session->set_flashdata('failed', "Invoice PKS sudah lunas");
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Invoice PKS sudah lunas</div>');
                     redirect('invoice/add');
-                } 
-                
-                $invoice->save();
-                $termin->paid($post["KODE_TERMIN"]);
+                }
+
+
                 $no_pks = $termin->sisaAnggaran($post['KODE_TERMIN']);
 
 
@@ -56,33 +55,43 @@ class Invoice extends CI_Controller
 
                 $sisa = $data_pks['SISA_ANGGARAN'] - $post['NOMINAL'];
 
-                $this->db->set('sisa_anggaran', $sisa);
-                $this->db->where('no_pks', $no_pks['NO_PKS']);
-                $this->db->update('pks');
+                if ($sisa >= 0) {
+                    $invoice->save();
+                    $termin->paid($post["KODE_TERMIN"]);
+                    $this->db->set('sisa_anggaran', $sisa);
+                    $this->db->where('no_pks', $no_pks['NO_PKS']);
+                    $this->db->update('pks');
 
-                $data_termin = $termin->getById($post["KODE_TERMIN"]);
+                    $data_termin = $termin->getById($post["KODE_TERMIN"]);
 
-                $mutasi_pks = $this->MutasiPKS_model;
-                $mutasi_pks->save($data_termin);
+                    $mutasi_pks = $this->MutasiPKS_model;
+                    $mutasi_pks->save($data_termin);
 
-                // ADD LOG
-                $log = $this->Log_model;
-                $data_log['USER'] = $data['user']['NAMA'];
-                $data_log['TABLE_NAME'] = 'invoice';
-                $data_log['KODE_DATA'] = $this->input->post('INVOICE');
-                $data_log['ACTIVITY'] = 'add';
-                $log->save($data_log);
+                    // ADD LOG
+                    $log = $this->Log_model;
+                    $data_log['USER'] = $data['user']['NAMA'];
+                    $data_log['TABLE_NAME'] = 'invoice';
+                    $data_log['KODE_DATA'] = $this->input->post('INVOICE');
+                    $data_log['ACTIVITY'] = 'add';
+                    $log->save($data_log);
 
-                $this->session->set_flashdata('message', 'Berhasil disimpan');
-                redirect('Invoice');
+                    $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil disimpan</div>');
+                    redirect('Invoice');
+                } else {
+                    $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Nominal Invoice melebihi sisa anggaran PKS. Harap cek kembali nominal termin yang akan dibayarkan</div>');
+                    $this->load->view('templates/header.php', $title);
+                    $this->load->view('templates/navbar.php', $data);
+                    $this->load->view("Invoice/create_invoice", $data);
+                    $this->load->view('templates/footer.php', $data);
+                }
             }
 
-            if(empty($this->input->post('termin')) && !empty($this->input->post('nopks'))){
-                    $this->session->set_flashdata('message', "Invoice PKS sudah lunas atau tidak ditemukan");
-                    redirect('Invoice/add');   
+            if (empty($this->input->post('termin')) && !empty($this->input->post('nopks'))) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Invoice PKS sudah lunas atau tidak ditemukan</div>');
+                redirect('Invoice/add');
             }
 
-            
+
             $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
             $this->load->view("Invoice/create_invoice", $data);

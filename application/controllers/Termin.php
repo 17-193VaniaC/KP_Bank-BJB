@@ -156,7 +156,6 @@ class Termin extends CI_Controller
             }
             $termin = $this->Termin_model;
             // $KODETERMIN = str_replace('_', '/', $_GET["NOPKS"]);
-
             $data['termin'] = $this->Termin_model->getById($KODETERMIN);
             $data['GL_'] = $this->db->get('GL')->result();
             $validation = $this->form_validation;
@@ -176,9 +175,7 @@ class Termin extends CI_Controller
                     $this->load->view('templates/navbar.php', $data);
                     $this->load->view('Termin/edit_termin', $data);
                     $this->load->view('templates/footer.php');
-                } else if ($data_PKS['SISA_ANGGARAN'] > $this->input->post('NOMINAL')) {
-                    var_dump('masuk');
-                    die;
+                } else if ($data_PKS['SISA_ANGGARAN'] >= $this->input->post('NOMINAL')) {
                     $termin->update($KODETERMIN);
 
                     // ADD LOG
