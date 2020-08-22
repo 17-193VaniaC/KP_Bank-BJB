@@ -26,43 +26,52 @@ class pks extends CI_Controller
     {
         $title['title'] = 'PKS';
 
-        // Config pagination
-        $config['base_url'] = base_url('pks/index');
-        $config['total_rows'] = $this->db->count_all('pks');
-        $config['per_page'] = 25;
-        $config["uri_segment"] = 3;
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
+        if ($hupla = $this->input->get('searchById')) {
+            $data['pks'] = $this->Pks_model->getAll($hupla);
+            $data['pagination'] = null;
+        } else {
+            // Config pagination
+            $config['base_url'] = base_url('pks/index');
 
-        // Pagination style
-        $config['first_link']       = 'First';
-        $config['last_link']        = 'Last';
-        $config['next_link']        = 'Next';
-        $config['prev_link']        = 'Prev';
-        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-        $config['full_tag_close']   = '</ul></nav></div>';
-        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-        $config['num_tag_close']    = '</span></li>';
-        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
-        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-        $config['first_tagl_close'] = '</span></li>';
-        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['last_tagl_close']  = '</span></li>';
+            // $config['total_rows'] = $this->db->where('NO_PKS', $hupla)->from("pks")->count_all_results();
+            $config['total_rows'] = $this->db->count_all('pks');
+            $config['per_page'] = 25;
+            $config["uri_segment"] = 3;
+            $choice = $config["total_rows"] / $config["per_page"];
+            $config["num_links"] = floor($choice);
 
-        $this->pagination->initialize($config);
+            // Pagination style
+            $config['first_link']       = 'First';
+            $config['last_link']        = 'Last';
+            $config['next_link']        = 'Next';
+            $config['prev_link']        = 'Prev';
+            $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+            $config['full_tag_close']   = '</ul></nav></div>';
+            $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+            $config['num_tag_close']    = '</span></li>';
+            $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+            $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+            $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+            $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['prev_tagl_close']  = '</span>Next</li>';
+            $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+            $config['first_tagl_close'] = '</span></li>';
+            $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['last_tagl_close']  = '</span></li>';
 
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+            $this->pagination->initialize($config);
 
-        $hupla = $this->input->get('searchById');
-        $data['pks'] = $this->Pks_model->getPagination($config["per_page"], $data['page']);
-        $data['pks'] = $this->Pks_model->getAll($hupla);
+            $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        $data['pagination'] = $this->pagination->create_links();
+
+            $data['pks'] = $this->Pks_model->getPagination($config["per_page"], $data['page']);
+
+            // $data['pks'] = $this->Pks_model->getAll();
+
+            $data['pagination'] = $this->pagination->create_links();
+        }
+
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
@@ -202,8 +211,7 @@ class pks extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view('pks/edit', $data);
                 $this->load->view('templates/footer.php');
-            } 
-            else {
+            } else {
 
                 $jenis = $this->input->post('jenis');
                 $kode_project = $this->input->post('kode_project');
@@ -215,12 +223,12 @@ class pks extends CI_Controller
                 // var_dump($prevdata["NAMA_VENDOR"]);
                 // var_dump($nama_vendor);
                 // die;
-                if($prevdata["NAMA_VENDOR"] != $nama_vendor){
+                if ($prevdata["NAMA_VENDOR"] != $nama_vendor) {
                     $this->Vendor_model->updateStatusAdd();
                     $this->Vendor_model->updateStatusDelEd($prevdata['NAMA_VENDOR']);
                 }
 
-                if($prevdata["JENIS"] != $jenis){
+                if ($prevdata["JENIS"] != $jenis) {
                     $this->JProject_model->updateStatusAdd();
                     $this->JProject_model->updateStatusDelEd($prevdata['JENIS']);
                 }
@@ -265,10 +273,9 @@ class pks extends CI_Controller
                     // HAPUS TERMIN
                     $hapus_termin = $termin->getAll($no_pks);
                     foreach ($hapus_termin as $row) {
-                         $termin->delete($row->KODE_TERMIN);
+                        $termin->delete($row->KODE_TERMIN);
                     }
-                } 
-                else {
+                } else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> PKS tidak dapat dihapus karena terdapat invoice yang telah dibayar.</div>');
                     redirect('pks');
                 }
@@ -298,7 +305,7 @@ class pks extends CI_Controller
             $data_log['KODE_DATA'] = $no_pks;
             $data_log['ACTIVITY'] = 'delete';
             $log->save($data_log);
-            
+
             // HAPUS PKS
             $prevdata = $this->Pks_model->getById($no_pks);
 
@@ -309,8 +316,7 @@ class pks extends CI_Controller
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus.</div>');
             redirect('pks');
-        } 
-        else {
+        } else {
             redirect('pks');
         }
     }

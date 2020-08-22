@@ -1,28 +1,28 @@
 <br>
-<div style="margin-top: 50px; padding: 25px;"> 
+<div style="margin-top: 50px; padding: 25px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
-    <!-- <div class="container-xl"> -->        
+    <!-- <div class="container-xl"> -->
     <div class="container-half">
         <h2><a href="<?= base_url('pks/'); ?>" style="text-decoration: none; color: black;">Daftar <b>PKS</b></a></h2>
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-           <p> <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">+ Tambah PKS</a></p>
+            <p> <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">+ Tambah PKS</a></p>
         <?php endif; ?>
     </div>
-    <div class="container-half right" >
+    <div class="container-half right">
         <div class="form-group">
-        <form method="get" class="form-inline" style="float: right;">
-            <input type="text" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
-            <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit">Search</button>
-        </form>
+            <form method="get" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            <span class=" input-group-btn">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
         </div>
     </div>
-     <div class="table-responsive">
+    <div class="table-responsive">
         <div class="table-wrapper">
             <table class="table table-striped table-hover table-bordered">
-                <thead  style="background-color: #204d95; color: white;">
+                <thead style="background-color: #204d95; color: white;">
                     <tr class="text-center">
                         <td>Nomor PKS</td>
                         <td>Kode RBB</td>
@@ -90,10 +90,12 @@
             </div> -->
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <!--Tampilkan pagination-->
-            <?php echo $pagination; ?>
+    <?php if ($pagination) : ?>
+        <div class="row">
+            <div class="col">
+                <!--Tampilkan pagination-->
+                <?php echo $pagination; ?>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 </div>
