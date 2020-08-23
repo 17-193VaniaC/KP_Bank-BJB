@@ -55,8 +55,9 @@ class Termin extends CI_Controller
             } else {
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($data['no_pks']);
+                $nominal_total = $pks->getNominal($data['no_pks']);
 
-                if ($data_PKS['SISA_ANGGARAN'] < $this->input->post('NOMINAL')) {
+                if ($data_PKS['SISA_ANGGARAN'] < $nominal_total->total + $this->input->post('NOMINAL')) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
@@ -169,7 +170,9 @@ class Termin extends CI_Controller
             } else {
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($NOPKS);
-                if ($data_PKS['SISA_ANGGARAN'] < $this->input->post('NOMINAL')) {
+                $nominal_total = $pks->getNominal($NOPKS);
+
+                if ($data_PKS['SISA_ANGGARAN'] < $nominal_total->total + $this->input->post('NOMINAL')) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
