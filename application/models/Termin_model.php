@@ -179,4 +179,9 @@ class Termin_model extends CI_Model
         // var_dump($this->db->get('gl')->result());
         // die;
     }
+    public function getRemainingBudget($pks){
+        $this->db->select("count('NOMINAL') as anggaranpakai");
+        $this->db->where('NO_PKS =',$pks);
+        return $this->db->get('termin_pks')->result();
+    }
 }
