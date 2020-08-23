@@ -167,23 +167,21 @@ class Termin extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view('Termin/edit_termin', $data);
                 $this->load->view('templates/footer.php');
-            } 
-            else {
+            } else {
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($NOPKS);
                 $termintotal = $termin->getRemainingBudget($NOPKS);
-//                var_dump($termintotal);
+                //                var_dump($termintotal);
                 // die;
                 $nominal_total = $pks->getNominal($NOPKS);
 
-                if ($this->input->post('NOMINAL') > $data_PKS["NOMINAL_PKS"] - $termintotal[0]->anggaranpakai + $nominal_total->total) {
+                if ($this->input->post('NOMINAL') >= $data_PKS["NOMINAL_PKS"] - $termintotal[0]->anggaranpakai + $nominal_total->total) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
                     $this->load->view('Termin/edit_termin', $data);
                     $this->load->view('templates/footer.php');
-                } 
-                else{
+                } else {
                     $termin->update($KODETERMIN);
 
                     // ADD LOG
