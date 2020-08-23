@@ -1,7 +1,7 @@
-<div style="background-color: #e3e4e6;">
+<div class="row" style="background-color: #e3e4e6; min-height: 92vh; ">
     <div class="col" style="background-color: #e3e4e6;">
         <div class="container" style="min-height: 100%;">
-            <div class="row justify-content-center" style="margin-top: 100px;">
+            <div class="row justify-content-center" style="margin-top: 50px;">
                 <div class="col-lg-9">
                     <!-- FLASH MESSAGE -->
                     <?php if ($this->session->flashdata('success')) { ?>
