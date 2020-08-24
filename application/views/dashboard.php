@@ -11,11 +11,10 @@
         margin: auto;
         color: black;
         min-height: 90px;
-        /*background-color: rgba(0,0,0,0.7);*/
     }
 
     .hupla {
-        margin-left: auto;
+        margin: auto;
         padding: 15px;
         color: white;
         width: 23%;
@@ -56,7 +55,7 @@
                     <img src="<?php echo base_url('assets/image/invoice.png'); ?>" class="symbol-menu" style="width: 50px;">
                 </div>
                 <div>
-                    <b>Tambah Invoice</b><br>
+                    <b>Invoice</b><br>
                     Pembayaran
                 </div>
             </a>
@@ -79,10 +78,12 @@
             <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
             Jenis Project
         </a>
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
         <a href="<?= base_url('register'); ?>" class="hupla">
             <img src="<?php echo base_url('assets/image/add_account.png'); ?>" class="symbol-menu" style="width: 40px; margin-right: 15px;">
             Tambah Akun
         </a>
+    <?php endif;?>
     </div>
     <br><br><br>
 </div>

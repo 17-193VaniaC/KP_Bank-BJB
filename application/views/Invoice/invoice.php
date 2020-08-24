@@ -5,7 +5,7 @@
     <?php } ?>
 
     <div class="container-half">
-        <h2><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none; color: black;">Daftar Invoice</a></h2></a>
+        <h2><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none; color: black;">Histori Invoice</a></h2></a>
     </div>
     <div class="container-half right">
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
