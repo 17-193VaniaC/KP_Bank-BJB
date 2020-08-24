@@ -84,18 +84,17 @@ class Invoice extends CI_Controller
                     $this->load->view("Invoice/create_invoice", $data);
                     $this->load->view('templates/footer.php', $data);
                 }
+            } else {
+                $this->load->view('templates/header.php', $title);
+                $this->load->view('templates/navbar.php', $data);
+                $this->load->view("Invoice/create_invoice", $data);
+                $this->load->view('templates/footer.php', $data);
             }
 
             if (empty($this->input->post('termin')) && !empty($this->input->post('nopks'))) {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Invoice PKS sudah lunas atau tidak ditemukan</div>');
                 redirect('Invoice/add');
             }
-
-
-            $this->load->view('templates/header.php', $title);
-            $this->load->view('templates/navbar.php', $data);
-            $this->load->view("Invoice/create_invoice", $data);
-            $this->load->view('templates/footer.php', $data);
         }
     }
 
