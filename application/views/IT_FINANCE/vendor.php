@@ -19,6 +19,25 @@
 	<?php } ?>
 
 <br>
+    <div class="container-half">
+        <h2><a href="<?= base_url('vendor/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Vendor</b></a></h2>
+        <p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline" >
+				<input type="text" name="nama_vendor" placeholder="Masukan nama vendor baru" class="form-control" />
+				<input type="submit" name="btn" value="+ Tambah Vendor" class="btn btn-success" />
+			</form>
+		<?php endif; ?></p>
+    </div>
+    <div class="container-half right">
+        <div class="form-group">
+            <form method="get" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            <span class=" input-group-btn">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+<!-- 
 	<div class="container-half">
 		<h2>Daftar Vendor</h2>
 	</div>
@@ -31,7 +50,7 @@
 			</form>
 		</div>
 		<br><br>
-	<?php endif; ?>
+	<?php endif; ?> -->
 
 
 	<!-- ##############################################TABEL VENDOR######################################################## -->
@@ -163,6 +182,14 @@
 			</div>
 		</div>
 	</div>
+	<?php if ($pagination) : ?>
+        <div class="row">
+            <div class="col">
+                <!--Tampilkan pagination-->
+                <?php echo $pagination; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 

@@ -24,6 +24,23 @@ class JProject_model extends CI_Model
         return $this->db->get($this->_table)->result();
     }
 
+    public function getPagination($that = null, $limit, $start)
+    {
+        $response = array();
+        if (!empty($that)) {
+            $this->db->select('*');
+            $this->db->like('jenis', $that, 'both');
+            $this->db->order_by('jenis', 'asc');
+            return $this->db->get('j_project', $limit, $start)->result();
+
+        }
+        // Select record
+        $this->db->select('*');
+        $this->db->order_by('jenis', 'asc');
+        $response = $this->db->get('j_project', $limit, $start)->result();
+        return $response;
+    }
+
     public function save()
     {
         $post = $this->input->post();

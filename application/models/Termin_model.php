@@ -44,21 +44,35 @@ class Termin_model extends CI_Model
     public function getAll($termin)
     {
         $response = array();
-        if (!empty($termin)) {
+        if (!empty($id)) {
             $this->db->select('*');
-            $this->db->where('NO_PKS', $termin);
-            $this->db->order_by('TERMIN', 'asc');
+            $this->db->where('NO_PKS', $id);
+            $this->db->order_by('INPUT_DATE', 'desc');
             $q = $this->db->get('termin_pks');
             $response = $q->result();
             return $response;
         }
         $this->db->select('*');
         $this->db->from('termin_pks');
-        $this->db->order_by('NO_PKS, TERMIN', 'asc');
+        $this->db->order_by('NO_PKS, TERMIN', 'desc');
         $termin = $this->db->get()->result();
         return $termin;
     }
 
+    public function getPagination($that = null, $limit, $start)
+    {
+     $response = array();
+        if (!empty($that)) {
+            $this->db->select('*');
+            $this->db->like('NO_PKS', $that, 'both');
+            $this->db->order_by('INPUT_DATE', 'desc');
+            return $this->db->get('termin_pks', $limit, $start)->result();
+
+        }
+        $this->db->order_by('INPUT_DATE', 'desc');
+        $response = $this->db->get('termin_pks', $limit, $start)->result();
+        return $response;
+    }
     public function getRow($no_pks)
     {
         $this->db->select('*');
@@ -88,7 +102,7 @@ class Termin_model extends CI_Model
     }
     public function getByIdPKS($NOPKS)
     {
-        return $this->db->get_where($this->_table, ["NO_PKS" => $NOPKS])->row();
+        return $this->db->get_where($this->_table, ["NO_PKS" => $NOPKS])->result();
     }
 
     public function update($kode_termin)
@@ -185,5 +199,14 @@ class Termin_model extends CI_Model
     {
         $query = $this->db->query('SELECT termin_pks.NOMINAL FROM termin_pks WHERE termin_pks.KODE_TERMIN ="' . $kodetermin . '"');
         return $query->row();
+    }
+    public function countquery($name = null){
+        if (!empty($name)) {
+            $this->db->select('count(termin_pks.NO_PKS) as n_row');
+            $this->db->like('termin_pks.NO_PKS', $name, 'both');
+            return $this->db->get('termin_pks')->result();
+        }
+        $this->db->select('count(termin_pks.NO_PKS) as n_row');
+        return $this->db->get('termin_pks')->result();
     }
 }

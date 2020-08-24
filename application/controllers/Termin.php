@@ -11,24 +11,80 @@ class Termin extends CI_Controller
         if (!$this->session->userdata('username')) {
             redirect('login');
         }
-
+        $this->load->library('pagination');
         $this->load->model("Termin_model");
         $this->load->model("Pks_model");
         $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
-
-    public function index($nopks = null)
+    public function index()
     {
         $title['title'] = 'Termin';
-        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        $data["termin"] = $this->Termin_model->getAll($nopks);
 
+        // Config pagination
+        $config['base_url'] = base_url('termin/index');
+        // $config['total_rows'] = $this->db->count_all('termin_pks');
+        $config['per_page'] = 20;
+        $config["uri_segment"] = 0;
+
+        // Pagination style
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+
+
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        if (!empty($this->input->post('Search'))) {
+            $id = $this->input->post('searchById');
+            $this->session->set_flashdata(array("search_termin"=>$id));  
+            $data['search']=$id;
+            $n_row = $this->Termin_model->countquery($id)[0]->n_row;
+            $config['total_rows'] = $n_row;
+            $data['page'] = 0;
+        } 
+        else{
+            if($this->session->userdata('search_termin') != NULL){
+                $data['search']= $this->session->flashdata('search_termin');
+                $n_row = $this->Termin_model->countquery($data['search'])[0]->n_row;
+                $config['total_rows'] = $n_row;
+            }
+            else{
+                $data['search']= '';
+                $config['total_rows'] = $this->db->count_all('termin_pks');
+            }
+        }
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
+
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        $data['termin'] = $this->Termin_model->getPagination($data['search'], $config["per_page"], $data['page']);  
+
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+        
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
-        $this->load->view("Termin/Termin", $data);
+        $this->load->view("Termin/termin", $data);
         $this->load->view('templates/footer.php');
     }
+
+
 
     // untuk menambah termin dari halaman termin
     public function addMore($no_pks, $termin)
@@ -308,7 +364,7 @@ class Termin extends CI_Controller
     public function Termin_pks($nopks)
     {
         $nopks = str_replace('_', '/', $nopks);
-        $data["termin"] = $this->Termin_model->getAll($nopks);
+        $data["termin"] = $this->Termin_model->getByIdPKS($nopks);
         $data["pks"] = $this->Pks_model->getById($nopks);
         $title['title'] = 'Termin PKS NO. ' . $nopks;
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();

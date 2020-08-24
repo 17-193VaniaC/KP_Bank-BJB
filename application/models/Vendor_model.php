@@ -22,6 +22,22 @@ class Vendor_model extends CI_Model
     {
         return $this->db->get($this->_table)->result();
     }
+
+    public function getPagination($that = null, $limit, $start)
+    {
+        $response = array();
+        if (!empty($that)) {
+            $this->db->select('*');
+            $this->db->like('nama_vendor', $that, 'both');
+            $this->db->order_by('nama_vendor', 'asc');
+            return $this->db->get('vendor', $limit, $start)->result();
+        }
+        // Select record
+        $this->db->select('*');
+        $this->db->order_by('nama_vendor', 'asc');
+        return $this->db->get('vendor', $limit, $start)->result();
+    }
+
     public function update($vendor = null)
     {
         $post = $this->input->post();

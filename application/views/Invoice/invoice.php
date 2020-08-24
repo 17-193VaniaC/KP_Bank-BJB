@@ -1,23 +1,25 @@
 <br> <br>
 <div class="container-xl" style="margin-top: 50px;">
+    
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
     <?php } ?>
 
     <div class="container-half">
-        <h2><a href="<?= base_url('Invoice/'); ?>" style="text-decoration: none; color: black;">Histori Invoice</a></h2></a>
-    </div>
-    <div class="container-half right">
+        <h2><a href="<?= base_url('invoice/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Invoice</b></a></h2>
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-            <a href="<?= base_url('Invoice/add'); ?>" class="btn btn-success">+ Tambah Invoice</a>
+            <p> <a href="<?= base_url('invoice/add'); ?>" class="btn btn-success">+ Tambah Invoce</a></p>
         <?php endif; ?>
     </div>
-    <!-- <div class="container-half right">
-        <form method="get" class="form-inline" style="float: right;">
-            <input type="text" autocomplete="off" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" />
-            <input class="btn btn-primary" type="submit" name="search" value="Cari">
-        </form>
-    </div> -->
+    <div class="container-half right">
+        <div class="form-group">
+            <form method="get" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari Invoice dengan No. PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            <span class=" input-group-btn">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
 
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -26,36 +28,44 @@
                     <tr class="text-center">
                         <td>Invoice</td>
                         <td>Nomor PKS</td>
+                        <td>Nama Project</td>
                         <td>Tanggal Invoice</td>
                         <td>Tahap</td>
                         <td>Nominal Bayar</td>
-                        <td>Sisa Anggaran PKS</td>
+                        <!-- <td>Sisa Anggaran PKS</td> -->
                     </tr>
                 </thead>
                 <tbody>
                     <div id="result"></div>
-                    <?php $pks = null;
-                    $sisa = 0 ?>
+                  <!--   <?php $pks = null;
+                    $sisa = 0 ?> -->
                     <?php foreach ($invoice as $row) : ?>
                         <tr>
                             <td><?= $row->INVOICE ?></td>
                             <td><?= $row->NO_PKS ?></td>
+                            <td><?= $row->NAMA_PROJECT?></td>
                             <td><?= $row->TGL_INVOICE ?></td>
                             <td><?= $row->TERMIN ?></td>
                             <td><?= $row->NOMINAL ?></td>
-
+<!-- 
                             <?php if ($pks == $row->NO_PKS) : ?>
                                 <?php $sisa -= $row->NOMINAL ?>
                                 <td><?= $sisa ?></td>
                             <?php else : ?>
                                 <?php $pks = $row->NO_PKS;
                                 $sisa = $row->NOMINAL_PKS - $row->NOMINAL ?>
-                                <td><?= $sisa ?></td>
-                            <?php endif; ?>
+                                <td><?= $row->SISA_ANGGARAN ?></td> -->
+                            <!-- <?php endif; ?> -->
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <!--Tampilkan pagination-->
+        <?php echo $pagination;?>
     </div>
 </div>

@@ -41,6 +41,25 @@ class Invoice_model extends CI_Model
         ORDER BY termin_pks.NO_PKS, termin_pks.TERMIN ASC')->result();
     }
 
+    public function getPagination($that = null, $limit, $start)
+    {
+        $response = array();
+        if (!empty($that)) {
+            $this->db->select('*');
+            $this->db->like('pks.NO_PKS', $that, 'both');
+            $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
+            $this->db->join('pks', 'pks.NO_PKS = termin_pks.NO_PKS');
+            $this->db->order_by('INPUT_DATE', 'desc');
+            return $this->db->get('pembayaran', $limit, $start)->result();
+        }
+        // Select record
+        $this->db->select('*');
+        $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
+        $this->db->join('pks', 'pks.NO_PKS = termin_pks.NO_PKS');
+        $this->db->order_by('pembayaran.INPUT_DATE', 'desc');
+        return $this->db->get('pembayaran', $limit, $start)->result();
+    }
+
     public function save()
     {
         //$last_termin = $this->Invoice_model->checktermin($NOPKS);

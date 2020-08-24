@@ -1,3 +1,5 @@
+<div style="background-image: url('<?php echo base_url('assets/image/bg2.jpeg'); ?>'); color: white; text-align: center; background-size: cover; min-height: 92vh;"><br>
+
 <?php if ($this->session->flashdata('message')) { ?>
     <br>
     <?php echo $this->session->flashdata('message') ?>
@@ -22,7 +24,6 @@
     }
 </style>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css'); ?>">
-<div style="background-image: url('<?php echo base_url('assets/image/bg2.jpeg'); ?>'); color: white; text-align: center; background-size: cover; min-height: 92vh;"><br>
     <br><br><br>
     <h3>Selamat datang di </h3>
     <h2>Sistem Informasi Finansial Bank BJB</h2>

@@ -26,11 +26,9 @@ class RBB extends CI_Controller
         // Config pagination
         $config['base_url'] = base_url('rbb/index');
         $config['total_rows'] = $this->db->count_all('rbb');
-        $config['per_page'] = 25;
-        $config["uri_segment"] = 3;
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
-
+        $config['per_page'] = 20;
+        $config["uri_segment"] = 0;
+ 
         // Pagination style
         $config['first_link']       = 'First';
         $config['last_link']        = 'Last';
@@ -51,13 +49,37 @@ class RBB extends CI_Controller
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
 
-        $this->pagination->initialize($config);
 
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data['rbb'] = $this->RBB_model->getPagination($config["per_page"], $data['page']);
-        $data['pagination'] = $this->pagination->create_links();
+
+        if (!empty($this->input->post('Search'))) {
+            $id = $this->input->post('searchById');
+            $this->session->set_flashdata(array("search_rbb"=>$id));  
+            $data['search']=$id;
+            $n_row = $this->RBB_model->countquery($id)[0]->n_row;
+            $config['total_rows'] = $n_row;
+            $data['page'] = 0;
+        } 
+        else{
+            if($this->session->flashdata('search_rbb') != NULL){
+                $data['search']= $this->session->flashdata('search_rbb');
+                $n_row = $this->RBB_model->countquery($data['search'])[0]->n_row;
+                $config['total_rows'] = $n_row;
+            }
+            else{
+                $data['search']= '';
+                $config['total_rows'] = $this->db->count_all('rbb');
+            }
+        }
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
 
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        $data['rbb'] = $this->RBB_model->getPagination($data['search'], $config["per_page"], $data['page']);
+
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+
 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
@@ -86,7 +108,7 @@ class RBB extends CI_Controller
                 $data_log['ACTIVITY'] = 'add';
                 $log->save($data_log);
 
-                $this->session->set_flashdata('message', 'Berhasil disimpan');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil disimpan</div>');
                 redirect('RBB');
             }
 

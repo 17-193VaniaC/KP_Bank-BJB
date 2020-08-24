@@ -12,10 +12,11 @@
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="get" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari PKS dengan NO PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            <form method="post" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari PKS dengan NO PKS" value='<?= $search ?>' name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <input type="submit" name="Search" class="btn btn-primary" />
+                <!-- <button class="btn btn-primary" type="submit">Search</button> -->
             </form>
         </div>
     </div>
@@ -68,13 +69,13 @@
             <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
             <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
             <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
-            <script type="text/javascript">
+<!--             <script type="text/javascript">
                 $(document).ready(function() {
                     $("#searchById").autocomplete({
                         source: "<?php echo site_url('pks/search/?'); ?>"
                     });
                 });
-            </script>
+            </script> -->
             <!-- CALON PAGING  -->
             <!-- <div class="clearfix">
                 <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>

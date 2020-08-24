@@ -69,14 +69,38 @@ class RBB_model extends CI_Model
         ];
     }
 
-    public function getAll()
+    public function getAll($that = null)
     {
-        return $this->db->get($this->_table)->result();
+        $response = array();
+        if (!empty($that)) {
+            $this->db->select('*');
+            $this->db->like('KODE_RBB', $that, 'both');
+            $this->db->order_by('INPUT_DATE', 'desc');
+            return $this->db->get('rbb')->result();
+
+        }
+        $this->db->order_by('INPUT_DATE', 'desc');
+        $response = $this->db->get('rbb')->result();
+        return $response;
     }
 
-    public function getPagination($limit, $start)
+    public function getPagination($that = null, $limit, $start)
     {
-        return $this->db->get($this->_table, $limit, $start)->result();
+     $response = array();
+        if (!empty($that)) {
+            $this->db->select('*');
+            $this->db->like('KODE_RBB', $that, 'both');
+            $this->db->order_by('INPUT_DATE', 'desc');
+            return $this->db->get('rbb', $limit, $start)->result();
+
+        }
+        $this->db->order_by('INPUT_DATE', 'desc');
+        $response = $this->db->get('rbb', $limit, $start)->result();
+        return $response;
+
+        $this->db->order_by('INPUT_DATE', 'desc');
+        $response = $this->db->get('rbb', $limit, $start)->result();
+        return $response;
     }
 
     public function save()
@@ -157,5 +181,14 @@ class RBB_model extends CI_Model
         $this->db->where('KODE_RBB', $post['KODE_RBB']);
         $this->db->update('rbb');
         return true;
+    }
+    public function countquery($name = null){
+        if (!empty($name)) {
+            $this->db->select('count(rbb.KODE_RBB) as n_row');
+            $this->db->like('rbb.KODE_RBB', $name, 'both');
+            return $this->db->get('rbb')->result();
+        }
+        $this->db->select('count(rbb.KODE_RBB) as n_row');
+        return $this->db->get('rbb')->result();
     }
 }

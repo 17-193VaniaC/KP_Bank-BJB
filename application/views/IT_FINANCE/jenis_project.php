@@ -19,19 +19,24 @@
 	<?php } ?>
 
 <br>
-	<div class="container-half">
-		<h2>Daftar Jenis Project</h2>
-	</div>
-
-	<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-		<div class="container-half right">
-			<form action="<?php echo site_url('jproject/add') ?>" method="post" class="form-inline" style="float: right;">
-				<input type="text" name="jenis" placeholder="Nama Jenis Project Baru" class="form-control" />
+	 <div class="container-half">
+        <h2><a href="<?= base_url('jproject/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Jenis Project</b></a></h2>
+        <p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+			<form action="<?php echo site_url('jproject/add') ?>" method="post" class="form-inline" >
+				<input type="text" name="jenis" placeholder="Masukan nama jenis project baru" class="form-control" />
 				<input type="submit" name="btn" value="+ Tambah Jenis Project" class="btn btn-success" />
 			</form>
-		</div>
-		<br><br>
-	<?php endif; ?>
+		<?php endif; ?></p>
+    </div>
+    <div class="container-half right">
+        <div class="form-group">
+            <form method="get" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari jenis project" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            	<span class=" input-group-btn">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
 
 
 	<!-- ##############################################TABEL JENIS######################################################## -->
@@ -107,7 +112,9 @@
 						<input type="submit" name="btn" value="Edit" class="btn btn-primary" />
 				</form>
 			</div>
+
 		</div>
+				
 	</div>
 </div>
 
@@ -132,3 +139,11 @@
 
 	});
 </script>
+<?php if ($pagination) : ?>
+        <div class="row">
+            <div class="col">
+                <!--Tampilkan pagination-->
+                <?php echo $pagination; ?>
+            </div>
+        </div>
+    <?php endif; ?>

@@ -1,21 +1,26 @@
 	<div class="container-xl" style=":margin-top 50px;">
 <br><br><br><br>	
 	<?php if ($this->session->flashdata('message')) {
-        echo "<div class='alert alert-success'>";
         echo $this->session->flashdata('message');
-        echo "</div>";
         ?>
     <?php } ?>
-			<div class="container-half">
-			<h2>Rencana Bisnis Bank</h2>
-			</div>
-			<div class="container-half right">
-				<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-					<a href="<?php echo site_url("rbb/add"); ?>">
-						<button class="btn btn-success"> + Tambah RBB </button>
-					</a>
-				<?php endif; ?>
-			</div>
+
+    <div class="container-half">
+	<h2><a href="<?= base_url('rbb/'); ?>" style="text-decoration: none; color: black;">Daftar <b>RBB</b></a></h2>
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+            <p> <a href="<?= base_url('rbb/add'); ?>" class="btn btn-success">+ Tambah RBB</a></p>
+        <?php endif; ?>
+    </div>
+    <div class="container-half right">
+        <div class="form-group">
+            <form method="post" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari RBB menggunakan Kode RBB" name="searchById" id="searchById" class="form-control" style="width: auto; />
+            <span class=" input-group-btn">
+                <input type="submit" name="Search" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+
 		<div class="table-responsive">
 			<div class="table-wrapper">
 				<table class="table table-striped table-hover table-bordered">
@@ -50,12 +55,14 @@
 				</table>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col">
-				<!--Tampilkan pagination-->
-				<?php echo $pagination; ?>
-			</div>
-		</div>
+   <?php if ($pagination) : ?>
+        <div class="row">
+            <div class="col">
+                <!--Tampilkan pagination-->
+                <?php echo $pagination; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 	</div>
 </body>
 

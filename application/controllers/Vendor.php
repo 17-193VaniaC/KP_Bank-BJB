@@ -10,6 +10,8 @@ class Vendor extends CI_Controller
         if (!$this->session->userdata('username')) {
             redirect('login');
         }
+
+        $this->load->library('pagination');
         $this->load->model("Vendor_model");
         $this->load->model("Log_model");
         $this->load->library('form_validation');
@@ -18,39 +20,91 @@ class Vendor extends CI_Controller
     public function index()
     {
         $title['title'] = 'Vendor';
-        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
-        $data['counter'] = 1;
-        $data["vendor"] = $this->Vendor_model->getAll();
-        $vendor = $this->Vendor_model;
-        $validation = $this->form_validation;
-        $validation->set_rules($vendor->rules());
-        $var = 0;
-        if ($validation->run() == TRUE) {
-            if ($data['user']['ROLE'] == 'IT FINANCE') {
-                $var = 1;
-                $kode_vendor = $vendor->update();
+        // Config pagination
+        $config['base_url'] = base_url('IT_FINANCE/vendor');
+        $config['total_rows'] = $this->db->count_all('vendor');
+        $config['per_page'] = 25;
+        $config["uri_segment"] = 3;
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
 
-                // ADD LOG
-                $log = $this->Log_model;
-                $data_log['USER'] = $data['user']['NAMA'];
-                $data_log['TABLE_NAME'] = 'vendor';
-                $data_log['KODE_DATA'] = $kode_vendor;
-                $data_log['ACTIVITY'] = 'edit';
-                $log->save($data_log);
+        // Pagination style
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
 
-                $this->session->set_flashdata('success', 'Data berhasil diubah');
-                $data["vendor"] = $this->Vendor_model->getAll();
-            } else {
-                redirect('vendor');
-            }
+        $this->pagination->initialize($config);
+
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+        if ($id = $this->input->get('searchById')) {
+            $data['vendor'] = $this->Vendor_model->getPagination($id, $config["per_page"], $data['page']);
+            $data['pagination'] = $this->pagination->create_links();
+        } 
+        else{
+            $data['vendor'] = $this->Vendor_model->getPagination(null, $config["per_page"], $data['page']);
+            $data['pagination'] = $this->pagination->create_links();
         }
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view("IT_FINANCE/vendor", $data);
         $this->load->view('templates/footer.php');
     }
+
+    // public function index()
+    // {
+    //     $title['title'] = 'Vendor';
+    //     $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+
+    //     $data['counter'] = 1;
+    //     $data["vendor"] = $this->Vendor_model->getAll();
+    //     $vendor = $this->Vendor_model;
+    //     $validation = $this->form_validation;
+    //     $validation->set_rules($vendor->rules());
+    //     $var = 0;
+    //     if ($validation->run() == TRUE) {
+    //         if ($data['user']['ROLE'] == 'IT FINANCE') {
+    //             $var = 1;
+    //             $kode_vendor = $vendor->update();
+
+    //             // ADD LOG
+    //             $log = $this->Log_model;
+    //             $data_log['USER'] = $data['user']['NAMA'];
+    //             $data_log['TABLE_NAME'] = 'vendor';
+    //             $data_log['KODE_DATA'] = $kode_vendor;
+    //             $data_log['ACTIVITY'] = 'edit';
+    //             $log->save($data_log);
+
+    //             $this->session->set_flashdata('success', 'Data berhasil diubah');
+    //             $data["vendor"] = $this->Vendor_model->getAll();
+    //         } else {
+    //             redirect('vendor');
+    //         }
+    //     }
+
+    //     $this->load->view('templates/header.php', $title);
+    //     $this->load->view('templates/navbar.php', $data);
+    //     $this->load->view("IT_FINANCE/vendor", $data);
+    //     $this->load->view('templates/footer.php');
+    // }
 
     public function add()
     {

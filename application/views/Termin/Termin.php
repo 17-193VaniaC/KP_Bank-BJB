@@ -1,7 +1,18 @@
 <!-- <body style="background: rgb(53,150,255);background: linear-gradient(299deg, rgba(53,150,255,1) 0%, rgba(119,182,250,1) 50%, rgba(255,221,118,1) 100%);"> -->
-<br>
 <div class="container-xl" style="margin-top: 50px;">
-	<h2 style="text-align: center; ">Daftar Termin</h2>
+	<br><br>
+	 <div class="container-half">
+        <h2><a href="<?= base_url('termin/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Termin</b></a></h2>
+    </div>
+    <div class="container-half right">
+        <div class="form-group">
+            <form method="post" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari Termin dengan No. PKS" name="searchById" id="searchById" class="form-control" value='<?= $search?>' style="width: auto; />
+            <span class=" input-group-btn">
+                <input type="submit" name="Search" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
 	<br>
 	<table class="table table-striped table-hover table-bordered">
 		<thead style="background-color: #204d95; color: white;">
@@ -43,6 +54,12 @@
 		<?php endforeach;  ?>
 
 	</table>
+	<div class="row">
+    <div class="col">
+        <!--Tampilkan pagination-->
+        <?php echo $pagination;?>
+    </div>
+</div>
 	</body>
 
 	</html>
