@@ -18,7 +18,7 @@
                                     $total += $row->NOMINAL;
                                 endforeach;
                             ?>
-                                <?php if ($user['ROLE'] == 'IT FINANCE' && $baris < 13 && $total < $pks["NOMINAL_PKS"]) : ?>
+                                <?php if ($user['ROLE'] == 'IT FINANCE' && $baris <= 13 && $total < $pks["NOMINAL_PKS"]) : ?>
                                     <a href="<?php echo base_url('Termin/addMore/' . $pks_ . '/' . $baris); ?>">
                                         <button class="btn btn-success"> + Tambah Termin </button>
                                     </a>

@@ -52,18 +52,20 @@ class Termin extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view("Termin/add_termin_pks", $data);
                 $this->load->view('templates/footer.php');
-            } else {
+            } 
+            else {
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($data['no_pks']);
-                $nominal_total = $pks->getNominal($data['no_pks']);
+                $nominal_total = $this->Termin_model->getRemainingBudget($data['no_pks']);
 
-                if ($data_PKS['SISA_ANGGARAN'] < $nominal_total->total + $this->input->post('NOMINAL')) {
+                if ($data_PKS['NOMINAL_PKS'] < $nominal_total[0]->anggaranpakai + $this->input->post('NOMINAL')) {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
                     $this->load->view("Termin/add_termin_pks", $data);
                     $this->load->view('templates/footer.php');
-                } else {
+                } 
+                else {
                     $kode_termin = $data['termin']->save($no_pks);
 
                     // ADD LOG
@@ -171,20 +173,22 @@ class Termin extends CI_Controller
                 $pks = $this->Pks_model;
                 $data_PKS = $pks->getById($NOPKS);
                 $termintotal = $termin->getRemainingBudget($NOPKS);
-                //                var_dump($termintotal);
+                $nominal_total = $termin->getNominal($KODETERMIN);
+                // var_dump($data_PKS["NOMINAL_PKS"]);
+                // var_dump($termintotal[0]->anggaranpakai);
+                // var_dump($nominal_total->NOMINAL);
                 // die;
-                $nominal_total = $pks->getNominal($NOPKS);
 
-                if ($this->input->post('NOMINAL') >= $data_PKS["NOMINAL_PKS"] - $termintotal[0]->anggaranpakai + $nominal_total->total) {
+
+                if ($this->input->post('NOMINAL') > $data_PKS["NOMINAL_PKS"] - $termintotal[0]->anggaranpakai + $nominal_total->NOMINAL) {//Nominal input > Nominal PKS - total nominal termin dulu
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal termin melebihi sisa anggaran PKS</div>');
                     $this->load->view('templates/header.php', $title);
                     $this->load->view('templates/navbar.php', $data);
                     $this->load->view('Termin/edit_termin', $data);
                     $this->load->view('templates/footer.php');
-                } else {
+                } 
+                else {
                     $termin->update($KODETERMIN);
-
-                    // ADD LOG
                     $log = $this->Log_model;
                     $data_log['USER'] = $data['user']['NAMA'];
                     $data_log['TABLE_NAME'] = 'termin_pks';

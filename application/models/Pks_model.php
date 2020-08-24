@@ -96,7 +96,5 @@ class Pks_model extends CI_Model
     {
         $query = $this->db->query('SELECT COUNT(termin_pks.NOMINAL) as total FROM termin_pks WHERE termin_pks.NO_PKS ="' . $nopks . '"');
         return $query->row();
-        // var_dump($query->row_array());
-        // die;
     }
 }

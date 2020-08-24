@@ -138,10 +138,6 @@ class Termin_model extends CI_Model
     {
         return $this->db->get_where('termin_pks', ['KODE_TERMIN' => $kodetermin])->row_array();
 
-
-        // $this->db->select('NO_PKS');
-        // $this->db->where('KODE_TERMIN', $kodetermin);
-        // return $this->db->get('termin_pks')->row();
     }
 
     public function hasntBeenPaid($nopks)
@@ -180,8 +176,14 @@ class Termin_model extends CI_Model
         // die;
     }
     public function getRemainingBudget($pks){
-        $this->db->select("count('NOMINAL') as anggaranpakai");
+        $this->db->select("sum(termin_pks.NOMINAL) as anggaranpakai");
         $this->db->where('NO_PKS =',$pks);
         return $this->db->get('termin_pks')->result();
+    }
+
+    public function getNominal($kodetermin)
+    {
+        $query = $this->db->query('SELECT termin_pks.NOMINAL FROM termin_pks WHERE termin_pks.KODE_TERMIN ="' . $kodetermin . '"');
+        return $query->row();
     }
 }
