@@ -23,7 +23,7 @@ class JProject extends CI_Controller
         $data['counter'] = 1;
         // Config pagination
         $config['base_url'] = base_url('JProject/index');
-        $config['per_page'] = 2;
+        $config['per_page'] = 20;
         $config["uri_segment"] = 3;
 
         // Pagination style

@@ -25,7 +25,7 @@ class Invoice extends CI_Controller
 
         // Config pagination
         $config['base_url'] = base_url('Invoice/index');
-        $config['per_page'] = 2;
+        $config['per_page'] = 20;
         $config["uri_segment"] = 3;
 
         // Pagination style
@@ -152,6 +152,9 @@ class Invoice extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Invoice PKS sudah lunas atau tidak ditemukan</div>');
                 redirect('Invoice/add');
             }
+        }
+        else{
+            redirect('invoice');
         }
     }
 

@@ -52,6 +52,7 @@
                                                 </td>
                                                 <td class="text-left" style="margin-left: 3px; width: 30%; padding-top:20px; padding-right: 20px">
                                                     <select class="form-control" name="KATEGORI" id="KATEGORI">
+                                                        <option value="">--- Pilih Kategori Termin ---</option>
                                                         <option value="Pengadaan">Pengadaan</option>
                                                         <option value="Maintenance">Maintenance</option>
                                                         <option value="Waranty">Waranty</option>

@@ -6,6 +6,7 @@ class auth extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library('pagination');
         $this->load->model("Log_model");
         $this->load->model("User_model");
         $this->load->library('form_validation');
@@ -132,13 +133,78 @@ class auth extends CI_Controller
 
     public function seeAllUser()
     {
-        $title['title'] = 'Daftar Akun';
-        $data['list'] = $this->User_model->getAll();
+        $title['title'] = 'Daftar Akun Pengguna';
+        $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+        if ($dataa['user']['ROLE'] == 'IT FINANCE') {
+
+        $title['title'] = 'Daftar Akun Pengguna';
+         // Config pagination
+        $config['base_url'] = base_url('auth/seeAllUser');
+        $config['per_page'] = 20;
+        $config["uri_segment"] = 3;
+
+        // Pagination style
+        $config['first_link']       = 'First';
+        $config['last_link']        = 'Last';
+        $config['next_link']        = 'Next';
+        $config['prev_link']        = 'Prev';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;   
+
+        if (!empty($this->input->post('Search'))) {
+            $id = $this->input->post('searchById');
+            $this->session->set_flashdata(array("search_user"=>$id));  
+            $data['search']=$id;
+            $n_row = $this->User_model->countquery($id)[0]->n_row;
+            $config['total_rows'] = $n_row;
+            $data['page'] = 0;
+        } 
+        else{
+            if($this->session->flashdata('search_user') != NULL){
+                $data['search']= $this->session->flashdata('search_user');
+                $n_row = $this->User_model->countquery($data['search'])[0]->n_row;
+                $config['total_rows'] = $n_row;
+            }
+            else{
+                $data['search']= '';
+                $config['total_rows'] = $this->db->count_all('user');
+            }
+        }
+
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
+      
+
+        $data['list'] = $this->User_model->getPagination($data['search'], $config["per_page"], $data['page']);
+
+        //initialize pagination and create
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+
+        // $data['list'] = $this->User_model->getAll();
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
         $this->load->view('auth/index', $data);
         $this->load->view('templates/footer.php');
+    }
+    else{
+        redirect("dashboard");
+    }
     }
 
     // public function edit($username)
@@ -225,7 +291,7 @@ class auth extends CI_Controller
 
             if ($user) {
                 // token
-                $token = base64_encode(random_bytes(32));
+                $token = base64_encode(openssl_random_pseudo_bytes(32));
                 $user_token = [
                     'email' => $email,
                     'token' => $token,
@@ -311,14 +377,14 @@ class auth extends CI_Controller
                     <tr>
                         <td 
                             style="letter-spacing: .5px; color: #3f4b81; font-family: Arial, Helvetica, sans-serif, sans-serif; font-size: 14px; font-weight: bold;">
-                            Hai! <br> Baru-baru ini terdapat permintaan untuk mengubah password anda. Silakan klik tombol di bawah untuk mengubah password 
+                            Baru-baru ini terdapat permintaan untuk mengubah password anda. Silakan klik tombol di bawah untuk mengubah password 
                         </td>
                     </tr>
                     <hr>
                     <tr>
                         <td align="center">
                         <br>
-                            <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '"><button style="background-color: blue;
+                            <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '"><button style="background-color: #204d95;
                             border: none;
                             color: white;
                             padding: 15px 32px;
