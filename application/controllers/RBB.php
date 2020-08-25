@@ -26,8 +26,8 @@ class RBB extends CI_Controller
         // Config pagination
         $config['base_url'] = base_url('rbb/index');
         $config['total_rows'] = $this->db->count_all('rbb');
-        $config['per_page'] = 20;
-        $config["uri_segment"] = 0;
+        $config['per_page'] = 1;
+        $config["uri_segment"] = 3;
  
         // Pagination style
         $config['first_link']       = 'First';

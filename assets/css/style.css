@@ -128,8 +128,9 @@ footer {
 }
 
 /*posisi kolom opsi*/
-.table-option-row{
+td .table-option-row{
    text-align: center;
    padding: 5px;
+   width: 10%;
 }
 

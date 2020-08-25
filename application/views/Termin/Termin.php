@@ -4,9 +4,14 @@
 	 <div class="container-half">
         <h2><a href="<?= base_url('termin/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Termin</b></a></h2>
     </div>
+    <?php
+	if(!empty($this->session->flashdata('search_termin'))){
+            empty($this->session->set_flashdata(array('search_termin'=>$search)));
+    }
+    ?>
     <div class="container-half right">
         <div class="form-group">
-            <form method="post" class="form-inline" style="float: right;">
+            <form method="post" action="<?= base_url() ?>termin/index/" class="form-inline" style="float: right;">
                 <input type="text" placeholder="Cari Termin dengan No. PKS" name="searchById" id="searchById" class="form-control" value='<?= $search?>' style="width: auto; />
             <span class=" input-group-btn">
                 <input type="submit" name="Search" class="btn btn-primary" />
@@ -16,15 +21,15 @@
 	<br>
 	<table class="table table-striped table-hover table-bordered">
 		<thead style="background-color: #204d95; color: white;">
-			<td>No. PKS</td>
-			<td>Termin</td>
-			<td>Nominal</td>
-			<td>Tanggal Termin</td>
-			<td>Status</td>
-			<td>Kategori</td>
-			<td>GL</td>
+			<td style="width : 13%;">No. PKS</td>
+			<td style="width : 8%;">No. Termin</td>
+			<td style="width : 10%;">Nominal</td>
+			<td style="width : 10%;">Tanggal Termin</td>
+			<td style="width : 8%;">Status</td>
+			<td style="width : 13%;">Kategori</td>
+			<td style="width : 10%;">GL</td>
 			<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-				<td>Opsi</td>
+				<td style="width : 13%; text-align: center;">Opsi</td>
 			<?php endif; ?>
 		</thead>
 		<?php foreach ($termin as $listtermin) : ?>

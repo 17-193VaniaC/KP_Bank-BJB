@@ -24,8 +24,8 @@ class Vendor extends CI_Controller
         // Config pagination
         $config['base_url'] = base_url('vendor/index');
         $config['total_rows'] = $this->db->count_all('vendor');
-        $config['per_page'] = 2;
-        $config["uri_segment"] = 0;
+        $config['per_page'] = 20;
+        $config["uri_segment"] = 3;
 
         // Pagination style
         $config['first_link']       = 'First';
@@ -48,7 +48,8 @@ class Vendor extends CI_Controller
         $config['last_tagl_close']  = '</span></li>';
 
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-
+        $data["vendor"] = $this->Vendor_model->getAll();
+       
         if (!empty($this->input->post('Search'))) {
             $id = $this->input->post('searchById');
             $this->session->set_flashdata(array("search_vendor"=>$id));
@@ -68,7 +69,6 @@ class Vendor extends CI_Controller
                 $config['total_rows'] = $this->db->count_all('vendor');
             }
         }
-        
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
         
@@ -77,6 +77,7 @@ class Vendor extends CI_Controller
 
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
+        $data['counter'] = $data['page'];
 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
@@ -84,42 +85,33 @@ class Vendor extends CI_Controller
         $this->load->view('templates/footer.php');
     }
 
-    // public function index()
-    // {
-    //     $title['title'] = 'Vendor';
-    //     $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+    public function edit()
+    {
+        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
-    //     $data['counter'] = 1;
-    //     $data["vendor"] = $this->Vendor_model->getAll();
-    //     $vendor = $this->Vendor_model;
-    //     $validation = $this->form_validation;
-    //     $validation->set_rules($vendor->rules());
-    //     $var = 0;
-    //     if ($validation->run() == TRUE) {
-    //         if ($data['user']['ROLE'] == 'IT FINANCE') {
-    //             $var = 1;
-    //             $kode_vendor = $vendor->update();
+        $data["vendor"] = $this->Vendor_model->getAll();
+        $vendor = $this->Vendor_model;
+        $validation = $this->form_validation;
+        $validation->set_rules($vendor->rules());
+        if ($validation->run() == TRUE) {
+            if ($data['user']['ROLE'] == 'IT FINANCE') {
+                $var = 1;
+                $kode_vendor = $vendor->update();
+                // ADD LOG
+                $log = $this->Log_model;
+                $data_log['USER'] = $data['user']['NAMA'];
+                $data_log['TABLE_NAME'] = 'vendor';
+                $data_log['KODE_DATA'] = $kode_vendor;
+                $data_log['ACTIVITY'] = 'edit';
+                $log->save($data_log);
 
-    //             // ADD LOG
-    //             $log = $this->Log_model;
-    //             $data_log['USER'] = $data['user']['NAMA'];
-    //             $data_log['TABLE_NAME'] = 'vendor';
-    //             $data_log['KODE_DATA'] = $kode_vendor;
-    //             $data_log['ACTIVITY'] = 'edit';
-    //             $log->save($data_log);
-
-    //             $this->session->set_flashdata('success', 'Data berhasil diubah');
-    //             $data["vendor"] = $this->Vendor_model->getAll();
-    //         } else {
-    //             redirect('vendor');
-    //         }
-    //     }
-
-    //     $this->load->view('templates/header.php', $title);
-    //     $this->load->view('templates/navbar.php', $data);
-    //     $this->load->view("IT_FINANCE/vendor", $data);
-    //     $this->load->view('templates/footer.php');
-    // }
+                $this->session->set_flashdata('success', 'Data berhasil diubah');
+            } else {
+                redirect('vendor');
+            }
+        }
+        redirect('vendor');
+    }
 
     public function add()
     {

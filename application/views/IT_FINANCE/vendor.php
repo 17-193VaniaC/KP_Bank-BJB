@@ -16,23 +16,26 @@
 		echo form_error('nama_vendor');
 		echo "</div>";
 		?>
-	<?php } ?>
+	<?php } 
+		if(!empty($this->session->flashdata('search_vendor'))){
+			empty($this->session->set_flashdata(array('search_vendor'=>$search)));
+		}
+	?>
 
 <br>
     <div class="container-half">
         <h2><a href="<?= base_url('vendor/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Vendor</b></a></h2>
         <p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline" >
-				<input type="text" name="nama_vendor" placeholder="Masukan nama vendor baru" class="form-control" value="<?= $search?>" />
+				<input type="text" name="nama_vendor" placeholder="Masukan nama vendor baru" class="form-control"/>
 				<input type="submit" name="btn" value="+ Tambah Vendor" class="btn btn-success" />
 			</form>
 		<?php endif; ?></p>
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="post" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; />
-            <span class=" input-group-btn">
+            <form method="post" action="<?php echo site_url('vendor/index') ?>" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; " value="<?= $search?>" >
                 <input type="submit" name="Search" class="btn btn-primary" />
             </form>
         </div>
@@ -59,34 +62,25 @@
 			<table class="table table-striped table-hover table-bordered">
 				<thead style="background-color: #204d95; color: white;">
 					<tr class="text-center">
-						<td>No</td>
-						<td>Nama Vendor</td>
+						<td style="width: 5%;">No</td>
+						<td  style="width: 23%;">Nama Vendor</td>
 						<!-- <td>Jumlah penggunaan</td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<td class="table-option-row">Opsi</td>
+							<td  style="width: 10%;" class="table-option-row">Opsi</td>
 						<?php endif; ?>
 					</tr>
-				</thead><?php $counter = 1; ?>
-				<?php
-				foreach ($vendor as $listvendor) : ?>
+				</thead>
+				<?php $counter++;
+				foreach ($vendor as $listvendor) :?>
 					<tr>
 						<td class="text-center">
 							<?= $counter++ ?>
 						</td>
 						<td><?php echo $listvendor->nama_vendor ?></td>
-						<!-- <td><?php echo $listvendor->STATUS ?></td> -->
-						
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">
 								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listvendor->KODE_VENDOR; ?>" data-vendor="<?php echo $listvendor->nama_vendor; ?>" data-status="<?php echo $listvendor->STATUS; ?>"> Edit</button>
-
-								<!-- <button id="deletebutton" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-vendor2="<?php echo $listvendor->nama_vendor; ?>">Hapus</button> -->
-
-								<!-- <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">  -->
 								<a class="btn btn-danger" href="<?php echo site_url('vendor/delete/' . $listvendor->KODE_VENDOR); ?>" onclick="return confirm('Hapus data vendor?')">Hapus</a>
-
-								<!-- <button class="btn btn-danger" onclick="comfirm('are you sure?')" >Hapus</button> -->
-								<!-- </a> -->
 							</td>
 						<?php endif; ?>
 					</tr>
@@ -95,53 +89,6 @@
 			</table>
 		</div>
 	</div>
-	<!-- 
-	<button data-target="#modalHupla" data-toggle="modal">AAAAAAA</button>
-	
-
-	<div class="modal fade" id="modalEdit" role="dialog">
-    <div class="modal-dialog">
-     -->
-	<!-- Modal content-->
-	<!--      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
- -->
-
-	<!-- </div>
-
-<div class="modal fade" tabindex="-1" role="dialog" id="modalEdit">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Vendor</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>  
- -->
 	<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
 	<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -152,7 +99,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="" method="post">
+				<form action="<?php echo site_url('vendor/edit') ?>" method="post">
 					<div class="modal-body" id="modal-edit">
 						<table style="margin: 8%;">
 							<div class="notif-warning" id="notif-warning">
@@ -182,58 +129,8 @@
 			</div>
 		</div>
 	</div>
-	<?php if ($pagination) : ?>
-        <div class="row">
-            <div class="col">
-                <!--Tampilkan pagination-->
-                <?php echo $pagination; ?>
-            </div>
-        </div>
-    <?php endif; ?>
 </div>
 
-
-<!--+++++++++++++++++++++++++++++++++++++++++++++++++++ Modal hapus ++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-<!-- <div class="modal" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Hapus Vendor </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-		<form  method="post" id="form_hapus">
-      <div class="modal-body" id="modal_body_delete">
-      	<table style="margin: 10%;">
-					<tr>
-						<td style="margin-left: 3px; width: 20%; padding:10px;">
-							<label for="nama_vendor">Hapus Vendor</label>
-						</td>
-						<td style="margin-left: 3px; width: 30%; padding:10px;">
-							<input type="text" name="nama_vendor" id="nama_vendor" class="form-controll" />
-							?
-						</td>
-					</tr>
-					<tr><td style="margin-left: 3px; width: 30%; padding:10px;"></td>
-					</tr>
-				</table>
-		    </div>
-	    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <a href="<?php echo site_url('vendor/delete/' . $listvendor->nama_vendor); ?>">
-		<button class="btn btn-danger">Hapus</button></a> -->
-<!--  <a href="<?php echo site_url('vendor/edit/' . $listvendor->nama_vendor) ?>""><button class="btn btn-success">Ubah</button></a> -->
-<!-- </div>
-</div>
-</div>
-</div> -->
-
-<!-- <?php if ($user['ROLE'] == 'IT FINANCE') : ?> -->
-<!-- /div>
-	</div> -->
-<!-- <?php endif; ?> -->
-<!-- </div> -->
     <?php if ($pagination) : ?>
         <div class="row">
             <div class="col">
@@ -262,21 +159,21 @@
 		}
 
 	});
-	// $(document).ready(function(){
-	// 	$("#form_edit").on("submit", (function(e){
-	// 		e.preventDevaullt();
-	//     	$.ajax({
-	//     		url: <?php site_url('vendor/edit/') ?> + n_vendor,
-	//     		type: post,
-	//     		data: {nama_vendor:nama_vendor, KODE_VENDOR: KODE_VENDOR},
-	//     		success: function(data){
-	//     			alert("data berhasil diubah");
-	//     			$("#modalEdit").modal("hide");
-	//     			location.reload();
-	//     		}
-	// 		});
-	// 	}));
-	// });
+	$(document).ready(function(){
+		$("#form_edit").on("submit", (function(e){
+			e.preventDevaullt();
+	    	$.ajax({
+	    		url: <?php site_url('vendor/edit/') ?> + n_vendor,
+	    		type: post,
+	    		data: {nama_vendor:nama_vendor, KODE_VENDOR: KODE_VENDOR},
+	    		success: function(data){
+	    			alert("data berhasil diubah");
+	    			$("#modalEdit").modal("hide");
+	    			location.reload();
+	    		}
+			});
+		}));
+	});
 
 	// $(document).on("click", "#deletebutton", function(){
 	// 	var n_vendor = $(this).data(vendor2);

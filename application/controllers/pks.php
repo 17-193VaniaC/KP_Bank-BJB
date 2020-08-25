@@ -22,13 +22,13 @@ class pks extends CI_Controller
         $this->load->model('Log_model');
     }
 
-public function index()
+    public function index()
     {
         $title['title'] = 'PKS';
 
         // Config pagination
         $config['base_url'] = base_url('pks/index');
-        $config['per_page'] = 1;
+        $config['per_page'] = 20;
         $config["uri_segment"] = 3;
 
         // Pagination style
@@ -73,7 +73,6 @@ public function index()
                 $config['total_rows'] = $this->db->count_all('pks');
             }
         }
-        var_dump($data['page']);
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
 

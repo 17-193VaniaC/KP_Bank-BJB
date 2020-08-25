@@ -3,7 +3,10 @@
 	<?php if ($this->session->flashdata('message')) {
         echo $this->session->flashdata('message');
         ?>
-    <?php } ?>
+    <?php } 
+    if(!empty($this->session->flashdata('search_rbb'))){
+            empty($this->session->set_flashdata(array('search_rbb'=>$search)));
+     }?>
 
     <div class="container-half">
 	<h2><a href="<?= base_url('rbb/'); ?>" style="text-decoration: none; color: black;">Daftar <b>RBB</b></a></h2>
@@ -13,7 +16,7 @@
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="post" class="form-inline" style="float: right;">
+            <form method="post" action="<?= base_url() ?>rbb/index/" class="form-inline" style="float: right;">
                 <input type="text" placeholder="Cari RBB menggunakan Kode RBB" name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
                 <input type="submit" name="Search" class="btn btn-primary" />
@@ -25,14 +28,14 @@
 			<div class="table-wrapper">
 				<table class="table table-striped table-hover table-bordered">
 					<thead style="background-color: #204d95; color: white;">
-						<td>Kode RBB</td>
-						<td>Program Kerja</td>
-						<td>Anggaran</td>
-						<td>GL</td>
-						<td>Nama Rek</td>
-						<td>Sisa Anggaran</td>
+						<td style="width : 10%;">Kode RBB</td>
+						<td style="width : 15%;">Program Kerja</td>
+						<td style="width : 8%;">Anggaran</td>
+						<td style="width : 8%;">GL</td>
+						<td style="width : 12%;">Nama Rek</td>
+						<td style="width : 8%;">Sisa Anggaran</td>
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<td class="table-option-row">Opsi</td>
+							<td style="width : 10%;" class="table-option-row">Opsi</td>
 						<?php endif; ?>
 					</thead>
 					<?php foreach ($rbb as $listrbb) : ?>

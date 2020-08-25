@@ -2,7 +2,11 @@
 <div style="margin-top: 50px; padding: 25px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
-    <?php } ?>
+    <?php }
+    if(!empty($this->session->flashdata('search'))){
+            empty($this->session->set_flashdata(array('search'=>$search)));
+        }
+     ?>
     <!-- <div class="container-xl"> -->
     <div class="container-half">
         <h2><a href="<?= base_url('pks/'); ?>" style="text-decoration: none; color: black;">Daftar <b>PKS</b></a></h2>
@@ -12,7 +16,7 @@
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="post" class="form-inline" style="float: right;">
+            <form method="post" action="<?= base_url() ?>pks/index/" class="form-inline" style="float: right;">
                 <input type="text" placeholder="Cari PKS dengan NO PKS" value='<?= $search ?>' name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
                 <input type="submit" name="Search" class="btn btn-primary" />
@@ -22,20 +26,20 @@
     </div>
     <div class="table-responsive">
         <div class="table-wrapper">
-            <table class="table table-striped table-hover table-bordered">
+            <table class="table table-striped table-hover table-bordered" style="font-size: 15;">
                 <thead style="background-color: #204d95; color: white;">
                     <tr class="text-center">
-                        <td>Nomor PKS</td>
-                        <td>Kode RBB</td>
-                        <td>Jenis</td>
-                        <td>Kode Project</td>
-                        <td>Nama Project</td>
-                        <td>tanggal PKS</td>
-                        <td>Nominal PKS</td>
-                        <td>Sisa Anggaran</td>
-                        <td>Nama Vendor</td>
+                        <td style="width : 13%;">Nomor PKS</td>
+                        <td style="width : 7%;">Kode RBB</td>
+                        <td style="width : 7%;">Jenis</td>
+                        <td style="width : 14%;">Kode Project</td>
+                        <td style="width : 15%;">Nama Project</td>
+                        <td style="width : 8%;">Tanggal PKS</td>
+                        <td style="width : 8%;">Nominal PKS</td>
+                        <td style="width : 8%;">Sisa Anggaran</td>
+                        <td style="width : 10%;">Nama Vendor</td>
                         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                            <td>Opsi</td>
+                            <td style="width : 15%;">Opsi</td>
                         <?php endif; ?>
                     </tr>
                 </thead>

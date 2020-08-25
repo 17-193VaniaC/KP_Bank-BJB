@@ -16,7 +16,11 @@
 		echo form_error('jenis');
 		echo "</div>";
 		?>
-	<?php } ?>
+	<?php } 
+		if(!empty($this->session->flashdata('search_jp'))){
+			empty($this->session->set_flashdata(array('search_jp'=>$search)));
+		}
+	?>
 
 <br>
 	 <div class="container-half">
@@ -30,10 +34,9 @@
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="get" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari jenis project" name="searchById" id="searchById" class="form-control" style="width: auto; />
-            	<span class=" input-group-btn">
-                <button class="btn btn-primary" type="submit">Search</button>
+            <form method="post" action="<?php echo site_url('jproject/index') ?>" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Cari jenis project" name="searchById" id="searchById" class="form-control" style="width: auto;" value="<?= $search?>" />
+                <input type="submit" name="Search" class="btn btn-primary" />
             </form>
         </div>
     </div>
@@ -45,14 +48,14 @@
 			<table class="table table-striped table-hover table-bordered">
 				<thead style="background-color: #204d95; color: white;">
 					<tr class="text-center">
-						<td>No</td>
-						<td>Jenis Project</td>
+						<td style="width: 5%;">No</td>
+						<td style="width: 20%">Jenis Project</td>
 						<!-- <td>Jumlah penggunaan</td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<td class="table-option-row">Opsi</td>
+							<td style="width: 10%" class="table-option-row">Opsi</td>
 						<?php endif; ?>
 					</tr>
-				</thead><?php $counter = 1; ?>
+				</thead><?php $counter++; ?>
 				<?php
 				foreach ($jenis as $listjenis) : ?>
 					<tr>
@@ -84,7 +87,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="" method="post">
+				<form action="<?php echo site_url('jproject/edit') ?>" method="post">
 					<div class="modal-body" id="modal-edit">
 						<table style="margin: 8%;">
 							<div class="notif-warning" id="notif-warning">
@@ -137,6 +140,21 @@
 			document.getElementById("notif-warning").style.display = "none";
 		}
 
+	$(document).ready(function(){
+		$("#form_edit").on("submit", (function(e){
+			e.preventDevaullt();
+	    	$.ajax({
+	    		url: <?php site_url('jproject/edit/') ?> + n_jenis,
+	    		type: post,
+	    		data: {jenis:jenis, KODE_JENISPROJECT: KODE_JENISPROJECT},
+	    		success: function(data){
+	    			alert("data berhasil diubah");
+	    			$("#modalEdit").modal("hide");
+	    			location.reload();
+	    		}
+			});
+		}));
+	});
 	});
 </script>
 <?php if ($pagination) : ?>

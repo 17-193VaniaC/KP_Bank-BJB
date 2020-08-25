@@ -26,7 +26,7 @@ class Vendor_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that)) {
+        if (!empty($that) || $that=='0') {
             $this->db->select('*');
             $this->db->like('nama_vendor', $that, 'both');
             $this->db->order_by('nama_vendor', 'asc');
@@ -103,7 +103,7 @@ class Vendor_model extends CI_Model
     }
 
     public function countquery($name = null){
-        if (!empty($name)) {
+        if (!empty($name) || $name=='0') {
             $this->db->select('count(vendor.KODE_VENDOR) as n_row');
             $this->db->like('vendor.nama_vendor', $name, 'both');
             return $this->db->get('vendor')->result();

@@ -44,12 +44,12 @@ class Invoice_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that)) {
+        if (!empty($that) || $that=='0') {
             $this->db->select('*');
             $this->db->like('pks.NO_PKS', $that, 'both');
             $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
             $this->db->join('pks', 'pks.NO_PKS = termin_pks.NO_PKS');
-            $this->db->order_by('INPUT_DATE', 'desc');
+            $this->db->order_by('pembayaran.INPUT_DATE', 'desc');
             return $this->db->get('pembayaran', $limit, $start)->result();
         }
         // Select record
@@ -62,20 +62,11 @@ class Invoice_model extends CI_Model
 
     public function save()
     {
-        //$last_termin = $this->Invoice_model->checktermin($NOPKS);
-        // if($last_termin >0 ){
-        //    $nominalbayar = $this->Invoice_model->termin_val($NOPKS, $last_termin);
-        // $last_budget = $this->Invoice_model->budget_remain($NOPKS);
-        // $termin= $this->load->model("Termin_model");
-
         $post = $this->input->post();
         $this->INVOICE = $post["INVOICE"];
         $this->KODE_TERMIN = $post["KODE_TERMIN"];
         $this->TGL_INVOICE = $post["TGL_INVOICE"];
         $this->INPUT_DATE =  date("Y-m-d h:i:s");
-
-        // $termin->paid($post["KODE_TERMIN"]);
-
 
         return $this->db->insert($this->_table, $this);
     }
@@ -125,5 +116,22 @@ class Invoice_model extends CI_Model
         $this->db->order_by('NO_PKS');
         $this->db->limit(4);
         return $this->db->get()->result();
+    }
+
+    public function countquery($that = null){
+        if (!empty($that) || $that=='0') {
+            $this->db->select('count(INVOICE) as n_row');
+            $this->db->like('pks.NO_PKS', $that, 'both');
+            $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
+            $this->db->join('pks', 'pks.NO_PKS = termin_pks.NO_PKS');
+            $this->db->order_by('pembayaran.INPUT_DATE', 'desc');
+            return $this->db->get('pembayaran')->result();
+        }
+        // Select record
+        $this->db->select('count(INVOICE) as n_row');
+        $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
+        $this->db->join('pks', 'pks.NO_PKS = termin_pks.NO_PKS');
+        $this->db->order_by('pembayaran.INPUT_DATE', 'desc');
+        return $this->db->get('pembayaran')->result();
     }
 }

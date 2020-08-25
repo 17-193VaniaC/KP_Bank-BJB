@@ -3,7 +3,10 @@
     
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
-    <?php } ?>
+    <?php } 
+    if(!empty($this->session->flashdata('search_invoice'))){
+            empty($this->session->set_flashdata(array('search_invoice'=>$search)));
+        }?>
 
     <div class="container-half">
         <h2><a href="<?= base_url('invoice/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Invoice</b></a></h2>
@@ -13,10 +16,10 @@
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="get" class="form-inline" style="float: right;">
+            <form method="post" action="<?php echo site_url('invoice/index') ?>" class="form-inline" style="float: right;">
                 <input type="text" placeholder="Cari Invoice dengan No. PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <input type="submit" name="Search" class="btn btn-primary" />
             </form>
         </div>
     </div>
@@ -26,19 +29,17 @@
             <table class="table table-striped table-hover table-bordered">
                 <thead style="background-color: #204d95; color: white;">
                     <tr class="text-center">
-                        <td>Invoice</td>
-                        <td>Nomor PKS</td>
-                        <td>Nama Project</td>
-                        <td>Tanggal Invoice</td>
-                        <td>Tahap</td>
-                        <td>Nominal Bayar</td>
+                        <td style="width: 12%;">Invoice</td>
+                        <td style="width: 20%;">Nomor PKS</td>
+                        <td style="width: 20%;">Nama Project</td>
+                        <td style="width: 10%;">Tanggal Invoice</td>
+                        <td style="width: 10%;">Tahap</td>
+                        <td style="width: 10%;">Nominal Bayar</td>
                         <!-- <td>Sisa Anggaran PKS</td> -->
                     </tr>
                 </thead>
                 <tbody>
                     <div id="result"></div>
-                  <!--   <?php $pks = null;
-                    $sisa = 0 ?> -->
                     <?php foreach ($invoice as $row) : ?>
                         <tr>
                             <td><?= $row->INVOICE ?></td>
@@ -63,9 +64,11 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col">
-        <!--Tampilkan pagination-->
-        <?php echo $pagination;?>
-    </div>
-</div>
+    <?php if ($pagination) : ?>
+        <div class="row">
+            <div class="col">
+                <!--Tampilkan pagination-->
+                <?php echo $pagination; ?>
+            </div>
+        </div>
+    <?php endif; ?>

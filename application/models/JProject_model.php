@@ -27,7 +27,7 @@ class JProject_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that)) {
+        if (!empty($that) || $that=='0') {
             $this->db->select('*');
             $this->db->like('jenis', $that, 'both');
             $this->db->order_by('jenis', 'asc');
@@ -104,5 +104,14 @@ class JProject_model extends CI_Model
         $this->db->set('STATUS', $RN);;
         $this->db->where("KODE_JENISPROJECT", $prevId);
         return $this->db->update('j_project');
+    }
+        public function countquery($name = null){
+        if (!empty($name) || $name=='0') {
+            $this->db->select('count(j_project.KODE_JENISPROJECT) as n_row');
+            $this->db->like('j_project.jenis', $name, 'both');
+            return $this->db->get('j_project')->result();
+        }
+        $this->db->select('count(j_project.KODE_JENISPROJECT) as n_row');
+        return $this->db->get('j_project')->result();
     }
 }
