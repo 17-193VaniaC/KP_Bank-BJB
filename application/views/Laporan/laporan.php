@@ -3,8 +3,8 @@
 <div class="row">
       <div class="col" style="text-align: center; margin-top: 20px;">
             <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                  <p> <a href="<?= base_url('laporan/export'); ?>" class="btn btn-success">+ Export Laporan</a></p>
-                  <p> <a href="<?= base_url('laporan/laporan_pdf'); ?>" class="btn btn-success">Laporan</a></p>
+                  <a href="<?= base_url('laporan/laporan_pdf'); ?>" style="margin-right: 5px;" class="btn btn-danger">Print Laporan</a>
+                  <a href="<?= base_url('laporan/exportAsExcel'); ?>" class="btn btn-success">Save as Excel</a>
             <?php endif; ?>
       </div>
 </div>
@@ -178,7 +178,9 @@
 <?php
                                     endforeach;
                               } else {
-                                    echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
+                                    echo "<td>-</td><td>";
+                                    echo $a["ANGGARAN"];
+                                    echo "</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
                               } ?>
 </tr>
 <?php endforeach; ?>

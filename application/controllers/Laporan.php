@@ -88,4 +88,79 @@ class Laporan extends CI_Controller
         // $pdf->SetFont('', 'B', 12);
         // $pdf->Cell()
     }
+
+    public function exportAsExcel(){
+        $this->load->library('excel');
+        $object = new PHPExcel();
+
+        $object->setActiveSheetIndex(0);
+        $table_columns = array("Kode RBB", "Program Kerja", "Anggaran", 'GL', 'Nama Rekening',  "Mutasi RBB", "Sisa Anggaran",  "Nomor PKS",    "Jenis Project", "Kode Project", "Nama Project", "Tanggal PKS", "Nominal PKS",  "Nama Vendor", "Mutasi PKS", "Sisa Anggaran", "Kode Invoice",   "Tahap",    'Nominal',  "Tanggal Invoice");
+        $column = 0;
+        foreach ($table_columns as $field) {
+            $object->getActiveSheet()->setCellValueByColumnAndRow($column, 1, $field);
+            $column++;
+        }
+
+        $data_laporan = $this->Laporan_model->getData();
+        $excel_row = 2;
+
+        foreach ($data_laporan as $row) {
+            //rbb
+            $object->getActiveSheet()->setCellValueByColumnAndRow(0,$excel_row, $row["KODE_RBB"]);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(1,$excel_row, $row["PROGRAM_KERJA"]);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(2,$excel_row, $row["ANGGARAN"]);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(3,$excel_row, $row["GL"]);
+            $object->getActiveSheet()->setCellValueByColumnAndRow(4,$excel_row, $row["NAMA_REK"]);
+
+            $Mutasi_rbb=0;
+            $Sisa_rbb = $row['ANGGARAN'];
+            //kalau ada pks
+            if(!empty($row['pks'])){
+                foreach ($row['pks'] as $pks) {
+
+                    $Mutasi_rbb = $Mutasi_rbb+$pks["NOMINAL_PKS"];
+                    $Sisa_rbb = $Sisa_rbb-$pks['NOMINAL_PKS'];
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(5,$excel_row, $Mutasi_rbb);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(6,$excel_row, $Sisa_rbb);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(7,$excel_row, $pks['NO_PKS']);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(8,$excel_row, $pks['jenis']);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(9,$excel_row, $pks['KODE_PROJECT']);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(10,$excel_row, $pks['NAMA_PROJECT']);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(11,$excel_row, $pks['TGL_PKS']);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(12,$excel_row, $pks['NOMINAL_PKS']);
+                    $object->getActiveSheet()->setCellValueByColumnAndRow(13,$excel_row, $pks['nama_vendor']);
+                    $Mutasi_pks=0;
+                    $Sisa_pks = $pks["NOMINAL_PKS"];
+                    // kalau ada invoice
+                    if(!empty($pks['invs'])){
+                        foreach ($pks['invs'] as $invs) {
+                            $Mutasi_pks = $Mutasi_pks+$pks["NOMINAL_PKS"];
+                            $Sisa_rpks = $Sisa_pks-$pks['NOMINAL_PKS'];
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(14,$excel_row, $Mutasi_pks);
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(15,$excel_row, $Sisa_pks);
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(16,$excel_row, $invs['INVOICE']);
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(17,$excel_row, $invs['TERMIN']);
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(18,$excel_row, $invs['NOMINAL']);
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(20,$excel_row, $invs['TGL_INVOICE']);
+                            $excel_row++;
+                        }    
+                    }
+                    else{
+                            $excel_row++;
+                    }
+
+                }
+            }
+            else{
+                $excel_row++;
+                
+            }
+        
+        }
+        $object_writter = PHPExcel_IOFactory::createWriter($object, 'Excel5');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment; filename=Laporan Gabungan.xls');
+        $object_writter->save('php://output');
+        redirect('laporan');
+    }
 }
