@@ -19,7 +19,7 @@ class Laporan_model extends CI_Model
     //     $termin =$this->db->get()->result();
     //     return $termin;
     // }    
-   
+
     // public function seeThisTermin($nopks){
     //    // $this->db->from('termin_pks');
     //     $this->db->where('STATUS', "UNPAID");
@@ -41,20 +41,21 @@ class Laporan_model extends CI_Model
     //     $sql = mysqli_fetch_array($query);
     //     return $sql;
     // }
-    public function getData(){
+    public function getData()
+    {
         $this->db->select("KODE_RBB, PROGRAM_KERJA, ANGGARAN, GL, NAMA_REK, (ANGGARAN-SISA_ANGGARAN) as Mutasi, SISA_ANGGARAN");
-        $res= $this->db->get('rbb')->result_array();
-        foreach ($res as $a=>$val):
+        $res = $this->db->get('rbb')->result_array();
+        foreach ($res as $a => $val) :
             $this->db->select("j_project.jenis, KODE_PROJECT, NAMA_PROJECT, TGL_PKS, NO_PKS, NOMINAL_PKS, (NOMINAL_PKS-SISA_ANGGARAN) as Mutasi, SISA_ANGGARAN, vendor.nama_vendor");
             $this->db->join('vendor', "vendor.KODE_VENDOR = pks.NAMA_VENDOR");
             $this->db->join('j_project', "j_project.KODE_JENISPROJECT = pks.JENIS");
-            $r = $this->db->get_where('pks', array('pks.KODE_RBB'=>$val["KODE_RBB"]))->result_array();
-            foreach ($r as $b=>$val) :
+            $r = $this->db->get_where('pks', array('pks.KODE_RBB' => $val["KODE_RBB"]))->result_array();
+            foreach ($r as $b => $val) :
                 $this->db->join('pembayaran', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN', 'inner');
-                $s = $this->db->get_where('termin_pks', array('termin_pks.NO_PKS'=>$val["NO_PKS"]))->result_array();
+                $s = $this->db->get_where('termin_pks', array('termin_pks.NO_PKS' => $val["NO_PKS"]))->result_array();
                 $r[$b]['invs'] = $s;
             endforeach;
-            $res[$a]['pks']= $r;
+            $res[$a]['pks'] = $r;
         endforeach;
         // var_dump($res);
 
@@ -63,21 +64,20 @@ class Laporan_model extends CI_Model
 
         // die;
         return $res;
-
-
     }
-    public function getData2(){        
-        $res= $this->db->get('rbb')->result_array();
-        foreach ($res as $a=>$val):
+    public function getData2()
+    {
+        $res = $this->db->get('rbb')->result_array();
+        foreach ($res as $a => $val) :
             $this->db->join('vendor', "vendor.KODE_VENDOR = pks.NAMA_VENDOR");
             $this->db->join('j_project', "j_project.KODE_JENISPROJECT = pks.JENIS");
-            $r = $this->db->get_where('pks', array('pks.KODE_RBB'=>$val["KODE_RBB"]))->result_array();
-            foreach ($r as $b=>$val) :
+            $r = $this->db->get_where('pks', array('pks.KODE_RBB' => $val["KODE_RBB"]))->result_array();
+            foreach ($r as $b => $val) :
                 $this->db->join('pembayaran', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN', 'inner');
-                $s = $this->db->get_where('termin_pks', array('termin_pks.NO_PKS'=>$val["NO_PKS"]))->result_array();
+                $s = $this->db->get_where('termin_pks', array('termin_pks.NO_PKS' => $val["NO_PKS"]))->result_array();
                 $r[$b]['invs'] = $s;
             endforeach;
-            $res[$a]['pks']= $r;
+            $res[$a]['pks'] = $r;
         endforeach;
         // var_dump($res);
 
@@ -86,12 +86,9 @@ class Laporan_model extends CI_Model
 
         // die;
         return $res;
-
-
     }
 
+    public function getByDate($tgl_awal, $tgl_akhir)
+    {
+    }
 }
-
-
-
-
