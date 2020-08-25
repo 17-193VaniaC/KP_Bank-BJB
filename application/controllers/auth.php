@@ -281,7 +281,61 @@ class auth extends CI_Controller
         $this->email->to($this->input->post('email'));
 
         $this->email->subject('Reset Password');
-        $this->email->message('Click link berikut untuk mengubah password : <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Ubah Password</a>');
+        // $this->email->message('Click link berikut untuk mengubah password : <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Ubah Password</a>');
+        $this->email->message('
+        
+        <!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>HTML Email</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body style="margin: 0; padding: 0;">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+        <tr>
+            <td align="center" bgcolor="#767c91"
+                style="padding: 40px 0 30px 0; font-family: sans-serif; color: white; font-weight: bold; font-size: 25px;">
+                Reset Password
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#f7f7f7" style="padding: 40px 30px 40px 30px;">
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr>
+                        <td 
+                            style="letter-spacing: .5px; color: #3f4b81; font-family: Arial, Helvetica, sans-serif, sans-serif; font-size: 14px; font-weight: bold;">
+                            Hai! <br> Baru-baru ini terdapat permintaan untuk mengubah password anda. Silakan klik tombol di bawah untuk mengubah password 
+                        </td>
+                    </tr>
+                    <hr>
+                    <tr>
+                        <td align="center">
+                        <br>
+                            <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '"><button style="background-color: blue;
+                            border: none;
+                            color: white;
+                            padding: 15px 32px;
+                            text-align: center;
+                            text-decoration: none;
+                            display: inline-block;
+                            font-size: 14px;">Ubah Password</button></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+        
+        
+        
+        
+        
+        
+        ');
         // $this->email->message('Click link berikut untuk mengubah password : <a href="">Ubah Password</a>');
 
         if ($this->email->send()) {
