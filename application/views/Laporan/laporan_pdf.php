@@ -2,8 +2,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/style.css">
 
     <!-- Bootstrap CSS -->
-    <!--   <link href="<?= base_url('assets/'); ?>css/bootstrap.css" rel="stylesheet" type="text/css">
-    <link href="<?= base_url('assets/'); ?>css/bootstrap.min.css" rel="stylesheet" type="text/css"> -->
+      <link href="<?= base_url('assets/'); ?>css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/'); ?>css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 </head>
 <style type="text/css">
@@ -43,8 +43,8 @@
 
 <body onload="window.print()">
     <H2 style="text-align: center;">Laporan Gabungan</H2>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered">
+    <div>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th colspan="7">RENCANA BISNIS BANK</th>
