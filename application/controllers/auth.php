@@ -16,7 +16,8 @@ class auth extends CI_Controller
     {
         if ($this->session->userdata('username')) {
             redirect('dashboard');
-        } else {
+        } 
+        else {
             redirect('login');
         }
     }
@@ -33,7 +34,8 @@ class auth extends CI_Controller
             $this->load->view('templates/header', $title);
             $this->load->view('auth/login');
             $this->load->view('templates/footer');
-        } else {
+        } 
+        else {
             //Validasi sukses  
             $this->_login();  //_ untuk menandakan private hanya untuk kelas ini saja  
         }
@@ -97,7 +99,8 @@ class auth extends CI_Controller
                 $this->load->view('templates/navbar', $dataa);
                 $this->load->view('auth/register');
                 $this->load->view('templates/footer');
-            } else {
+            } 
+            else {
                 $data = [
                     'ROLE' => $this->input->post('role'),
                     'NAMA' => $this->input->post('nama', true),
@@ -116,16 +119,18 @@ class auth extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun berhasil dibuat. </div>');
-                redirect('list');
+                redirect('seeAllUser');
             }
-        } elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {
+        } 
+        elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {
             redirect('dashboard');
-        } else {
+        } 
+        else {
             redirect('login');
         }
     }
 
-    public function list()
+    public function seeAllUser()
     {
         $title['title'] = 'Daftar Akun';
         $data['list'] = $this->User_model->getAll();
@@ -181,13 +186,13 @@ class auth extends CI_Controller
         if ($data['user']['USERNAME'] == $username) {
             // $this->User_model->delete($username);
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak bisa menghapus akun yang anda gunakan saat ini</div>');
-            redirect('list');
+            redirect('seeAllUser');
         } else if ($data['user']['ROLE'] == 'IT FINANCE') {
             $this->User_model->delete($username);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus.</div>');
-            redirect('list');
+            redirect('seeAllUser');
         } else {
-            redirect('list');
+            redirect('seeAllUser');
         }
     }
 

@@ -81,7 +81,7 @@
             Jenis Project
         </a>
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-            <a href="<?= base_url('list'); ?>" class="hupla">
+            <a href="<?= base_url('auth/seeAllUser'); ?>" class="hupla">
                 <img src="<?php echo base_url('assets/image/add_account.png'); ?>" class="symbol-menu" style="width: 40px; margin-right: 15px;">
                 Daftar Akun
             </a>
