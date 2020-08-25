@@ -23,17 +23,17 @@
         <h2><a href="<?= base_url('vendor/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Vendor</b></a></h2>
         <p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline" >
-				<input type="text" name="nama_vendor" placeholder="Masukan nama vendor baru" class="form-control" />
+				<input type="text" name="nama_vendor" placeholder="Masukan nama vendor baru" class="form-control" value="<?= $search?>" />
 				<input type="submit" name="btn" value="+ Tambah Vendor" class="btn btn-success" />
 			</form>
 		<?php endif; ?></p>
     </div>
     <div class="container-half right">
         <div class="form-group">
-            <form method="get" class="form-inline" style="float: right;">
+            <form method="post" class="form-inline" style="float: right;">
                 <input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <input type="submit" name="Search" class="btn btn-primary" />
             </form>
         </div>
     </div>
@@ -234,8 +234,14 @@
 	</div> -->
 <!-- <?php endif; ?> -->
 <!-- </div> -->
-
-
+    <?php if ($pagination) : ?>
+        <div class="row">
+            <div class="col">
+                <!--Tampilkan pagination-->
+                <?php echo $pagination; ?>
+            </div>
+        </div>
+    <?php endif; ?>
 <script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
 <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>

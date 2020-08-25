@@ -101,4 +101,14 @@ class Vendor_model extends CI_Model
         $this->db->where("KODE_VENDOR", $prevId);
         return $this->db->update('vendor');
     }
+
+    public function countquery($name = null){
+        if (!empty($name)) {
+            $this->db->select('count(vendor.KODE_VENDOR) as n_row');
+            $this->db->like('vendor.nama_vendor', $name, 'both');
+            return $this->db->get('vendor')->result();
+        }
+        $this->db->select('count(vendor.KODE_VENDOR) as n_row');
+        return $this->db->get('vendor')->result();
+    }
 }

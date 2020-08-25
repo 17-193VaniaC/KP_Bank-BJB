@@ -20,6 +20,7 @@
         padding: 15px;
         color: white;
         width: 23%;
+        min-height: 90px;
         background-color: rgba(0, 0, 0, 0.7);
     }
 </style>
@@ -66,7 +67,7 @@
 
     <br><br>
 
-    <div class="row" style="width: 100%; padding: auto;">
+    <div class="row" style="width: 100%; padding: auto; margin: auto;">
         <a href="<?= base_url('laporan'); ?>" class="hupla">
             <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
             Laporan Gabungan

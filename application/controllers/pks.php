@@ -28,8 +28,8 @@ public function index()
 
         // Config pagination
         $config['base_url'] = base_url('pks/index');
-        $config['per_page'] = 20;
-        $config["uri_segment"] = 0;
+        $config['per_page'] = 1;
+        $config["uri_segment"] = 3;
 
         // Pagination style
         $config['first_link']       = 'First';
@@ -54,7 +54,6 @@ public function index()
 
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;   
 
-
         if (!empty($this->input->post('Search'))) {
             $id = $this->input->post('searchById');
             $this->session->set_flashdata(array("search"=>$id));  
@@ -74,7 +73,7 @@ public function index()
                 $config['total_rows'] = $this->db->count_all('pks');
             }
         }
-        
+        var_dump($data['page']);
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
 

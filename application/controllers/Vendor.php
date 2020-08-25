@@ -22,12 +22,10 @@ class Vendor extends CI_Controller
         $title['title'] = 'Vendor';
 
         // Config pagination
-        $config['base_url'] = base_url('IT_FINANCE/vendor');
+        $config['base_url'] = base_url('vendor/index');
         $config['total_rows'] = $this->db->count_all('vendor');
-        $config['per_page'] = 25;
-        $config["uri_segment"] = 3;
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
+        $config['per_page'] = 2;
+        $config["uri_segment"] = 0;
 
         // Pagination style
         $config['first_link']       = 'First';
@@ -49,19 +47,36 @@ class Vendor extends CI_Controller
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
 
-        $this->pagination->initialize($config);
-
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        if ($id = $this->input->get('searchById')) {
-            $data['vendor'] = $this->Vendor_model->getPagination($id, $config["per_page"], $data['page']);
-            $data['pagination'] = $this->pagination->create_links();
+        if (!empty($this->input->post('Search'))) {
+            $id = $this->input->post('searchById');
+            $this->session->set_flashdata(array("search_vendor"=>$id));
+            $data["search"] = $id;
+            $n_row = $this->Vendor_model->countquery($id)[0]->n_row;
+            $config['total_rows'] = $n_row;
+            $data['page'] = 0;
         } 
         else{
-            $data['vendor'] = $this->Vendor_model->getPagination(null, $config["per_page"], $data['page']);
-            $data['pagination'] = $this->pagination->create_links();
+            if($this->session->flashdata('search_vendor') != NULL){
+                $data['search']= $this->session->flashdata('search_vendor');
+                $n_row = $this->Vendor_model->countquery($data['search'])[0]->n_row;
+                $config['total_rows'] = $n_row;
+            }
+            else{
+                $data['search']= '';
+                $config['total_rows'] = $this->db->count_all('vendor');
+            }
         }
+        
+        $choice = $config["total_rows"] / $config["per_page"];
+        $config["num_links"] = floor($choice);
+        
+        $data['vendor'] = $this->Vendor_model->getPagination($data["search"], $config["per_page"], $data['page']);
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
 
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);
