@@ -146,12 +146,14 @@ class Laporan extends CI_Controller
                         }    
                     }
                     else{
+                            $object->getActiveSheet()->setCellValueByColumnAndRow(15,$excel_row, $Sisa_pks);
                             $excel_row++;
                     }
 
                 }
             }
             else{
+                $object->getActiveSheet()->setCellValueByColumnAndRow(6,$excel_row, $Sisa_rbb);
                 $excel_row++;
                 
             }
