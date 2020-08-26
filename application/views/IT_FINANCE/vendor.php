@@ -1,5 +1,6 @@
-<br>	<div class="container-xl" style="margin-top: 50px;">
-<!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
+<br>
+<div class="container-xl" style="margin-top: 50px;">
+	<!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
 		<?php
 		echo "<div class='alert alert-success'>";
@@ -16,31 +17,31 @@
 		echo form_error('nama_vendor');
 		echo "</div>";
 		?>
-	<?php } 
-		if(!empty($this->session->flashdata('search_vendor'))){
-			empty($this->session->set_flashdata(array('search_vendor'=>$search)));
-		}
+	<?php }
+	if (!empty($this->session->flashdata('search_vendor'))) {
+		empty($this->session->set_flashdata(array('search_vendor' => $search)));
+	}
 	?>
 
-<br>
-    <div class="container-half">
-        <h2><a href="<?= base_url('vendor/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Vendor</b></a></h2>
-        <p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-			<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline" >
-				<input type="text" name="nama_vendor" placeholder="Masukan nama vendor baru" class="form-control"/>
-				<input type="submit" name="btn" value="+ Tambah Vendor" class="btn btn-success" />
+	<br>
+	<div class="container-half">
+		<h2><a href="<?= base_url('vendor/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Vendor</b></a></h2>
+		<p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+				<form action="<?php echo site_url('vendor/add') ?>" method="post" class="form-inline">
+					<input type="text" name="nama_vendor" placeholder="Nama vendor baru" class="form-control" />
+					<input type="submit" name="btn" value="+ Tambah Vendor" class="btn btn-success" />
+				</form>
+			<?php endif; ?></p>
+	</div>
+	<div class="container-half right">
+		<div class="form-group">
+			<form method="post" action="<?php echo site_url('vendor/index') ?>" class="form-inline" style="float: right;">
+				<input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; " value="<?= $search ?>">
+				<input type="submit" name="Search" class="btn btn-primary" value="Cari" />
 			</form>
-		<?php endif; ?></p>
-    </div>
-    <div class="container-half right">
-        <div class="form-group">
-            <form method="post" action="<?php echo site_url('vendor/index') ?>" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; " value="<?= $search?>" >
-                <input type="submit" name="Search" class="btn btn-primary" />
-            </form>
-        </div>
-    </div>
-<!-- 
+		</div>
+	</div>
+	<!-- 
 	<div class="container-half">
 		<h2>Daftar Vendor</h2>
 	</div>
@@ -63,15 +64,15 @@
 				<thead style="background-color: #204d95; color: white;">
 					<tr class="text-center">
 						<td style="width: 5%;">No</td>
-						<td  style="width: 23%;">Nama Vendor</td>
+						<td style="width: 23%;">Nama Vendor</td>
 						<!-- <td>Jumlah penggunaan</td> -->
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-							<td  style="width: 10%;" class="table-option-row">Opsi</td>
+							<td style="width: 10%;" class="table-option-row">Opsi</td>
 						<?php endif; ?>
 					</tr>
 				</thead>
 				<?php $counter++;
-				foreach ($vendor as $listvendor) :?>
+				foreach ($vendor as $listvendor) : ?>
 					<tr>
 						<td class="text-center">
 							<?= $counter++ ?>
@@ -125,20 +126,21 @@
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
 						<input type="submit" name="btn" value="Edit" class="btn btn-primary" />
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
 
-    <?php if ($pagination) : ?>
-        <div class="row">
-            <div class="col">
-                <!--Tampilkan pagination-->
-                <?php echo $pagination; ?>
-            </div>
-        </div>
-    <?php endif; ?>
+<?php if ($pagination) : ?>
+	<div class="row">
+		<div class="col">
+			<!--Tampilkan pagination-->
+			<?php echo $pagination; ?>
+		</div>
+	</div>
+<?php endif; ?>
 <script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
 <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
@@ -159,18 +161,21 @@
 		}
 
 	});
-	$(document).ready(function(){
-		$("#form_edit").on("submit", (function(e){
+	$(document).ready(function() {
+		$("#form_edit").on("submit", (function(e) {
 			e.preventDevaullt();
-	    	$.ajax({
-	    		url: <?php site_url('vendor/edit/') ?> + n_vendor,
-	    		type: post,
-	    		data: {nama_vendor:nama_vendor, KODE_VENDOR: KODE_VENDOR},
-	    		success: function(data){
-	    			alert("data berhasil diubah");
-	    			$("#modalEdit").modal("hide");
-	    			location.reload();
-	    		}
+			$.ajax({
+				url: <?php site_url('vendor/edit/') ?> + n_vendor,
+				type: post,
+				data: {
+					nama_vendor: nama_vendor,
+					KODE_VENDOR: KODE_VENDOR
+				},
+				success: function(data) {
+					alert("data berhasil diubah");
+					$("#modalEdit").modal("hide");
+					location.reload();
+				}
 			});
 		}));
 	});

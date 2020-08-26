@@ -49,29 +49,27 @@ class Vendor extends CI_Controller
 
         $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
         $data["vendor"] = $this->Vendor_model->getAll();
-       
+
         if (!empty($this->input->post('Search'))) {
             $id = $this->input->post('searchById');
-            $this->session->set_flashdata(array("search_vendor"=>$id));
+            $this->session->set_flashdata(array("search_vendor" => $id));
             $data["search"] = $id;
             $n_row = $this->Vendor_model->countquery($id)[0]->n_row;
             $config['total_rows'] = $n_row;
             $data['page'] = 0;
-        } 
-        else{
-            if($this->session->flashdata('search_vendor') != NULL){
-                $data['search']= $this->session->flashdata('search_vendor');
+        } else {
+            if ($this->session->flashdata('search_vendor') != NULL) {
+                $data['search'] = $this->session->flashdata('search_vendor');
                 $n_row = $this->Vendor_model->countquery($data['search'])[0]->n_row;
                 $config['total_rows'] = $n_row;
-            }
-            else{
-                $data['search']= '';
+            } else {
+                $data['search'] = '';
                 $config['total_rows'] = $this->db->count_all('vendor');
             }
         }
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
-        
+
         $data['vendor'] = $this->Vendor_model->getPagination($data["search"], $config["per_page"], $data['page']);
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
 
@@ -107,10 +105,10 @@ class Vendor extends CI_Controller
 
                 $this->session->set_flashdata('success', 'Data berhasil diubah');
             } else {
-                redirect('vendor');
+                redirect('daftar_vendor');
             }
         }
-        redirect('vendor');
+        redirect('daftar_vendor');
     }
 
     public function add()
@@ -136,17 +134,16 @@ class Vendor extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('success', 'Berhasil disimpan');
-            } 
-            else {
+            } else {
                 $this->session->set_flashdata('failed', 'Data yang dimasukan kosong atau sudah ada');
             }
 
             $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
             $this->load->view('templates/footer.php');
-            redirect('vendor');
+            redirect('daftar_vendor');
         } else {
-            redirect('vendor');
+            redirect('daftar_vendor');
         }
     }
 
@@ -172,9 +169,9 @@ class Vendor extends CI_Controller
             } else {
                 $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
             }
-            redirect('vendor');
+            redirect('daftar_vendor');
         } else {
-            redirect('vendor');
+            redirect('daftar_vendor');
         }
     }
 }
