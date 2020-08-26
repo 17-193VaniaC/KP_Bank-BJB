@@ -2,7 +2,7 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>/assets/css/style.css">
 
     <!-- Bootstrap CSS -->
-      <link href="<?= base_url('assets/'); ?>css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="<?= base_url('assets/'); ?>css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="<?= base_url('assets/'); ?>css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 </head>
@@ -19,13 +19,18 @@
     }
 
     .output {
-        height;
-        8.5in;
+        height: 8.5in;
         width: 11in;
         border: 1px solid red;
         position: absolute;
         top: 0px;
         left: 0px;
+    }
+
+    @media print {
+        @page {
+            size: landscape
+        }
     }
 
     @media print {
@@ -213,21 +218,21 @@
                                     echo "</td><td>-</td><td>-</td><td>-</td><td>-</td>";
                                 } ?>
             </tr>
-    <?php
+        <?php
                             endforeach;
                         } else {
-                            echo "<td>-</td>";?>
-                            <td rowspan="<?php if ($n_colspan != 0) {
-                                            echo $n_colspan;
-                                        } else {
-                                            echo $n_colspan + 1;
-                                        } ?>"><?php echo $a["ANGGARAN"];
-                                        echo "</td>";
-                            echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
-                        } ?>
+                            echo "<td>-</td>"; ?>
+        <td rowspan="<?php if ($n_colspan != 0) {
+                                echo $n_colspan;
+                            } else {
+                                echo $n_colspan + 1;
+                            } ?>"><?php echo $a["ANGGARAN"];
+                                    echo "</td>";
+                                    echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
+                                } ?>
+        </tr>
+    <?php endforeach; ?>
     </tr>
-<?php endforeach; ?>
-</tr>
             </tbody>
         </table>
     </div>
