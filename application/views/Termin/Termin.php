@@ -12,9 +12,9 @@
     <div class="container-half right">
         <div class="form-group">
             <form method="post" action="<?= base_url() ?>termin/index/" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari Termin dengan No. PKS" name="searchById" id="searchById" class="form-control" value='<?= $search?>' style="width: auto; />
+                <input type="text" placeholder="No. PKS Termin" name="searchById" id="searchById" class="form-control" value='<?= $search?>' style="width: auto; />
             <span class=" input-group-btn">
-                <input type="submit" name="Search" class="btn btn-primary" />
+                <input type="submit" name="Search" class="btn btn-primary" value="Cari"/>
             </form>
         </div>
     </div>

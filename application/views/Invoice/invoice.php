@@ -17,9 +17,9 @@
     <div class="container-half right">
         <div class="form-group">
             <form method="post" action="<?php echo site_url('invoice/index') ?>" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari Invoice dengan No. PKS" name="searchById" id="searchById" class="form-control" style="width: auto; />
+                <input type="text" placeholder="No. PKS Invoice" name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
-                <input type="submit" name="Search" class="btn btn-primary" />
+                <input type="submit" name="Search" class="btn btn-primary" value="Cari" />
             </form>
         </div>
     </div>

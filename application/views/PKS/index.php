@@ -17,9 +17,9 @@
     <div class="container-half right">
         <div class="form-group">
             <form method="post" action="<?= base_url() ?>pks/index/" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari PKS dengan NO PKS" value='<?= $search ?>' name="searchById" id="searchById" class="form-control" style="width: auto; />
+                <input type="text" placeholder="No. PKS" value='<?= $search ?>' name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
-                <input type="submit" name="Search" class="btn btn-primary" />
+                <input type="submit" name="Search" class="btn btn-primary" value="Cari"/>
                 <!-- <button class="btn btn-primary" type="submit">Search</button> -->
             </form>
         </div>
