@@ -2,10 +2,10 @@
 <H2 style="text-align: center;"><BR><BR>Laporan Gabungan</H2>
 <div class="row">
       <div class="col" style="text-align: center; margin-top: 20px;">
-            <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+          
                   <a href="<?= base_url('laporan/laporan_pdf'); ?>" style="margin-right: 5px;" class="btn btn-danger">Print Laporan</a>
                   <a href="<?= base_url('laporan/exportAsExcel'); ?>" class="btn btn-success">Save as Excel</a>
-            <?php endif; ?>
+          
       </div>
 </div>
 <div class="table-responsive">
