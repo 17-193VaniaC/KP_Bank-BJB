@@ -84,10 +84,11 @@ class Termin_model extends CI_Model
     public function save($nopks)
     {
         $post = $this->input->post();
+        $this->TERMIN = $post["TERMIN"];
+
         $this->NO_PKS = $nopks;
         $this->KODE_TERMIN = uniqid();
         $this->NOMINAL = $post["NOMINAL"];
-        $this->TERMIN = $post["TERMIN"];
         $this->TGL_TERMIN = $post["TGL_TERMIN"];
         $this->STATUS = "UNPAID";
         $this->KATEGORI = $post["KATEGORI"];

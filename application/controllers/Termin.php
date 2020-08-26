@@ -101,7 +101,12 @@ class Termin extends CI_Controller
             $data['termin_ke'] = $termin;
             $data['gl'] = $this->db->get('gl')->result();
 
+            if($this->Termin_model->countTermin($no_pks)==15){
+                $no_pks = str_replace('/', '_', $no_pks);
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Jumlah termin tidak bisa melebihin 15 termin</div>');
+                redirect('Termin/Termin_pks/' . $no_pks);
 
+            }
 
             if ($validation->run() == FALSE) {
                 $this->load->view('templates/header.php', $title);

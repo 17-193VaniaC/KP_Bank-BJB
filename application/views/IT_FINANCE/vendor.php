@@ -1,4 +1,5 @@
 <br>
+<div>
 <div class="container-xl" style="margin-top: 50px;">
 	<!-- <div class="container-xl" style="margin-top: 20px; min-height: 80vh"> -->
 	<?php if ($this->session->flashdata('success')) { ?>
@@ -134,13 +135,11 @@
 </div>
 
 <?php if ($pagination) : ?>
-	<div class="row">
-		<div class="col">
+	<!-- <div class="row"> -->
 			<!--Tampilkan pagination-->
 			<?php echo $pagination; ?>
-		</div>
-	</div>
 <?php endif; ?>
+	</div></div></div>
 <script src="<?php echo base_url() . 'assets/js/jquery-3.5.1.min.js' ?>" type="text/javascript"></script>
 <script src="<?php echo base_url() . 'assets/js/jquery-ui.js' ?>" type="text/javascript"></script>
 <script src="<?= base_url('assets/'); ?>js/bootstrap.bundle.min.js"></script>
