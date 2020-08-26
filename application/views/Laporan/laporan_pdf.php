@@ -216,7 +216,14 @@
     <?php
                             endforeach;
                         } else {
-                            echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
+                            echo "<td>-</td>";?>
+                            <td rowspan="<?php if ($n_colspan != 0) {
+                                            echo $n_colspan;
+                                        } else {
+                                            echo $n_colspan + 1;
+                                        } ?>"><?php echo $a["ANGGARAN"];
+                                        echo "</td>";
+                            echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
                         } ?>
     </tr>
 <?php endforeach; ?>
