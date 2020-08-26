@@ -44,7 +44,6 @@ class Mutasi_RBB extends CI_Controller
                 if ($rbb->isExist() == FALSE) {
                     $this->session->set_flashdata('failed', 'RBB tidak ditemukan');
                     redirect('mutasi_rbb/Penyesuaian_RBB');
-                
                 }
                 if ($rbb->sych() == FALSE) {
                     $this->session->set_flashdata('failed', 'Anggaran baru kurang dari total PKS');
@@ -60,7 +59,8 @@ class Mutasi_RBB extends CI_Controller
                 $data_log['ACTIVITY'] = 'add';
                 $log->save($data_log);
 
-                $this->session->set_flashdata('success', 'Berhasil disimpan');
+                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Behasil disimpan </div>');
+                redirect('rbb');
             }
             // $this->session->set_flashdata('failed', 'Tidak sesuai rule');
 

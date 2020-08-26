@@ -2,10 +2,10 @@
 <div class="container-xl" style="margin-top: 50px; padding: 25px;">
     <?php if ($this->session->flashdata('message')) { ?>
         <?php echo $this->session->flashdata('message') ?>
-    <?php } 
-    if(!empty($this->session->flashdata('search_user'))){
-            empty($this->session->set_flashdata(array('search_user'=>$search)));
-        }
+    <?php }
+    if (!empty($this->session->flashdata('search_user'))) {
+        empty($this->session->set_flashdata(array('search_user' => $search)));
+    }
     ?>
     <!-- <div class="container-xl"> -->
     <div class="container-half">
@@ -17,9 +17,9 @@
     <div class="container-half right">
         <div class="form-group">
             <form method="post" action="<?php echo site_url('auth/seeAllUser') ?>" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Cari Username" name="searchById" id="searchById" class="form-control" style="width: auto; />
-            <span class=" input-group-btn">
-                <input type="submit" name="Search" class="btn btn-primary" />
+                <input type="text" placeholder="Cari Username" name="searchById" id="searchById" class="form-control" style="width: auto; " />
+                <span class=" input-group-btn">
+                    <input type="submit" name="Search" class="btn btn-primary" value="Cari" />
             </form>
         </div>
     </div>
@@ -33,7 +33,7 @@
                         <td style="width: 20%">Email</td>
                         <td style="width: 20%">Role</td>
                         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-                            <td >Opsi</td>
+                            <td>Opsi</td>
                         <?php endif; ?>
                     </tr>
                 </thead>

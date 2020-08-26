@@ -34,7 +34,7 @@
 
     <div class="container">
         <div class="row" style="text-align: center;">
-            <a href="<?= base_url('rbb'); ?>" class="jumbotron"  style="text-decoration: none;">
+            <a href="<?= base_url('rbb'); ?>" class="jumbotron" style="text-decoration: none;">
                 <div style="width: 30%; float: left;">
                     <img src="<?php echo base_url('assets/image/plan.png'); ?>" class="symbol-menu" style="width: 60px;">
                 </div>
@@ -68,42 +68,42 @@
     <br><br>
 
     <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-    <div class="row" style="width: 100%; padding: auto; margin: auto;">
-        <a href="<?= base_url('laporan'); ?>" class="hupla" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
-            Laporan Gabungan
-        </a>
-        <a href="<?= base_url('vendor'); ?>" class="hupla" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
-            Vendor
-        </a>
-        <a href="<?= base_url('JProject'); ?>" class="hupla" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
-            Jenis Project
-        </a>
-        <a href="<?= base_url('auth/seeAllUser'); ?>" class="hupla" style="text-decoration: none;">
-            <img src="<?php echo base_url('assets/image/add_account.png'); ?>" class="symbol-menu" style="width: 40px; margin-right: 15px;">
-            Daftar Pengguna
-        </a>
-    </div>
+        <div class="row" style="width: 100%; padding: auto; margin: auto;">
+            <a href="<?= base_url('laporan'); ?>" class="hupla" style="text-decoration: none;">
+                <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
+                Laporan Gabungan
+            </a>
+            <a href="<?= base_url('daftar_vendor'); ?>" class="hupla" style="text-decoration: none;">
+                <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
+                Vendor
+            </a>
+            <a href="<?= base_url('JProject'); ?>" class="hupla" style="text-decoration: none;">
+                <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
+                Jenis Project
+            </a>
+            <a href="<?= base_url('auth/seeAllUser'); ?>" class="hupla" style="text-decoration: none;">
+                <img src="<?php echo base_url('assets/image/add_account.png'); ?>" class="symbol-menu" style="width: 40px; margin-right: 15px;">
+                Daftar Pengguna
+            </a>
+        </div>
     <?php endif; ?>
     <?php if ($user['ROLE'] == 'GROUP HEAD') : ?>
-    <div class="container">
-    <div class="row" style="width: 100%; padding: auto; margin: auto;">
-        <a href="<?= base_url('laporan'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
-            <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
-            Laporan Gabungan
-        </a>
-        <a href="<?= base_url('vendor'); ?>"  style="width: 30%; text-decoration: none;" class="hupla">
-            <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
-            Vendor
-        </a>
-        <a href="<?= base_url('JProject'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
-            <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
-            Jenis Project
-        </a>
-    </div>
-    </div>
+        <div class="container">
+            <div class="row" style="width: 100%; padding: auto; margin: auto;">
+                <a href="<?= base_url('laporan'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
+                    <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
+                    Laporan Gabungan
+                </a>
+                <a href="<?= base_url('vendor'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
+                    <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
+                    Vendor
+                </a>
+                <a href="<?= base_url('JProject'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
+                    <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
+                    Jenis Project
+                </a>
+            </div>
+        </div>
     <?php endif; ?>
 
     <br><br><br>
