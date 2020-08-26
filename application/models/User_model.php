@@ -97,4 +97,8 @@ class User_model extends CI_Model
         $this->db->select('count(USERNAME) as n_row');
         return $this->db->get('user')->result();
     }
+    public function deletetoken($token)
+    {
+         $this->db->delete('user_token', array('token' => $token));
+    }
 }

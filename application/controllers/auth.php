@@ -321,6 +321,7 @@ class auth extends CI_Controller
 
             if ($user_token) {
                 $this->session->set_userdata('reset_email', $email);
+                $this->session->set_flashdata('token', $token);
                 $this->changePassword();
             } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Ubah password gagal! Token salah</div>');
@@ -443,6 +444,8 @@ class auth extends CI_Controller
             $this->db->update('user');
 
             $this->session->unset_userdata('reset_email');
+
+            $this->User_model->deletetoken($this->session->flashdata('token'));
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ubah password berhasil!</div>');
             redirect('login');
