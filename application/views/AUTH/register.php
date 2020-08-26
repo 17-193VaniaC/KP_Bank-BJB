@@ -1,5 +1,6 @@
 <!-- <body class="bg-gradient-primary"> -->
-<div class="col h-100" style="background-color: #e3e4e6;">
+    <div style="background-color: #e3e4e6;">
+<div class="col h-100" >
     <div class="container">
 
         <?php if ($this->session->flashdata('message')) { ?>

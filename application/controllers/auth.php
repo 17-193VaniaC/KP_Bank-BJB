@@ -120,7 +120,7 @@ class auth extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun berhasil dibuat. </div>');
-                redirect('seeAllUser');
+                redirect('auth/seeAllUser');
             }
         } 
         elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {
@@ -252,13 +252,13 @@ class auth extends CI_Controller
         if ($data['user']['USERNAME'] == $username) {
             // $this->User_model->delete($username);
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak bisa menghapus akun yang anda gunakan saat ini</div>');
-            redirect('seeAllUser');
+            redirect('auth/seeAllUser');
         } else if ($data['user']['ROLE'] == 'IT FINANCE') {
             $this->User_model->delete($username);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus.</div>');
-            redirect('seeAllUser');
+            redirect('auth/seeAllUser');
         } else {
-            redirect('seeAllUser');
+            redirect('auth/seeAllUser');
         }
     }
 
