@@ -14,7 +14,6 @@ class Invoice extends CI_Controller
         $this->load->model("Invoice_model");
         $this->load->model("Termin_model");
         $this->load->model("Pks_model");
-        $this->load->model("MutasiPKS_model");
         $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
@@ -48,30 +47,28 @@ class Invoice extends CI_Controller
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
 
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;   
+        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
         if (!empty($this->input->post('Search'))) {
             $id = $this->input->post('searchById');
-            $this->session->set_flashdata(array("search_invoice"=>$id));  
-            $data['search']=$id;
+            $this->session->set_flashdata(array("search_invoice" => $id));
+            $data['search'] = $id;
             $n_row = $this->Invoice_model->countquery($id)[0]->n_row;
             $config['total_rows'] = $n_row;
             $data['page'] = 0;
-        } 
-        else{
-            if($this->session->flashdata('search_invoice') != NULL){
-                $data['search']= $this->session->flashdata('search_invoice');
+        } else {
+            if ($this->session->flashdata('search_invoice') != NULL) {
+                $data['search'] = $this->session->flashdata('search_invoice');
                 $n_row = $this->Invoice_model->countquery($data['search'])[0]->n_row;
                 $config['total_rows'] = $n_row;
-            }
-            else{
-                $data['search']= '';
+            } else {
+                $data['search'] = '';
                 $config['total_rows'] = $this->db->count_all('pembayaran');
             }
         }
         $choice = $config["total_rows"] / $config["per_page"];
         $config["num_links"] = floor($choice);
-      
+
 
         $data['invoice'] = $this->Invoice_model->getPagination($data['search'], $config["per_page"], $data['page']);
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
@@ -119,11 +116,6 @@ class Invoice extends CI_Controller
                     $this->db->where('no_pks', $no_pks['NO_PKS']);
                     $this->db->update('pks');
 
-                    $data_termin = $termin->getById($post["KODE_TERMIN"]);
-
-                    $mutasi_pks = $this->MutasiPKS_model;
-                    $mutasi_pks->save($data_termin);
-
                     // ADD LOG
                     $log = $this->Log_model;
                     $data_log['USER'] = $data['user']['NAMA'];
@@ -152,8 +144,7 @@ class Invoice extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Invoice PKS sudah lunas atau tidak ditemukan</div>');
                 redirect('Invoice/add');
             }
-        }
-        else{
+        } else {
             redirect('invoice');
         }
     }

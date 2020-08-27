@@ -17,8 +17,7 @@ class auth extends CI_Controller
     {
         if ($this->session->userdata('username')) {
             redirect('dashboard');
-        } 
-        else {
+        } else {
             redirect('login');
         }
     }
@@ -35,8 +34,7 @@ class auth extends CI_Controller
             $this->load->view('templates/header', $title);
             $this->load->view('auth/login');
             $this->load->view('templates/footer');
-        } 
-        else {
+        } else {
             //Validasi sukses  
             $this->_login();  //_ untuk menandakan private hanya untuk kelas ini saja  
         }
@@ -100,8 +98,7 @@ class auth extends CI_Controller
                 $this->load->view('templates/navbar', $dataa);
                 $this->load->view('auth/register');
                 $this->load->view('templates/footer');
-            } 
-            else {
+            } else {
                 $data = [
                     'ROLE' => $this->input->post('role'),
                     'NAMA' => $this->input->post('nama', true),
@@ -122,11 +119,9 @@ class auth extends CI_Controller
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun berhasil dibuat. </div>');
                 redirect('auth/seeAllUser');
             }
-        } 
-        elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {
+        } elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {
             redirect('dashboard');
-        } 
-        else {
+        } else {
             redirect('login');
         }
     }
@@ -137,74 +132,71 @@ class auth extends CI_Controller
         $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($dataa['user']['ROLE'] == 'IT FINANCE') {
 
-        $title['title'] = 'Daftar Akun Pengguna';
-         // Config pagination
-        $config['base_url'] = base_url('auth/seeAllUser');
-        $config['per_page'] = 20;
-        $config["uri_segment"] = 3;
+            $title['title'] = 'Daftar Akun Pengguna';
+            // Config pagination
+            $config['base_url'] = base_url('auth/seeAllUser');
+            $config['per_page'] = 20;
+            $config["uri_segment"] = 3;
 
-        // Pagination style
-        $config['first_link']       = 'First';
-        $config['last_link']        = 'Last';
-        $config['next_link']        = 'Next';
-        $config['prev_link']        = 'Prev';
-        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-        $config['full_tag_close']   = '</ul></nav></div>';
-        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-        $config['num_tag_close']    = '</span></li>';
-        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
-        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-        $config['first_tagl_close'] = '</span></li>';
-        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['last_tagl_close']  = '</span></li>';
+            // Pagination style
+            $config['first_link']       = 'First';
+            $config['last_link']        = 'Last';
+            $config['next_link']        = 'Next';
+            $config['prev_link']        = 'Prev';
+            $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+            $config['full_tag_close']   = '</ul></nav></div>';
+            $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+            $config['num_tag_close']    = '</span></li>';
+            $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+            $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+            $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+            $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['prev_tagl_close']  = '</span>Next</li>';
+            $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+            $config['first_tagl_close'] = '</span></li>';
+            $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+            $config['last_tagl_close']  = '</span></li>';
 
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;   
+            $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-        if (!empty($this->input->post('Search'))) {
-            $id = $this->input->post('searchById');
-            $this->session->set_flashdata(array("search_user"=>$id));  
-            $data['search']=$id;
-            $n_row = $this->User_model->countquery($id)[0]->n_row;
-            $config['total_rows'] = $n_row;
-            $data['page'] = 0;
-        } 
-        else{
-            if($this->session->flashdata('search_user') != NULL){
-                $data['search']= $this->session->flashdata('search_user');
-                $n_row = $this->User_model->countquery($data['search'])[0]->n_row;
+            if (!empty($this->input->post('Search'))) {
+                $id = $this->input->post('searchById');
+                $this->session->set_flashdata(array("search_user" => $id));
+                $data['search'] = $id;
+                $n_row = $this->User_model->countquery($id)[0]->n_row;
                 $config['total_rows'] = $n_row;
+                $data['page'] = 0;
+            } else {
+                if ($this->session->flashdata('search_user') != NULL) {
+                    $data['search'] = $this->session->flashdata('search_user');
+                    $n_row = $this->User_model->countquery($data['search'])[0]->n_row;
+                    $config['total_rows'] = $n_row;
+                } else {
+                    $data['search'] = '';
+                    $config['total_rows'] = $this->db->count_all('user');
+                }
             }
-            else{
-                $data['search']= '';
-                $config['total_rows'] = $this->db->count_all('user');
-            }
+
+            $choice = $config["total_rows"] / $config["per_page"];
+            $config["num_links"] = floor($choice);
+
+
+            $data['list'] = $this->User_model->getPagination($data['search'], $config["per_page"], $data['page']);
+
+            //initialize pagination and create
+            $this->pagination->initialize($config);
+            $data['pagination'] = $this->pagination->create_links();
+
+            // $data['list'] = $this->User_model->getAll();
+            $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+            $this->load->view('templates/header.php', $title);
+            $this->load->view('templates/navbar.php', $data);
+            $this->load->view('auth/index', $data);
+            $this->load->view('templates/footer.php');
+        } else {
+            redirect("dashboard");
         }
-
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
-      
-
-        $data['list'] = $this->User_model->getPagination($data['search'], $config["per_page"], $data['page']);
-
-        //initialize pagination and create
-        $this->pagination->initialize($config);
-        $data['pagination'] = $this->pagination->create_links();
-
-        // $data['list'] = $this->User_model->getAll();
-        $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        $this->load->view('templates/header.php', $title);
-        $this->load->view('templates/navbar.php', $data);
-        $this->load->view('auth/index', $data);
-        $this->load->view('templates/footer.php');
-    }
-    else{
-        redirect("dashboard");
-    }
     }
 
     // public function edit($username)
@@ -402,11 +394,6 @@ class auth extends CI_Controller
 </body>
 </html>
         
-        
-        
-        
-        
-        
         ');
         // $this->email->message('Click link berikut untuk mengubah password : <a href="">Ubah Password</a>');
 
@@ -429,9 +416,16 @@ class auth extends CI_Controller
             'min_length' => 'Password terdiri dari minimal 6 karakter'
         ]);
         $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]', []);
-
+        $pass_lama = $this->User_model->getByEmail($this->session->userdata('reset_email'));
+        // password_verify($password, $user['PASSWORD'])
         if ($this->form_validation->run() == false) {
             $title['title'] = 'Ubah Password';
+            $this->load->view('templates/header.php', $title);
+            $this->load->view('auth/ubah');
+            $this->load->view('templates/footer.php');
+        } else if (password_verify($this->input->post('password1'), $pass_lama['PASSWORD'])) {
+            $title['title'] = 'Ubah Password';
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password baru sama dengan password lama</div>');
             $this->load->view('templates/header.php', $title);
             $this->load->view('auth/ubah');
             $this->load->view('templates/footer.php');
