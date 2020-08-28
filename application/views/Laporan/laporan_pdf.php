@@ -52,8 +52,8 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th colspan="7">RENCANA BISNIS BANK</th>
-                    <th colspan="9">PERJANJIAN KERJASAMA</th>
+                    <th colspan="5">RENCANA BISNIS BANK</th>
+                    <th colspan="7">PERJANJIAN KERJASAMA</th>
                     <th colspan="4">PEMBAYARAN</th>
                 </tr>
             </thead>
@@ -64,8 +64,8 @@
                     <th>Anggaran</th>
                     <th>GL</th>
                     <th>Nama Rek</th>
-                    <th>Mutasi RBB</th>
-                    <th>Sisa Anggaran</th>
+                    <!-- <th>Mutasi RBB</th> -->
+                    <!-- <th>Sisa Anggaran</th> -->
                     <!-- PKS -->
                     <th>Nomor PKS</th>
                     <th>Jenis</th>
@@ -74,8 +74,8 @@
                     <th>tanggal PKS</th>
                     <th>Nominal PKS</th>
                     <th>Nama Vendor</th>
-                    <th>Mutasi PKS</th>
-                    <th>Sisa Anggaran</th>
+                    <!-- <th>Mutasi PKS</th> -->
+                    <!-- <th>Sisa Anggaran</th> -->
                     <!-- INVOICE -->
                     <th>Invoice</th>
                     <th>Tahap</th>
@@ -84,7 +84,7 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($table as $a) :
+               <!--  <?php foreach ($table as $a) :
                     $n_colspan = 0;
                     foreach ($a['pks'] as $bb) :
                         if (!empty($bb['invs'])) {
@@ -95,8 +95,8 @@
 
                     endforeach;
                     // echo $n_colspan;
-                ?>
-                    <tr>
+                ?> -->
+                   <!--  <tr>
                         <td rowspan="<?php if ($n_colspan != 0) {
                                             echo $n_colspan;
                                         } else {
@@ -121,10 +121,10 @@
                                             echo $n_colspan;
                                         } else {
                                             echo $n_colspan + 1;
-                                        } ?>"><?php echo $a["NAMA_REK"] ?></td>
+                                        } ?>"><?php echo $a["NAMA_REK"] ?></td> -->
 
                         <!-- +++++++++++++++++++++++ PKS +++++++++++++++++++++++++++++ -->
-                        <?php
+                        <!-- <?php
                         $Mutasi_rbb = 0;
                         $Sisa_rbb = $a["ANGGARAN"];
                         if (!empty($a['pks'])) {
@@ -140,8 +140,8 @@
                                 }
                                 $Mutasi_rbb = $Mutasi_rbb + $b['NOMINAL_PKS'];
                                 $Sisa_rbb = $Sisa_rbb - $b['NOMINAL_PKS'];
-                        ?>
-                                <td rowspan="<?php if ($n_colspan != 0) {
+                        ?> -->
+                               <!--  <td rowspan="<?php if ($n_colspan != 0) {
                                                     echo $n_colspan;
                                                 } else {
                                                     echo $n_colspan + 1;
@@ -185,14 +185,14 @@
                                                     echo $n_colspan;
                                                 } else {
                                                     echo $n_colspan + 1;
-                                                } ?>"><?php echo $b["nama_vendor"] ?></td>
+                                                } ?>"><?php echo $b["nama_vendor"] ?></td> -->
 
-                                <?PHP $x = $x + 1;
+                               <!--  <?PHP $x = $x + 1;
                                 $Mutasi_pks = 0;
                                 $Sisa_pks = $b["NOMINAL_PKS"];
                                 ?>
-                                <!-- ++++++++++++++++++++++++++++++ PEMBAYARAN +++++++++++++++++++++++++++++++= -->
-                                <?php
+ -->                                <!-- ++++++++++++++++++++++++++++++ PEMBAYARAN +++++++++++++++++++++++++++++++= -->
+                                <!-- <?php
                                 if (!empty($b['invs'])) {
                                     $y = 1;
                                     foreach ($b['invs'] as $c) :
@@ -201,15 +201,15 @@
                                         }
                                         $Mutasi_pks = $Mutasi_pks + $c['NOMINAL'];
                                         $Sisa_pks = $Sisa_pks - $c["NOMINAL"];
-                                ?>
+                                ?> -->
 
-                                        <td><?php echo $Mutasi_pks; ?></td>
+                                        <!-- <td><?php echo $Mutasi_pks; ?></td>
                                         <td><?php echo $Sisa_pks; ?></td>
                                         <td><?php echo $c["INVOICE"] ?></td>
                                         <td><?php echo $c["TERMIN"] ?></td>
                                         <td><?php echo $c["NOMINAL"] ?></td>
-                                        <td><?php echo $c["TGL_INVOICE"] ?></td>
-                    </tr>
+                                        <td><?php echo $c["TGL_INVOICE"] ?></td> -->
+                  <!--   </tr>
             <?PHP $y = $y + 1;
                                     endforeach;
                                 } else {
@@ -217,8 +217,8 @@
                                     echo $b['NOMINAL_PKS'];
                                     echo "</td><td>-</td><td>-</td><td>-</td><td>-</td>";
                                 } ?>
-            </tr>
-        <?php
+            </tr> -->
+       <!--  <?php
                             endforeach;
                         } else {
                             echo "<td>-</td>"; ?>
@@ -229,10 +229,34 @@
                             } ?>"><?php echo $a["ANGGARAN"];
                                     echo "</td>";
                                     echo "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
-                                } ?>
-        </tr>
+                                } ?> -->
+       <!--  </tr>
     <?php endforeach; ?>
-    </tr>
+    </tr> -->
+      <?php  foreach ($table as $table) :?>
+                  <tr>
+                        <td><?php echo $table["KODE_RBB"]?></td>
+                        <td><?= $table["PROGRAM_KERJA"]?></td>
+                        <td><?= $table["ANGGARAN"]?></td>
+                        <td><?= $table["GL"]?></td>
+                        <td><?= $table["NAMA_REK"]?></td>
+                        <td><?= $table["NO_PKS"]?></td>
+                        
+                        <td><?= $table["JENIS"]?></td>
+                        <td><?= $table["KODE_PROJECT"]?></td>
+                        <td><?= $table["NAMA_PROJECT"]?></td>
+                        <td><?= $table["TGL_PKS"]?></td>
+                        <td><?= $table["NOMINAL_PKS"]?></td>
+                        <td><?= $table["nama_vendor"]?></td>
+
+                        <td><?= $table["INVOICE"]?></td>
+                        <td><?= $table["TERMIN"]?></td>
+                        <td><?= $table["NOMINAL"]?></td>
+                        <td><?= $table["TGL_INVOICE"]?></td>
+
+                  </tr>
+
+                  <?php endforeach;?>
             </tbody>
         </table>
     </div>

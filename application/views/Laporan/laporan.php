@@ -1,19 +1,41 @@
-<br><br>
-<H2 style="text-align: center;"><BR><BR>Laporan Gabungan</H2>
-<div class="row">
-      <div class="col" style="text-align: center; margin-top: 20px;">
-          
-                  <a href="<?= base_url('laporan/laporan_pdf'); ?>" style="margin-right: 5px;" class="btn btn-danger">Print Laporan</a>
-                  <a href="<?= base_url('laporan/exportAsExcel'); ?>" class="btn btn-success">Save as Excel</a>
-          
-      </div>
+<br><br><br>      <br>  
+    <div style="float: left;">
+    <div class="container-half" style="margin-left: 10px;">
+      <h2>  Laporan Gabungan - Pembayaran</h2>
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+            <div style="float: left;">
+            <form action="<?= base_url('laporan/laporan_pdf');?>" method="post">
+                  <input type="hidden" name="keyword" value="<?= $keyword_ ?>" />
+                  <input type="submit" name="submit" value="Print" class="btn btn-danger">
+            </form>
+                  
+            </div><div style="float: left; margin-left: 10px;">
+                  
+            <form action="<?= base_url('laporan/exportAsExcel'); ?>" method="post" >
+                  <input type="hidden" name="keyword" value="<?= $keyword_ ?>" />
+                  <input type="submit" name="submit" value="Export as Excel" class="btn btn-success">
+            </form>
+            </div>
+<!--                   <a href="<?= base_url('laporan/laporan_pdf'); ?>" style="margin-right: 5px;" class="btn btn-danger">Print Laporan</a>
+                  <a href="<?= base_url('laporan/exportAsExcel'); ?>" class="btn btn-success">Save as Excel</a> -->
+        <?php endif; ?>
+    </div>
+    <div class="container-half right" style="float: left; width: 48%;">
+        <div class="form-group">
+            <form method="post" action="<?= base_url("laporan/index") ?>" class="form-inline" style="float: right;">
+                <input type="text" placeholder="Kata kunci" name="searchById" id="searchById" class="form-control" style="width: auto; " value='<?= $keyword_ ?>'/>
+            <span class=" input-group-btn">
+                <input type="submit" name="Search" class="btn btn-primary" value="Cari" />
+            </form>
+        </div>
+    </div>
 </div>
 <div class="table-responsive">
       <table class="table table-striped table-hover table-bordered">
             <table class="table table-striped table-hover table-bordered">
                   <thead style="background-color: #204d95; color: white;">
-                        <td colspan="7">RENCANA BISNIS BANK</td>
-                        <td colspan="9">PERJANJIAN KERJASAMA</td>
+                        <td colspan="5">RENCANA BISNIS BANK</td>
+                        <td colspan="7">PERJANJIAN KERJASAMA</td>
                         <td colspan="4">PEMBAYARAN</td>
                   </thead>
                   <thead style="background-color:  #b5c8e1; color: black;">
@@ -22,8 +44,8 @@
                         <th>Anggaran</th>
                         <th>GL</th>
                         <th>Nama Rek</th>
-                        <th>Mutasi RBB</th>
-                        <th>Sisa Anggaran</th>
+<!--                         <th>Mutasi RBB</th>
+                        <th>Sisa Anggaran</th> -->
                         <!-- PKS -->
                         <th>Nomor PKS</th>
                         <th>Jenis</th>
@@ -32,8 +54,8 @@
                         <th>tanggal PKS</th>
                         <th>Nominal PKS</th>
                         <th>Nama Vendor</th>
-                        <th>Mutasi PKS</th>
-                        <th>Sisa Anggaran</th>
+<!--                         <th>Mutasi PKS</th>
+                        <th>Sisa Anggaran</th> -->
                         <!-- INVOICE -->
                         <th>Invoice</th>
                         <th>Tahap</th>
@@ -41,7 +63,7 @@
                         <th>Tanggal Invoice</th>
                   </thead>
                   <!-- ++++++++++++++++++  RBB   ++++++++++++++++++ -->
-                  <?php foreach ($table as $a) :
+                  <!-- <?php foreach ($table as $a) :
                         $n_colspan = 0;
                         foreach ($a['pks'] as $bb) :
                               if (!empty($bb['invs'])) {
@@ -52,8 +74,8 @@
 
                         endforeach;
                         // echo $n_colspan;
-                  ?>
-                        <tr>
+                  ?> -->
+                       <!--  <tr>
                               <td rowspan="<?php if ($n_colspan != 0) {
                                                       echo $n_colspan;
                                                 } else {
@@ -78,10 +100,10 @@
                                                       echo $n_colspan;
                                                 } else {
                                                       echo $n_colspan + 1;
-                                                } ?>"><?php echo $a["NAMA_REK"] ?></td>
+                                                } ?>"><?php echo $a["NAMA_REK"] ?></td> -->
 
                               <!-- +++++++++++++++++++++++ PKS +++++++++++++++++++++++++++++ -->
-                              <?php
+                              <!-- <?php
                               $Mutasi_rbb = 0;
                               $Sisa_rbb = $a["ANGGARAN"];
                               if (!empty($a['pks'])) {
@@ -147,9 +169,9 @@
                                           <?PHP $x = $x + 1;
                                           $Mutasi_pks = 0;
                                           $Sisa_pks = $b["NOMINAL_PKS"];
-                                          ?>
+                                          ?> -->
                                           <!-- ++++++++++++++++++++++++++++++ PEMBAYARAN +++++++++++++++++++++++++++++++= -->
-                                          <?php
+                                         <!--  <?php
                                           if (!empty($b['invs'])) {
                                                 $y = 1;
                                                 foreach ($b['invs'] as $c) :
@@ -181,10 +203,36 @@
                                     echo "<td>-</td><td>";
                                     echo $a["ANGGARAN"];
                                     echo "</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
-                              } ?>
-</tr>
+                              } ?> -->
+<!-- </tr>
 <?php endforeach; ?>
-</tr>
-            </table>
+</tr> -->
+
+
+  <?php  foreach ($table as $table) :?>
+                  <tr>
+                        <td><?php echo $table["KODE_RBB"]?></td>
+                        <td><?= $table["PROGRAM_KERJA"]?></td>
+                        <td><?= $table["ANGGARAN"]?></td>
+                        <td><?= $table["GL"]?></td>
+                        <td><?= $table["NAMA_REK"]?></td>
+                        <td><?= $table["NO_PKS"]?></td>
+                        
+                        <td><?= $table["JENIS"]?></td>
+                        <td><?= $table["KODE_PROJECT"]?></td>
+                        <td><?= $table["NAMA_PROJECT"]?></td>
+                        <td><?= $table["TGL_PKS"]?></td>
+                        <td><?= $table["NOMINAL_PKS"]?></td>
+                        <td><?= $table["nama_vendor"]?></td>
+
+                        <td><?= $table["INVOICE"]?></td>
+                        <td><?= $table["TERMIN"]?></td>
+                        <td><?= $table["NOMINAL"]?></td>
+                        <td><?= $table["TGL_INVOICE"]?></td>
+
+                  </tr>
+
+                  <?php endforeach;?>
+            </table></table>
 </div>
 </div>
