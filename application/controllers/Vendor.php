@@ -17,12 +17,12 @@ class Vendor extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function index()
+    public function daftar_vendor()
     {
         $title['title'] = 'Vendor';
 
         // Config pagination
-        $config['base_url'] = base_url('vendor/index');
+        $config['base_url'] = base_url('vendor/daftar_vendor');
         $config['total_rows'] = $this->db->count_all('vendor');
         $config['per_page'] = 20;
         $config["uri_segment"] = 3;
@@ -167,11 +167,11 @@ class Vendor extends CI_Controller
                 $this->Vendor_model->delete($vendor);
                 $this->session->set_flashdata('success', 'Data berhasil dihapus');
             } else {
-                $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+                $this->session->set_flashdata('failed', 'Gagal menghapus data. Vendor sedang digunakan.');
             }
             redirect('daftar_vendor');
         } else {
-            redirect('daftar_vendor');
+            redirect('datar_vendor');
         }
     }
 }

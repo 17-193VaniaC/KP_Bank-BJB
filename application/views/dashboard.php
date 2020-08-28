@@ -73,7 +73,7 @@
                 <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
                 Laporan Gabungan
             </a>
-            <a href="<?= base_url('daftar_vendor'); ?>" class="hupla" style="text-decoration: none;">
+            <a href="<?= base_url('vendor/daftar_vendor'); ?>" class="hupla" style="text-decoration: none;">
                 <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                 Vendor
             </a>
@@ -94,7 +94,7 @@
                     <img src="<?php echo base_url('assets/image/report.png'); ?>" class="symbol-menu" style="width: 55px; margin-right: 15px;">
                     Laporan Gabungan
                 </a>
-                <a href="<?= base_url('daftar_vendor'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
+                <a href="<?= base_url('vendor/daftar_vendor'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
                     <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                     Vendor
                 </a>
