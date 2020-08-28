@@ -13,7 +13,7 @@
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
             <p> <a href="<?= base_url('pks/create'); ?>" class="btn btn-success">+ Tambah PKS</a></p>
         <?php endif; ?>
-    </div>
+    </div>  
     <div class="container-half right">
         <div class="form-group">
             <form method="post" action="<?= base_url() ?>pks/index/" class="form-inline" style="float: right;">
@@ -23,6 +23,17 @@
                 <!-- <button class="btn btn-primary" type="submit">Search</button> -->
             </form>
         </div>
+<br> 
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+        <div class="form-group" style="float: right; background-color: white; margin-top: 10px;">
+            <b>Import Data </b>
+                Pilih file untuk upload data:<br>
+           <form action="<?= base_url('Import/pks'); ?>" method="post" enctype="multipart/form-data">
+                <input type="file" name="upload_file" id="file"  style="float: left;  width: 210px; height: 40px; margin: 3px;" required/>
+                <button type="submit" value="Upload" name="submit" class="btn btn-primary" style="float: left;">Upload</button>
+            </form>
+        </div>
+        <?php endif; ?>
     </div>
     <div class="table-responsive">
         <div class="table-wrapper">

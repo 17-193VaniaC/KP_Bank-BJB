@@ -1,4 +1,4 @@
-	<div class="container-xl" style=":margin-top 50px;">
+<div class="container-xl" style=":margin-top 50px;">
 <br><br><br><br>	
 	<?php if ($this->session->flashdata('message')) {
         echo $this->session->flashdata('message');
@@ -17,11 +17,22 @@
     <div class="container-half right">
         <div class="form-group">
             <form method="post" action="<?= base_url() ?>rbb/index/" class="form-inline" style="float: right;">
-                <input type="text" placeholder="Kode RBB" name="searchById" id="searchById" class="form-control" style="width: auto; />
+                <input type="text" placeholder="Kode RBB" value='<?= $search ?>' name="searchById" id="searchById" class="form-control" style="width: auto; />
             <span class=" input-group-btn">
                 <input type="submit" name="Search" class="btn btn-primary" value="Cari" />
             </form>
         </div>
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+        <div class="form-group" style="float: right; background-color: white; margin-top: 10px;">
+        	<b>Import Data </b>
+				Pilih file untuk upload data:<br>
+           <form action="<?= base_url('Import/rbb'); ?>" method="post" enctype="multipart/form-data">
+				<input type="file" name="upload_file" id="file"  style="float: left;  width: 210px; height: 40px; margin: 3px;" required/>
+				<button type="submit" value="Upload" name="submit" class="btn btn-primary" style="float: left;">Upload</button>
+			</form>
+        </div>
+        <?php endif; ?>
+
     </div>
 
 		<div class="table-responsive">
