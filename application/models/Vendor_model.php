@@ -26,7 +26,7 @@ class Vendor_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that) || $that=='0') {
+        if (!empty($that) || $that == '0') {
             $this->db->select('*');
             $this->db->like('nama_vendor', $that, 'both');
             $this->db->order_by('nama_vendor', 'asc');
@@ -62,6 +62,12 @@ class Vendor_model extends CI_Model
     public function getById($kodev)
     {
         return $this->db->get_where($this->_table, ["KODE_VENDOR" => $kodev])->row();
+    }
+
+    public function getByNama($kodev)
+    {
+        $hasil = $this->db->get_where($this->_table, ["NAMA_VENDOR" => $kodev])->row();
+        return $hasil->KODE_VENDOR;
     }
 
     public function delete($kodev)
@@ -102,8 +108,9 @@ class Vendor_model extends CI_Model
         return $this->db->update('vendor');
     }
 
-    public function countquery($name = null){
-        if (!empty($name) || $name=='0') {
+    public function countquery($name = null)
+    {
+        if (!empty($name) || $name == '0') {
             $this->db->select('count(vendor.KODE_VENDOR) as n_row');
             $this->db->like('vendor.nama_vendor', $name, 'both');
             return $this->db->get('vendor')->result();

@@ -109,6 +109,7 @@ class RBB_model extends CI_Model
         $this->GL = $data["GL"];
         $this->NAMA_REK = $data["NAMA_REK"];
         $this->SISA_ANGGARAN = $data["ANGGARAN"];
+        $this->INPUT_DATE = date("Y-m-d h:i:s");
 
         return $this->db->insert($this->_table, $this);
     }
@@ -149,9 +150,11 @@ class RBB_model extends CI_Model
 
     public function sisa_subtr($KODERBB, $nominal) //untk mengurangi anggaran RBB
     {
-        $this->$_table->set('SISA_ANGGARAN', 'SISA_ANGGARAN - $nominal', False);
-        $this->$_table->where('KODE_RBB', $KODERBB);
-        $this->$_table->update();
+        $rbb = $this->db->get_where($this->_table, ["KODE_RBB" => $KODERBB])->row();
+        $total = $rbb->SISA_ANGGARAN - $nominal;
+        $this->db->set('SISA_ANGGARAN', $total);
+        $this->db->where('KODE_RBB', $KODERBB);
+        $this->db->update('rbb');
     }
 
     function getKode()

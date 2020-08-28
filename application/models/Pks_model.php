@@ -2,6 +2,7 @@
 
 class Pks_model extends CI_Model
 {
+    private $_table = "pks";
 
     public function getAll($that = null)
     {
@@ -13,7 +14,6 @@ class Pks_model extends CI_Model
             $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
             $this->db->order_by('INPUT_DATE', 'desc');
             return $this->db->get('pks')->result();
-
         }
         // Select record
         $this->db->select('*');
@@ -27,9 +27,9 @@ class Pks_model extends CI_Model
         $response = $q->result();
         return $response;
     }
-     
-    public function getPagination($that = null, $limit, $start=null)
-    {   
+
+    public function getPagination($that = null, $limit, $start = null)
+    {
         $response = array();
         if (!empty($that)) {
             $this->db->select('*');
@@ -38,7 +38,6 @@ class Pks_model extends CI_Model
             $this->db->join('j_project', 'j_project.KODE_JENISPROJECT = pks.jenis');
             $this->db->order_by('INPUT_DATE', 'desc');
             return $this->db->get('pks', $limit, $start)->result();
-
         }
         // Select record
         $this->db->select('*');
@@ -111,7 +110,8 @@ class Pks_model extends CI_Model
         return $query->row();
     }
 
-    public function countquery($name = null){
+    public function countquery($name = null)
+    {
         if (!empty($name)) {
             $this->db->select('count(pks.NO_PKS) as n_row');
             $this->db->like('pks.NO_PKS', $name, 'both');
@@ -119,5 +119,24 @@ class Pks_model extends CI_Model
         }
         $this->db->select('count(pks.NO_PKS) as n_row');
         return $this->db->get('pks')->result();
+    }
+
+    public function saveImport($data)
+    {
+        $this->NO_PKS = $data["NO_PKS"];
+        $this->KODE_RBB = $data["KODE_RBB"];
+        $this->JENIS = $data["JENIS"];
+        $this->KODE_PROJECT = $data["KODE_PROJECT"];
+        $this->NAMA_PROJECT = $data["NAMA_PROJECT"];
+        $this->TGL_PKS = $data["TGL_PKS"];
+        $this->NOMINAL_PKS = $data["NOMINAL_PKS"];
+        $this->NAMA_VENDOR = $data["NAMA_VENDOR"];
+        $this->SISA_ANGGARAN = $data["SISA_ANGGARAN"];
+        $this->INPUT_USER = $data["SISA_ANGGARAN"];
+        $this->SISA_ANGGARAN = $data["SISA_ANGGARAN"];
+        $this->INPUT_USER = $data["INPUT_USER"];
+        $this->INPUT_DATE = $data["INPUT_DATE"];
+
+        $this->db->insert($this->_table, $this);
     }
 }

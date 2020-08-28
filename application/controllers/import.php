@@ -8,6 +8,9 @@ class import extends CI_Controller
     {
         parent::__construct();
         $this->load->model('RBB_model');
+        $this->load->model('Pks_model');
+        $this->load->model('JProject_model');
+        $this->load->model('Vendor_model');
         $this->load->library('form_validation');
     }
 
@@ -70,6 +73,67 @@ class import extends CI_Controller
 
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Import Berhasil </div>');
             redirect('rbb');
+        }
+    }
+
+    public function import_pks()
+    {
+        $this->load->view('import/pks');
+    }
+
+    public function pks()
+    {
+        $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        if (isset($_FILES['upload_file']['name']) && in_array($_FILES['upload_file']['type'], $file_mimes)) {
+            $arr_file = explode('.', $_FILES['upload_file']['name']);
+            $extension = end($arr_file);
+            if ('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            // FIle path
+            $spreadsheet = $reader->load($_FILES['upload_file']['tmp_name']);
+            $allDataInSheet = $spreadsheet->getActiveSheet()->toArray();
+
+            $flag = 0;
+
+            foreach ($allDataInSheet as $dataInSheet) {
+
+                if ($flag == 1) {
+                    foreach ($dataInSheet as $key => $value) {
+                        if ($key == 0) {
+                            $data['NO_PKS'] = $value;
+                        } else if ($key == 1) {
+                            $data['KODE_RBB'] = $value;
+                        } else if ($key == 2) {
+                            $data['JENIS'] = $this->JProject_model->getByNama($value);
+                        } else if ($key == 3) {
+                            $data['KODE_PROJECT'] = $value;
+                        } else if ($key == 4) {
+                            $data['NAMA_PROJECT'] = $value;
+                        } else if ($key == 5) {
+                            $data['TGL_PKS'] = $value;
+                        } else if ($key == 6) {
+                            $data['NOMINAL_PKS'] = $value;
+                        } else if ($key == 7) {
+                            $data['NAMA_VENDOR'] = $this->Vendor_model->getByNama($value);
+                        } else if ($key == 8) {
+                            $data['SISA_ANGGARAN'] = $value;
+                        }
+                    }
+                    $data['INPUT_USER'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+                    $data['INPUT_DATE'] = date("Y-m-d h:i:s");
+                    $this->Pks_model->saveImport($data);
+                    $this->RBB_model->sisa_subtr($data['KODE_RBB'], $data['NOMINAL_PKS']);
+                } else {
+                    foreach ($dataInSheet as $key => $value) {
+                    }
+                    $flag = 1;
+                }
+            }
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Import Berhasil </div>');
+            redirect('pks');
         }
     }
     //         foreach ($dataInSheet as $key => $value) {

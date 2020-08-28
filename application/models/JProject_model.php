@@ -27,12 +27,11 @@ class JProject_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that) || $that=='0') {
+        if (!empty($that) || $that == '0') {
             $this->db->select('*');
             $this->db->like('jenis', $that, 'both');
             $this->db->order_by('jenis', 'asc');
             return $this->db->get('j_project', $limit, $start)->result();
-
         }
         // Select record
         $this->db->select('*');
@@ -64,6 +63,12 @@ class JProject_model extends CI_Model
     public function getById($jenis_project)
     {
         return $this->db->get_where($this->_table, ["KODE_JENISPROJECT" => $jenis_project])->row();
+    }
+
+    public function getByNama($jenis_project)
+    {
+        $hasil = $this->db->get_where($this->_table, ["jenis" => $jenis_project])->row();
+        return $hasil->KODE_JENISPROJECT;
     }
 
     public function delete($jenis_project)
@@ -105,8 +110,9 @@ class JProject_model extends CI_Model
         $this->db->where("KODE_JENISPROJECT", $prevId);
         return $this->db->update('j_project');
     }
-        public function countquery($name = null){
-        if (!empty($name) || $name=='0') {
+    public function countquery($name = null)
+    {
+        if (!empty($name) || $name == '0') {
             $this->db->select('count(j_project.KODE_JENISPROJECT) as n_row');
             $this->db->like('j_project.jenis', $name, 'both');
             return $this->db->get('j_project')->result();
