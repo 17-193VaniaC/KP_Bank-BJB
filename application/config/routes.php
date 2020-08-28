@@ -59,7 +59,7 @@ $route['PKS/search'] = 'PKS/search';
 $route['Invoice'] = 'Invoice';
 $route['create-rbb'] = 'rbb/add';
 $route['edit-rbb'] = 'rbb/edit';
-$route['daftar_vendor'] = 'Vendor/index';
+$route['vendor'] = 'vendor/daftar_vendor';
 $route['jenis_project'] = 'jproject';
 $route['register'] = 'auth/registration';
 $route['list'] = 'auth/list';
@@ -70,3 +70,5 @@ $route['dashboard'] = 'Welcome';
 $route['laporan/form'] = 'Laporan/form_export';
 $route['import_rbb'] = 'import/import_rbb';
 $route['import_pks'] = 'import/import_pks';
+$route['import_pks'] = 'ven';
+
