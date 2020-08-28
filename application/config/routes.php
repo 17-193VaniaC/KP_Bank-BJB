@@ -67,5 +67,4 @@ $route['login'] = 'auth/login';
 $route['logout'] = 'auth/logout';
 $route['forgot-password'] = 'auth/forgot';
 $route['dashboard'] = 'Welcome';
-$route['mutasi_pks'] = 'Mutasi_PKS';
 $route['laporan/form'] = 'Laporan/form_export';

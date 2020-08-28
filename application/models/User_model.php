@@ -40,7 +40,7 @@ class User_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that) || $that=='0') {
+        if (!empty($that) || $that == '0') {
             $this->db->select('*');
             $this->db->like('user.USERNAME', $that, 'both');
             $this->db->order_by('USERNAME', 'asc');
@@ -56,6 +56,12 @@ class User_model extends CI_Model
     {
         return $this->db->get_where($this->_table, ["USERNAME" => $usernm])->row();
     }
+
+    public function getByEmail($email)
+    {
+        return $this->db->get_where($this->_table, ["EMAIL" => $email])->row_array();
+    }
+
     public function login($usernm, $pswrd)
     {
     }
@@ -87,8 +93,9 @@ class User_model extends CI_Model
     {
         $this->db->delete('user', array('USERNAME' => $username));
     }
-    public function countquery($that = null){
-        if (!empty($that) || $that=='0') {
+    public function countquery($that = null)
+    {
+        if (!empty($that) || $that == '0') {
             $this->db->select('count(USERNAME) as n_row');
             $this->db->like('user.USERNAME', $that, 'both');
             return $this->db->get('user')->result();
@@ -99,6 +106,6 @@ class User_model extends CI_Model
     }
     public function deletetoken($token)
     {
-         $this->db->delete('user_token', array('token' => $token));
+        $this->db->delete('user_token', array('token' => $token));
     }
 }
