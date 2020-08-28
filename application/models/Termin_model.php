@@ -61,13 +61,12 @@ class Termin_model extends CI_Model
 
     public function getPagination($that = null, $limit, $start)
     {
-     $response = array();
+        $response = array();
         if (!empty($that)) {
             $this->db->select('*');
             $this->db->like('NO_PKS', $that, 'both');
             $this->db->order_by('INPUT_DATE', 'desc');
             return $this->db->get('termin_pks', $limit, $start)->result();
-
         }
         $this->db->order_by('INPUT_DATE', 'desc');
         $response = $this->db->get('termin_pks', $limit, $start)->result();
@@ -152,18 +151,17 @@ class Termin_model extends CI_Model
     public function sisaAnggaran($kodetermin)
     {
         return $this->db->get_where('termin_pks', ['KODE_TERMIN' => $kodetermin])->row_array();
-
     }
 
     public function hasntBeenPaid($nopks)
-    {   
+    {
         $this->db->where('NO_PKS', $nopks);
         $this->db->where('STATUS', 'UNPAID');
         return $this->db->get('termin_pks')->result();
     }
 
     public function countTermin($nopks)
-    {   
+    {
         $this->db->where('NO_PKS', $nopks);
         return count($this->db->get('termin_pks')->result());
     }
@@ -184,15 +182,17 @@ class Termin_model extends CI_Model
         $this->db->limit(4);
         return $this->db->get()->result();
     }
-    public function getGL($k){
-        $this->db->where('KELOMPOK =',$k);
+    public function getGL($k)
+    {
+        $this->db->where('KELOMPOK =', $k);
         return $this->db->get('gl')->result();
         // var_dump($this->db->get('gl')->result());
         // die;
     }
-    public function getRemainingBudget($pks){
+    public function getRemainingBudget($pks)
+    {
         $this->db->select("sum(termin_pks.NOMINAL) as anggaranpakai");
-        $this->db->where('NO_PKS =',$pks);
+        $this->db->where('NO_PKS =', $pks);
         return $this->db->get('termin_pks')->result();
     }
 
@@ -201,7 +201,8 @@ class Termin_model extends CI_Model
         $query = $this->db->query('SELECT termin_pks.NOMINAL FROM termin_pks WHERE termin_pks.KODE_TERMIN ="' . $kodetermin . '"');
         return $query->row();
     }
-    public function countquery($name = null){
+    public function countquery($name = null)
+    {
         if (!empty($name)) {
             $this->db->select('count(termin_pks.NO_PKS) as n_row');
             $this->db->like('termin_pks.NO_PKS', $name, 'both');
@@ -209,5 +210,21 @@ class Termin_model extends CI_Model
         }
         $this->db->select('count(termin_pks.NO_PKS) as n_row');
         return $this->db->get('termin_pks')->result();
+    }
+
+    public function saveImport($data)
+    {
+        $this->NO_PKS = $data["NO_PKS"];
+        $this->KODE_TERMIN = uniqid();
+        $this->TERMIN = $data["TERMIN"];
+        $this->GL = $data["GL"];
+        $this->KATEGORI = $data["KATEGORI"];
+        $this->TGL_TERMIN = $data["TGL_TERMIN"];
+        $this->NOMINAL = $data["NOMINAL"];
+        $this->STATUS = $data["STATUS"];
+        $this->INPUT_DATE = $data["INPUT_DATE"];
+
+        $this->db->insert($this->_table, $this);
+        return $this->KODE_TERMIN;
     }
 }

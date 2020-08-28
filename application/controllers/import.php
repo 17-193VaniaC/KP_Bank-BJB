@@ -11,6 +11,8 @@ class import extends CI_Controller
         $this->load->model('Pks_model');
         $this->load->model('JProject_model');
         $this->load->model('Vendor_model');
+        $this->load->model('Termin_model');
+        $this->load->model('Invoice_model');
         $this->load->library('form_validation');
     }
 
@@ -136,6 +138,123 @@ class import extends CI_Controller
             redirect('pks');
         }
     }
+
+    public function import_invoice()
+    {
+        $this->load->view('import/invoice');
+    }
+
+    public function invoice()
+    {
+        $file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        if (isset($_FILES['upload_file']['name']) && in_array($_FILES['upload_file']['type'], $file_mimes)) {
+            $arr_file = explode('.', $_FILES['upload_file']['name']);
+            $extension = end($arr_file);
+            if ('csv' == $extension) {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            // FIle path
+            $spreadsheet = $reader->load($_FILES['upload_file']['tmp_name']);
+            $allDataInSheet = $spreadsheet->getActiveSheet()->toArray();
+
+            $flag = 0;
+
+            foreach ($allDataInSheet as $dataInSheet) {
+
+                if ($flag == 1) {
+                    foreach ($dataInSheet as $key => $value) {
+                        if ($key == 0) {
+                            $data['NO_PKS'] = $value;
+                        } else if ($key == 1) {
+                            if ($value == 'Tahap I') {
+                                $data['TERMIN'] = 1;
+                            } else if ($value == 'Tahap II') {
+                                $data['TERMIN'] = 2;
+                            } else if ($value == 'Tahap III') {
+                                $data['TERMIN'] = 3;
+                            } else if ($value == 'Tahap IV') {
+                                $data['TERMIN'] = 4;
+                            } else if ($value == 'Tahap V') {
+                                $data['TERMIN'] = 5;
+                            } else if ($value == 'Tahap VI') {
+                                $data['TERMIN'] = 6;
+                            } else if ($value == 'Tahap VII') {
+                                $data['TERMIN'] = 7;
+                            } else if ($value == 'Tahap VIII') {
+                                $data['TERMIN'] = 8;
+                            } else if ($value == 'Tahap IX') {
+                                $data['TERMIN'] = 9;
+                            } else if ($value == 'Tahap X') {
+                                $data['TERMIN'] = 10;
+                            } else if ($value == 'Tahap XI') {
+                                $data['TERMIN'] = 11;
+                            } else if ($value == 'Tahap XII') {
+                                $data['TERMIN'] = 12;
+                            } else if ($value == 'Tahap XIII') {
+                                $data['TERMIN'] = 13;
+                            } else if ($value == 'Tahap XIV') {
+                                $data['TERMIN'] = 14;
+                            } else if ($value == 'Tahap XV') {
+                                $data['TERMIN'] = 15;
+                            }
+                        } else if ($key == 2) {
+                            $data['TGL_TERMIN'] = $value;
+                        } else if ($key == 3) {
+                            $data['NOMINAL'] = $value;
+                        } else if ($key == 4) {
+                            if ($value == 'SUDAH TERBAYARKAN') {
+                                $data['STATUS'] = 'PAID';
+                            } else {
+                                $data['STATUS'] = 'UNPAID';
+                            }
+                        } else if ($key == 5) {
+                            $data['INVOICE'] = $value;
+                        } else if ($key == 6) {
+                            $data['TGL_INVOICE'] = $value;
+                        } else if ($key == 7) {
+                            $data['GL'] = $value;
+                        } else if ($key == 8) {
+                            $data['KATEGORI'] = $value;
+                        }
+                    }
+                    // $data['INPUT_USER'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
+                    $data['INPUT_DATE'] = date("Y-m-d h:i:s");
+                    $kode_termin = $this->Termin_model->saveImport($data);
+                    $this->Invoice_model->saveImport($data, $kode_termin);
+                } else {
+                    foreach ($dataInSheet as $key => $value) {
+                    }
+                    $flag = 1;
+                }
+            }
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Import Berhasil </div>');
+            redirect('termin');
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //         foreach ($dataInSheet as $key => $value) {
 
     //             // echo 'galimimus';
