@@ -11,7 +11,7 @@ class import extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function index()
+    public function import_rbb()
     {
         $this->load->view('import/rbb');
     }
