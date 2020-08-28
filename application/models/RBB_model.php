@@ -77,7 +77,6 @@ class RBB_model extends CI_Model
             $this->db->like('KODE_RBB', $that, 'both');
             $this->db->order_by('INPUT_DATE', 'desc');
             return $this->db->get('rbb')->result();
-
         }
         $this->db->order_by('INPUT_DATE', 'desc');
         $response = $this->db->get('rbb')->result();
@@ -86,13 +85,12 @@ class RBB_model extends CI_Model
 
     public function getPagination($that = null, $limit, $start)
     {
-     $response = array();
+        $response = array();
         if (!empty($that)) {
             $this->db->select('*');
             $this->db->like('KODE_RBB', $that, 'both');
             $this->db->order_by('INPUT_DATE', 'desc');
             return $this->db->get('rbb', $limit, $start)->result();
-
         }
         $this->db->order_by('INPUT_DATE', 'desc');
         $response = $this->db->get('rbb', $limit, $start)->result();
@@ -103,6 +101,17 @@ class RBB_model extends CI_Model
         return $response;
     }
 
+    public function saveImport($data)
+    {
+        $this->KODE_RBB = $data["KODE_RBB"];
+        $this->PROGRAM_KERJA = $data["PROGRAM_KERJA"];
+        $this->ANGGARAN = $data["ANGGARAN"];
+        $this->GL = $data["GL"];
+        $this->NAMA_REK = $data["NAMA_REK"];
+        $this->SISA_ANGGARAN = $data["ANGGARAN"];
+
+        return $this->db->insert($this->_table, $this);
+    }
     public function save()
     {
         $post = $this->input->post();
@@ -182,7 +191,8 @@ class RBB_model extends CI_Model
         $this->db->update('rbb');
         return true;
     }
-    public function countquery($name = null){
+    public function countquery($name = null)
+    {
         if (!empty($name)) {
             $this->db->select('count(rbb.KODE_RBB) as n_row');
             $this->db->like('rbb.KODE_RBB', $name, 'both');

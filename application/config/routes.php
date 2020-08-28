@@ -68,3 +68,4 @@ $route['logout'] = 'auth/logout';
 $route['forgot-password'] = 'auth/forgot';
 $route['dashboard'] = 'Welcome';
 $route['laporan/form'] = 'Laporan/form_export';
+$route['import'] = 'import/index';
