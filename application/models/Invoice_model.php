@@ -44,7 +44,7 @@ class Invoice_model extends CI_Model
     public function getPagination($that = null, $limit, $start)
     {
         $response = array();
-        if (!empty($that) || $that=='0') {
+        if (!empty($that) || $that == '0') {
             $this->db->select('*');
             $this->db->like('pks.NO_PKS', $that, 'both');
             $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
@@ -118,8 +118,9 @@ class Invoice_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    public function countquery($that = null){
-        if (!empty($that) || $that=='0') {
+    public function countquery($that = null)
+    {
+        if (!empty($that) || $that == '0') {
             $this->db->select('count(INVOICE) as n_row');
             $this->db->like('pks.NO_PKS', $that, 'both');
             $this->db->join('termin_pks', 'termin_pks.KODE_TERMIN = pembayaran.KODE_TERMIN');
@@ -133,5 +134,15 @@ class Invoice_model extends CI_Model
         $this->db->join('pks', 'pks.NO_PKS = termin_pks.NO_PKS');
         $this->db->order_by('pembayaran.INPUT_DATE', 'desc');
         return $this->db->get('pembayaran')->result();
+    }
+
+    public function saveImport($data, $kode_termin)
+    {
+        $this->INVOICE = $data["INVOICE"];
+        $this->KODE_TERMIN = $kode_termin;
+        $this->TGL_INVOICE = $data["TGL_INVOICE"];
+        $this->INPUT_DATE = $data["INPUT_DATE"];
+
+        $this->db->insert($this->_table, $this);
     }
 }

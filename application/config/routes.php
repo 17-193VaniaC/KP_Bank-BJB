@@ -68,7 +68,5 @@ $route['logout'] = 'auth/logout';
 $route['forgot-password'] = 'auth/forgot';
 $route['dashboard'] = 'Welcome';
 $route['laporan/form'] = 'Laporan/form_export';
-$route['import_rbb'] = 'import/import_rbb';
 $route['import_pks'] = 'import/import_pks';
-$route['import_pks'] = 'ven';
-
+$route['import_invoice'] = 'import/import_invoice';
