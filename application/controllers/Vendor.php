@@ -105,10 +105,10 @@ class Vendor extends CI_Controller
 
                 $this->session->set_flashdata('success', 'Data berhasil diubah');
             } else {
-                redirect('daftar_vendor');
+                redirect('vendor/daftar_vendor');
             }
         }
-        redirect('daftar_vendor');
+        redirect('vendor/daftar_vendor');
     }
 
     public function add()
@@ -141,9 +141,9 @@ class Vendor extends CI_Controller
             $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
             $this->load->view('templates/footer.php');
-            redirect('daftar_vendor');
+            redirect('vendor/daftar_vendor');
         } else {
-            redirect('daftar_vendor');
+            redirect('vendor/daftar_vendor');
         }
     }
 
@@ -169,9 +169,9 @@ class Vendor extends CI_Controller
             } else {
                 $this->session->set_flashdata('failed', 'Gagal menghapus data. Vendor sedang digunakan.');
             }
-            redirect('daftar_vendor');
+            redirect('vendor/daftar_vendor');
         } else {
-            redirect('datar_vendor');
+            redirect('vendor/datar_vendor');
         }
     }
 }

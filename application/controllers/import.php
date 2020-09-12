@@ -16,10 +16,10 @@ class import extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function import_rbb()
-    {
-        $this->load->view('import/rbb');
-    }
+    // public function import_rbb()
+    // {
+    //     $this->load->view('import/rbb');
+    // }
 
     public function rbb()
     {
@@ -78,10 +78,10 @@ class import extends CI_Controller
         }
     }
 
-    public function import_pks()
-    {
-        $this->load->view('import/pks');
-    }
+    // public function import_pks()
+    // {
+    //     $this->load->view('import/pks');
+    // }
 
     public function pks()
     {
@@ -139,10 +139,10 @@ class import extends CI_Controller
         }
     }
 
-    public function import_invoice()
-    {
-        $this->load->view('import/invoice');
-    }
+    // public function import_invoice()
+    // {
+    //     $this->load->view('import/invoice');
+    // }
 
     public function invoice()
     {

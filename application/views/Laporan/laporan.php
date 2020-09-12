@@ -6,11 +6,9 @@
             <div style="float: left;">
             <form action="<?= base_url('laporan/laporan_pdf');?>" method="post">
                   <input type="hidden" name="keyword" value="<?= $keyword_ ?>" />
-                  <input type="submit" name="submit" value="Print" class="btn btn-danger">
+                  <input type="submit" name="submit" value="Print Laporan" class="btn btn-primary">
             </form>
-                  
             </div><div style="float: left; margin-left: 10px;">
-                  
             <form action="<?= base_url('laporan/exportAsExcel'); ?>" method="post" >
                   <input type="hidden" name="keyword" value="<?= $keyword_ ?>" />
                   <input type="submit" name="submit" value="Export as Excel" class="btn btn-success">

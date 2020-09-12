@@ -11,7 +11,7 @@
     <div class="container-half">
         <h2><a href="<?= base_url('invoice/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Invoice</b></a></h2>
         <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-            <p> <a href="<?= base_url('invoice/add'); ?>" class="btn btn-success">+ Tambah Invoce</a></p>
+            <p> <a href="<?= base_url('invoice/add'); ?>" class="btn btn-success">+ Tambah Invoice</a></p>
         <?php endif; ?>
     </div>
     <div class="container-half right">
@@ -22,6 +22,17 @@
                 <input type="submit" name="Search" class="btn btn-primary" value="Cari" />
             </form>
         </div>
+         <br> 
+        <?php if ($user['ROLE'] == 'IT FINANCE') : ?>
+        <div class="form-group" style="float: right; background-color: white; margin-top: 10px;">
+            <b>Import Data </b>
+                Pilih file untuk upload data:<br>
+           <form action="<?= base_url('Import/invoice'); ?>" method="post" enctype="multipart/form-data">
+                <input type="file" name="upload_file" id="file" style="float: left;  width: 210px; height: 40px; margin: 3px;" required/>
+                <button type="submit" value="Upload" name="submit" class="btn btn-primary" style="float: left;">Upload</button>
+            </form>
+        </div>
+        <?php endif; ?>
     </div>
 
     <div class="table-responsive">

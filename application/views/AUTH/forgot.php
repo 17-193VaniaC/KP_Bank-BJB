@@ -6,7 +6,7 @@
             <?php echo $this->session->flashdata('message') ?>
         <?php } ?>
 
-        <?php echo validation_errors(); ?>
+        <!-- <?php echo validation_errors(); ?> -->
         <!-- Outer Row -->
         <div class="row justify-content-center">
 

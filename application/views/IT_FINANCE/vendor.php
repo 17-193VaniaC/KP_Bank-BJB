@@ -36,7 +36,7 @@
 	</div>
 	<div class="container-half right">
 		<div class="form-group">
-			<form method="post" action="<?php echo site_url('vendor/index') ?>" class="form-inline" style="float: right;">
+			<form method="post" action="<?php echo site_url('vendor/daftar_vendor') ?>" class="form-inline" style="float: right;">
 				<input type="text" placeholder="Cari vendor" name="searchById" id="searchById" class="form-control" style="width: auto; " value="<?= $search ?>">
 				<input type="submit" name="Search" class="btn btn-primary" value="Cari" />
 			</form>
