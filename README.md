@@ -7,7 +7,7 @@ Nitama Nurlingga Yotifa (05111740000059)
 - [ ] Manual Book
 
 ## File Laporan Kerja Praktik
-[Laporan Kerja Praktik](https://1drv.ms/w/s!Ajv_aha2wJHRhwDifdK7I4bzFNVO?e=GWnJM)
+[Laporan Kerja Praktik](https://github.com/17-193VaniaC/KP_Bank-BJB/blob/master/Laporan_KP_05111740000193_05111740000059.docx)
 
 ## Manual Book
 
