@@ -4,8 +4,8 @@ class Vendor_model extends CI_Model
 {
     private $_table = "vendor";
 
-    public $KODE_VENDOR;
-    public $nama_vendor;
+    private $KODE_VENDOR;
+    private $nama_vendor;
 
     public function rules()
     {

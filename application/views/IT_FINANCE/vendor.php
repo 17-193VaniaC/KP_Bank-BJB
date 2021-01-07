@@ -179,24 +179,4 @@
 		}));
 	});
 
-	// $(document).on("click", "#deletebutton", function(){
-	// 	var n_vendor = $(this).data(vendor2);
-	// 	$("#modal_body_delete #nama_vendor").val(n_vendor);
-	// });
-
-	// $(document).ready(function(){
-	// 	$("#form_hapus").on("submit", (function(e){
-	// 		e.preventDevaullt();
-	//     	$.ajax({
-	//     		url: <?php site_url('vendor/delete/') ?> + n_vendor,
-	//     		type: post,
-	//     		data: {nama_vendor:nama_vendor},
-	//     		success: function(data){
-	//     			alert("data berhasil dihapus");
-	//     			$("#modalEdit").modal("hide");
-	//     			location.reload();
-	//     		}
-	// 		});
-	// 	}));
-	// });
 </script>

@@ -149,8 +149,11 @@ class JProject extends CI_Controller
         // if ($data['user']['ROLE'] == 'IT FINANCE') {
         if (empty("jenis")) redirect('jproject');
         $thisdata = $this->JProject_model->getById($jenis);
-        if ($thisdata->STATUS < 1) {
-            // ADD LOG
+
+        if ($thisdata->STATUS > 0) {
+            $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
+            redirect('jproject');        
+        } 
             $log = $this->Log_model;
             $data_log['USER'] = $data['user']['NAMA'];
             $data_log['TABLE_NAME'] = 'jenis project';
@@ -160,10 +163,6 @@ class JProject extends CI_Controller
 
             $this->JProject_model->delete($jenis);
             $this->session->set_flashdata('success', 'Data berhasil dihapus');
-        } else {
-            $this->session->set_flashdata('failed', 'Gagal menghapus data. Jenis project sedang digunakan.');
-        }
-        redirect('jproject');
-        // }
+            redirect('jproject');
     }
 }

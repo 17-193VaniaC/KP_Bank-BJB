@@ -1,7 +1,7 @@
 <?php
     use PhpOffice\PhpSpreadsheet\Spreadsheet;
     use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-    // require FCPATH . '/vendor/autoload.php';
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class Laporan extends CI_Controller
@@ -23,20 +23,14 @@ class Laporan extends CI_Controller
         $title['title'] = 'Laporan';
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if(!empty($this->input->post('Search'))){ 
-            // var_dump($this->input->post('searchById'))  ;
-            // die;?
-            // $this->session->set_flashdata('SearchActive', 'RBB terakhir');
             $res = $this->Laporan_model->getData($this->input->post('searchById'));
             $data['table'] = $res;
             $data['keyword_'] = $this->input->post('searchById');
-        
         }
         else{
             $res = $this->Laporan_model->getData();
-            // $this->session->set_flashdata('SearchActive', 'RBB terakhir');
             $data['table'] = $res;   
             $data['keyword_'] = '';
-
         }
         $this->load->view('templates/header.php', $title);
         $this->load->view('templates/navbar.php', $data);

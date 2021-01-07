@@ -199,45 +199,6 @@ class auth extends CI_Controller
         }
     }
 
-    // public function edit($username)
-    // {
-    //     $title['title'] = 'Edit Akun';
-    //     $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-    //     if ($data['user']['ROLE'] == 'IT FINANCE') {
-    //         $data['akun'] = $this->User_model->getByUsername($username);
-
-    //         $this->form_validation->set_rules('role', 'Role', 'required|trim');
-    //         $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-    //         if ($this->input->post('password1') && $this->input->post('password1')) {
-    //             $this->form_validation->set_rules('password1', 'Password', 'trim|min_length[6]|matches[password2]', [
-    //                 'matches' => 'Password tidak sesuai',
-    //                 'min_length' => 'Password terdiri dari minimal 6 karakter'
-    //             ]);
-    //         }
-    //         if ($this->form_validation->run() == false) {
-    //             $this->load->view('templates/header.php', $title);
-    //             $this->load->view('templates/navbar.php', $data);
-    //             $this->load->view('auth/edit', $data);
-    //             $this->load->view('templates/footer.php');
-    //         } else {
-    //             $this->User_model->update();
-
-    //             // ADD LOG
-    //             $log = $this->Log_model;
-    //             $data_log['USER'] = $data['user']['NAMA'];
-    //             $data_log['TABLE_NAME'] = 'user';
-    //             $data_log['KODE_DATA'] = $this->input->post('username');
-    //             $data_log['ACTIVITY'] = 'edit';
-    //             $log->save($data_log);
-
-    //             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Data berhasil diubah</div>');
-    //             redirect('auth/list');
-    //         }
-    //     } else {
-    //         redirect('list');
-    //     }
-    // }
-
     public function delete($username)
     {
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();

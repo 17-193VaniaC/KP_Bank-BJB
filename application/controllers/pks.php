@@ -114,7 +114,8 @@ class pks extends CI_Controller
                 $this->load->view('templates/navbar.php', $dataa);
                 $this->load->view('pks/create', $dataa);
                 $this->load->view('templates/footer.php');
-            } else {
+            } 
+            else {
                 $rbb = $this->RBB_model;
                 $data_rbb = $rbb->getById($this->input->post('kode_rbb'));
 
@@ -171,14 +172,9 @@ class pks extends CI_Controller
                     // END
 
                     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> PKS baru berhasil dibuat.</div>');
-                    // if (empty($n_termin)) { //termin lebih dari satu, diarahkan ke halaman termin
-                    //     redirect('pks/index');
-                    // } else {
-                    //     $i=1;
-                    //     $a = str_replace('/', '_', $this->input->post('no_pks'));
                     redirect('pks');
-                    // }
-                } else {
+                } 
+                else {
                     $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> Nominal PKS melebihi sisa anggaran RBB (' . $total . ')</div>');
                     redirect('pks');
                 }
@@ -220,7 +216,8 @@ class pks extends CI_Controller
                 $this->load->view('templates/navbar.php', $data);
                 $this->load->view('pks/edit', $data);
                 $this->load->view('templates/footer.php');
-            } else {
+            } 
+            else {
 
                 $jenis = $this->input->post('jenis');
                 $kode_project = $this->input->post('kode_project');
@@ -229,9 +226,6 @@ class pks extends CI_Controller
                 $nama_vendor = $this->input->post('nama_vendor');
 
                 $prevdata = $this->Pks_model->getById($no_pks);
-                // var_dump($prevdata["NAMA_VENDOR"]);
-                // var_dump($nama_vendor);
-                // die;
                 if ($prevdata["NAMA_VENDOR"] != $nama_vendor) {
                     $this->Vendor_model->updateStatusAdd();
                     $this->Vendor_model->updateStatusDelEd($prevdata['NAMA_VENDOR']);

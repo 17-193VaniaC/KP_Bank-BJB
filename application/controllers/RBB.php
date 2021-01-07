@@ -11,6 +11,7 @@ class RBB extends CI_Controller
         if (!$this->session->userdata('username')) {
             redirect('login');
         }
+        $this->load->library('unit_test');
 
         $this->load->library('pagination');
         $this->load->model("RBB_model");
@@ -166,27 +167,32 @@ class RBB extends CI_Controller
     {
         $pks = $this->Pks_model;
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        if ($data['user']['ROLE'] == 'IT FINANCE') {
-            $data_pks = $pks->getByRBB($kode_rbb);
-
-            if (!$data_pks) {
-                $rbb = $this->RBB_model;
-
-                // ADD LOG
-                $log = $this->Log_model;
-                $data_log['USER'] = $data['user']['NAMA'];
-                $data_log['TABLE_NAME'] = 'rbb';
-                $data_log['KODE_DATA'] = $kode_rbb;
-                $data_log['ACTIVITY'] = 'delete';
-                $log->save($data_log);
-
-                $rbb->delete($kode_rbb);
-                $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> RBB berhasil dihapus.</div>');
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> RBB tidak bisa dihapus karena telah terdapat data PKS. Jika ingin menghapus, silahkan hapus data PKS terlebih dahulu</div>');
-            }
+        if ($data['user']['ROLE'] != 'IT FINANCE') {
+            redirect('RBB');
         }
+        $data_pks = $pks->getByRBB($kode_rbb);
+        if ($data_pks) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> RBB tidak bisa dihapus karena telah terdapat data PKS. Jika ingin menghapus, silahkan hapus data PKS terlebih dahulu</div>');
+            redirect('RBB');
 
+        } 
+        $rbb = $this->RBB_model;
+                // ADD LOG
+        $log = $this->Log_model;
+        $data_log['USER'] = $data['user']['NAMA'];
+        $data_log['TABLE_NAME'] = 'rbb';
+        $data_log['KODE_DATA'] = $kode_rbb;
+        $data_log['ACTIVITY'] = 'delete';
+        $log->save($data_log);
+        $rbb->delete($kode_rbb);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> RBB berhasil dihapus.</div>');
         redirect('RBB');
+
+    }
+
+    public function test_getall_type()
+    {
+        $this->unit->run(is_array($this->RBB_model->getAll()), TRUE, "Result type test");
+        echo $this->unit->report();
     }
 }

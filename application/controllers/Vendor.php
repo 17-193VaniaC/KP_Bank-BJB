@@ -10,12 +10,13 @@ class Vendor extends CI_Controller
         if (!$this->session->userdata('username')) {
             redirect('login');
         }
-
+        $this->load->library('unit_test');
         $this->load->library('pagination');
         $this->load->model("Vendor_model");
         $this->load->model("Log_model");
         $this->load->library('form_validation');
     }
+
 
     public function daftar_vendor()
     {

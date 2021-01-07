@@ -163,10 +163,5 @@
 	});
 </script>
 <?php if ($pagination) : ?>
-	<!-- <div class="row"> -->
-		<!-- <div class="col"> -->
-			<!--Tampilkan pagination-->
 			<?php echo $pagination; ?>
-		<!-- </div> -->
-	<!-- </div> -->
 <?php endif; ?>

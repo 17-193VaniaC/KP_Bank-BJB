@@ -7,6 +7,7 @@ class Welcome extends CI_Controller
 	{
 		parent::__construct();
 
+
 		if (!$this->session->userdata('username')) {
 			redirect('login');
 		}
@@ -21,4 +22,4 @@ class Welcome extends CI_Controller
 		$this->load->view('dashboard', $data);
 		$this->load->view('templates/footer.php');
 	}
-}
+    }
