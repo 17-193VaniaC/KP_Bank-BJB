@@ -95,10 +95,6 @@ class RBB_model extends CI_Model
         $this->db->order_by('INPUT_DATE', 'desc');
         $response = $this->db->get('rbb', $limit, $start)->result();
         return $response;
-
-        $this->db->order_by('INPUT_DATE', 'desc');
-        $response = $this->db->get('rbb', $limit, $start)->result();
-        return $response;
     }
 
     public function saveImport($data)
@@ -122,7 +118,6 @@ class RBB_model extends CI_Model
         $this->GL = $post["GL"];
         $this->NAMA_REK = $post["NAMA_REK"];
         $this->SISA_ANGGARAN = $post["ANGGARAN"];
-
         return $this->db->insert($this->_table, $this);
     }
 
@@ -160,29 +155,27 @@ class RBB_model extends CI_Model
     function getKode()
     {
         $response = array();
-
-        // Select record
         $this->db->select('KODE_RBB');
         $q = $this->db->get('rbb');
         $response = $q->result();
 
         return $response;
     }
+
     public function isExist()
     {
         $post = $this->input->post(); //Take from input
-        $this->db->where('KODE_RBB', $post["KODE_RBB"]);
-        $rbbdata = $this->db->get('rbb')->result();
+        $rbbdata = $this->getById($post["KODE_RBB"]);
         if (count($rbbdata) < 1) { //no data found
             return False;
         }
         return true;
     }
-    public function sych()
+
+    public function UpdateAnggaranRBB()
     {
         $post = $this->input->post(); //Take from input
-        $this->db->where('KODE_RBB', $post["KODE_RBB"]);
-        $rbb = $this->db->get('rbb')->result();
+        $rbb = $this->getById($post["KODE_RBB"]);
         $used = $rbb[0]->ANGGARAN - $rbb[0]->SISA_ANGGARAN;
         if ($post["NOMINAL"] < $used) { //if the new budget is less than used budget
             return false;
@@ -194,6 +187,7 @@ class RBB_model extends CI_Model
         $this->db->update('rbb');
         return true;
     }
+    
     public function countquery($name = null)
     {
         if (!empty($name)) {

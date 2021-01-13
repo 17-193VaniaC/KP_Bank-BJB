@@ -55,6 +55,7 @@ class Vendor_model extends CI_Model
         $post = $this->input->post();
         $this->KODE_VENDOR = uniqid();
         $this->nama_vendor = $post["nama_vendor"];
+        $this->STATUS = 0;
         $this->db->insert($this->_table, $this);
         return $this->KODE_VENDOR;
     }

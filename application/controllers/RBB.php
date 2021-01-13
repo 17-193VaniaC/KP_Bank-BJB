@@ -189,10 +189,4 @@ class RBB extends CI_Controller
         redirect('RBB');
 
     }
-
-    public function test_getall_type()
-    {
-        $this->unit->run(is_array($this->RBB_model->getAll()), TRUE, "Result type test");
-        echo $this->unit->report();
-    }
 }
