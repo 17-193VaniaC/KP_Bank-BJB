@@ -85,7 +85,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <!-- <div class="dropdown-divider"></div> -->
-                <a class="dropdown-item" href="<?= base_url('auth/logout'); ?>"><img src="<?php echo base_url() . 'assets/image/logout.png' ?>" style="width: 15px;"><b> Logout</b></a>
+                <a class="dropdown-item" href="<?= base_url('user/logout'); ?>"><img src="<?php echo base_url() . 'assets/image/logout.png' ?>" style="width: 15px;"><b> Logout</b></a>
             </div>
         </div>
     </div>

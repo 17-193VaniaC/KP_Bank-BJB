@@ -158,7 +158,8 @@ class RBB extends CI_Controller
             $this->load->view('templates/navbar.php', $data);
             $this->load->view("RBB/edit_rbb", $data);
             $this->load->view('templates/footer.php');
-        } else {
+        } 
+        else {
             redirect('RBB');
         }
     }
@@ -170,12 +171,14 @@ class RBB extends CI_Controller
         if ($data['user']['ROLE'] != 'IT FINANCE') {
             redirect('RBB');
         }
+
         $data_pks = $pks->getByRBB($kode_rbb);
-        if ($data_pks) {
+        $isExist = ($data_pks >= 1);
+        if ($isExist) {
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"> RBB tidak bisa dihapus karena telah terdapat data PKS. Jika ingin menghapus, silahkan hapus data PKS terlebih dahulu</div>');
             redirect('RBB');
-
         } 
+
         $rbb = $this->RBB_model;
                 // ADD LOG
         $log = $this->Log_model;
@@ -189,4 +192,5 @@ class RBB extends CI_Controller
         redirect('RBB');
 
     }
+
 }

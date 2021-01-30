@@ -77,11 +77,11 @@
                 <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                 Vendor
             </a>
-            <a href="<?= base_url('JProject'); ?>" class="hupla" style="text-decoration: none;">
+            <a href="<?= base_url('JenisProject'); ?>" class="hupla" style="text-decoration: none;">
                 <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                 Jenis Project
             </a>
-            <a href="<?= base_url('auth/seeAllUser'); ?>" class="hupla" style="text-decoration: none;">
+            <a href="<?= base_url('user/seeAllUser'); ?>" class="hupla" style="text-decoration: none;">
                 <img src="<?php echo base_url('assets/image/add_account.png'); ?>" class="symbol-menu" style="width: 40px; margin-right: 15px;">
                 Daftar Pengguna
             </a>
@@ -98,7 +98,7 @@
                     <img src="<?php echo base_url('assets/image/vendor.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                     Vendor
                 </a>
-                <a href="<?= base_url('JProject'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
+                <a href="<?= base_url('JenisProject'); ?>" style="width: 30%; text-decoration: none;" class="hupla">
                     <img src="<?php echo base_url('assets/image/jp.png'); ?>" class="symbol-menu" style="width: 60px; margin-right: 15px;">
                     Jenis Project
                 </a>

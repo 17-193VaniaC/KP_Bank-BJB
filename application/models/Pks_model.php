@@ -139,4 +139,5 @@ class Pks_model extends CI_Model
 
         $this->db->insert($this->_table, $this);
     }
+
 }

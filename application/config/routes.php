@@ -49,23 +49,22 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'auth';
+$route['default_controller'] = 'User';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['RBB'] = 'rbb';
 $route['pks'] = 'PKS';
 $route['PKS/search'] = 'PKS/search';
-//$route['Termin/add/(:any)/(:any)'] = 'termin/add/$1/$2';
 $route['Invoice'] = 'Invoice';
 $route['create-rbb'] = 'rbb/add';
 $route['edit-rbb'] = 'rbb/edit';
 $route['vendor'] = 'vendor/daftar_vendor';
-$route['jenis_project'] = 'jproject';
-$route['register'] = 'auth/registration';
-$route['list'] = 'auth/list';
-$route['login'] = 'auth/login';
-$route['logout'] = 'auth/logout';
-$route['forgot-password'] = 'auth/forgot';
+$route['jenis_project'] = 'jenisproject';
+$route['register'] = 'user/registration';
+$route['list'] = 'user/list';
+$route['login'] = 'user/login';
+$route['logout'] = 'user/logout';
+$route['forgot-password'] = 'user/forgot';
 $route['dashboard'] = 'Welcome';
 $route['laporan/form'] = 'Laporan/form_export';
 $route['import_pks'] = 'import/import_pks';

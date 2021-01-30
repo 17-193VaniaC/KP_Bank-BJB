@@ -25,9 +25,9 @@
 
 	<br>
 	<div class="container-half">
-		<h2><a href="<?= base_url('jproject/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Jenis Project</b></a></h2>
+		<h2><a href="<?= base_url('jenisproject/'); ?>" style="text-decoration: none; color: black;">Daftar <b>Jenis Project</b></a></h2>
 		<p><?php if ($user['ROLE'] == 'IT FINANCE') : ?>
-				<form action="<?php echo site_url('jproject/add') ?>" method="post" class="form-inline">
+				<form action="<?php echo site_url('jenisproject/add') ?>" method="post" class="form-inline">
 					<input type="text" name="jenis" placeholder="Nama jenis project baru" class="form-control" />
 					<input type="submit" name="btn" value="+ Tambah Jenis Project" class="btn btn-success" />
 				</form>
@@ -35,7 +35,7 @@
 	</div>
 	<div class="container-half right">
 		<div class="form-group">
-			<form method="post" action="<?php echo site_url('jproject/index') ?>" class="form-inline" style="float: right;">
+			<form method="post" action="<?php echo site_url('jenisproject/index') ?>" class="form-inline" style="float: right;">
 				<input type="text" placeholder="Cari jenis project" name="searchById" id="searchById" class="form-control" style="width: auto;" value="<?= $search ?>" />
 				<input type="submit" name="Search" class="btn btn-primary" value="Cari" />
 			</form>
@@ -43,7 +43,6 @@
 	</div>
 
 
-	<!-- ##############################################TABEL JENIS######################################################## -->
 	<div class="table-responsive">
 		<div class="table-wrapper">
 			<table class="table table-striped table-hover table-bordered">
@@ -68,7 +67,7 @@
 						<?php if ($user['ROLE'] == 'IT FINANCE') : ?>
 							<td class="table-option-row">
 								<button id="editbutton" type="button" class="btn btn-info" data-toggle="modal" data-target="#modalEdit" data-id="<?php echo $listjenis->KODE_JENISPROJECT; ?>" data-jenis="<?php echo $listjenis->jenis; ?>" data-status="<?php echo $listjenis->STATUS; ?>"> Edit</button>
-								<a class="btn btn-danger" href="<?php echo site_url('jproject/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Hapus data jenis project?')">Hapus</a>
+								<a class="btn btn-danger" href="<?php echo site_url('jenisproject/delete/' . $listjenis->KODE_JENISPROJECT); ?>" onclick="return confirm('Hapus data jenis project?')">Hapus</a>
 							</td>
 						<?php endif; ?>
 					</tr>
@@ -78,7 +77,6 @@
 		</div>
 	</div>
 
-	<!-- +++++++++++++++++++++++++++++++++++++++ Modal edit ++++++++++++++++++++++++++++++++++++++++++++-->
 	<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -88,7 +86,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="<?php echo site_url('jproject/edit') ?>" method="post">
+				<form action="<?php echo site_url('jenisproject/edit') ?>" method="post">
 					<div class="modal-body" id="modal-edit">
 						<table style="margin: 8%;">
 							<div class="notif-warning" id="notif-warning">
@@ -146,7 +144,7 @@
 			$("#form_edit").on("submit", (function(e) {
 				e.preventDevaullt();
 				$.ajax({
-					url: <?php site_url('jproject/edit/') ?> + n_jenis,
+					url: <?php site_url('jenisproject/edit/') ?> + n_jenis,
 					type: post,
 					data: {
 						jenis: jenis,

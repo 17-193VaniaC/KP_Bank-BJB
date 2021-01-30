@@ -94,7 +94,6 @@ class Vendor extends CI_Controller
         $validation->set_rules($vendor->rules());
         if ($validation->run() == TRUE) {
             if ($data['user']['ROLE'] == 'IT FINANCE') {
-                $var = 1;
                 $kode_vendor = $vendor->update();
                 // ADD LOG
                 $log = $this->Log_model;
@@ -146,11 +145,16 @@ class Vendor extends CI_Controller
     public function delete($vendor = null)
     {
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
-        if ($data['user']['ROLE'] == 'IT FINANCE') {
-            if (empty("vendor")) redirect('termin');
-            $thisdata = $this->Vendor_model->getById($vendor);
-            if ($thisdata->STATUS < 1) {
+        if ($data['user']['ROLE'] != 'IT FINANCE') {
+            redirect('vendor/datar_vendor');
+        }
+        if (empty("vendor")) redirect('termin');
 
+        $thisdata = $this->Vendor_model->getById($vendor);
+            if ($thisdata->STATUS > 1) {
+                $this->session->set_flashdata('failed', 'Gagal menghapus data. Vendor sedang digunakan.');
+            } 
+            else {
                 $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
                 // ADD LOG
                 $log = $this->Log_model;
@@ -162,12 +166,8 @@ class Vendor extends CI_Controller
 
                 $this->Vendor_model->delete($vendor);
                 $this->session->set_flashdata('success', 'Data berhasil dihapus');
-            } else {
-                $this->session->set_flashdata('failed', 'Gagal menghapus data. Vendor sedang digunakan.');
             }
-            redirect('vendor/daftar_vendor');
-        } else {
-            redirect('vendor/datar_vendor');
-        }
+        redirect('vendor/daftar_vendor');
     }
+    
 }

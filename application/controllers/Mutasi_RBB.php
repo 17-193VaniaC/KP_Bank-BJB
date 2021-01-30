@@ -45,7 +45,7 @@ class Mutasi_RBB extends CI_Controller
                     $this->session->set_flashdata('failed', 'RBB tidak ditemukan');
                     redirect('mutasi_rbb/Penyesuaian_RBB');
                 }
-                if ($rbb->UpdateAnggaranRBB() == FALSE) {
+                if ($rbb->UpdateAnggaranRBB()) {
                     $this->session->set_flashdata('failed', 'Anggaran baru kurang dari total PKS');
                     redirect('mutasi_rbb/Penyesuaian_RBB');
                 }

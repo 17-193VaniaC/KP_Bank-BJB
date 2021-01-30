@@ -17,7 +17,7 @@ class pks extends CI_Controller
         $this->load->model('MutasiRBB_model');
         $this->load->model('Pks_model');
         $this->load->model('Vendor_model');
-        $this->load->model('JProject_model');
+        $this->load->model('JenisProject_model');
         $this->load->model('Termin_model');
         $this->load->model('Log_model');
     }
@@ -98,7 +98,7 @@ class pks extends CI_Controller
         if ($dataa['user']['ROLE'] == 'IT FINANCE') {
             $dataa['no_rbb'] = $this->RBB_model->getKode();
             $dataa['vendor'] = $this->Vendor_model->getAll();
-            $dataa['jenis'] = $this->JProject_model->getAll();
+            $dataa['jenis'] = $this->JenisProject_model->getAll();
 
             $this->form_validation->set_rules('no_pks', 'No. PKS', 'required|trim|is_unique[pks.no_pks]');
             $this->form_validation->set_rules('kode_rbb', 'Kode RBB', 'required|trim');
@@ -146,12 +146,11 @@ class pks extends CI_Controller
 
                     $this->db->insert('pks', $data);
                     $this->load->model("Vendor_model");
-                    $this->load->model("JProject_model");
-                    // $v_pks = $this->Pks_model->getVendor($this->input->post('no_pks'));
-                    // $jp_pks = $this->Pks_model->getJP($this->input->post('no_pks'));
+                    $this->load->model("JenisProject_model");
+
 
                     $this->Vendor_model->updateStatusAdd();
-                    $this->JProject_model->updateStatusAdd();
+                    $this->JenisProject_model->updateStatusAdd();
 
                     // MENGURANGI SISA ANGGARAN RBB
                     $rbb = $this->RBB_model;
@@ -203,7 +202,7 @@ class pks extends CI_Controller
             $data['pks'] = $this->Pks_model->getById($no_pks);
             // $data['no_rbb'] = $this->RBB_model->getKode();
             $data['vendor'] = $this->Vendor_model->getAll();
-            $data['jenis'] = $this->JProject_model->getAll();
+            $data['jenis'] = $this->JenisProject_model->getAll();
 
             $this->form_validation->set_rules('jenis', 'Jenis', 'required|trim');
             $this->form_validation->set_rules('kode_project', 'Kode_project', 'required|trim');
@@ -232,8 +231,8 @@ class pks extends CI_Controller
                 }
 
                 if ($prevdata["JENIS"] != $jenis) {
-                    $this->JProject_model->updateStatusAdd();
-                    $this->JProject_model->updateStatusDelEd($prevdata['JENIS']);
+                    $this->JenisProject_model->updateStatusAdd();
+                    $this->JenisProject_model->updateStatusDelEd($prevdata['JENIS']);
                 }
 
                 $this->db->set('jenis', $jenis);
@@ -263,7 +262,7 @@ class pks extends CI_Controller
 
     public function delete($no_pks)
     {
-        // $data['pks'] = $this->Pks_model->deleteData($no_pks);
+
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['ROLE'] == 'IT FINANCE') {
             $termin = $this->Termin_model;
@@ -273,7 +272,7 @@ class pks extends CI_Controller
 
             if ($data_termin) {
                 if ($data_termin['STATUS'] == 'UNPAID') {
-                    // HAPUS TERMIN
+
                     $hapus_termin = $termin->getAll($no_pks);
                     foreach ($hapus_termin as $row) {
                         $termin->delete($row->KODE_TERMIN);
@@ -313,7 +312,7 @@ class pks extends CI_Controller
             $prevdata = $this->Pks_model->getById($no_pks);
 
             $this->Vendor_model->updateStatusDel($prevdata["NAMA_VENDOR"]);
-            $this->JProject_model->updateStatusDel($prevdata["JENIS"]);
+            $this->JrnisProject_model->updateStatusDel($prevdata["JENIS"]);
 
             $pks->deleteData($no_pks);
 

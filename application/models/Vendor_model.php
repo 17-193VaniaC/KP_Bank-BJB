@@ -32,7 +32,6 @@ class Vendor_model extends CI_Model
             $this->db->order_by('nama_vendor', 'asc');
             return $this->db->get('vendor', $limit, $start)->result();
         }
-        // Select record
         $this->db->select('*');
         $this->db->order_by('nama_vendor', 'asc');
         return $this->db->get('vendor', $limit, $start)->result();

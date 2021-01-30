@@ -143,7 +143,7 @@ class RBB_model extends CI_Model
         return $this->db->delete($this->_table, array("KODE_RBB" => $KODERBB));
     }
 
-    public function sisa_subtr($KODERBB, $nominal) //untk mengurangi anggaran RBB
+    public function sisa_subtr($KODERBB, $nominal)
     {
         $rbb = $this->db->get_where($this->_table, ["KODE_RBB" => $KODERBB])->row();
         $total = $rbb->SISA_ANGGARAN - $nominal;
@@ -164,9 +164,9 @@ class RBB_model extends CI_Model
 
     public function isExist()
     {
-        $post = $this->input->post(); //Take from input
+        $post = $this->input->post();
         $rbbdata = $this->getById($post["KODE_RBB"]);
-        if (count($rbbdata) < 1) { //no data found
+        if (count($rbbdata) < 1) { 
             return False;
         }
         return true;
@@ -174,10 +174,10 @@ class RBB_model extends CI_Model
 
     public function UpdateAnggaranRBB()
     {
-        $post = $this->input->post(); //Take from input
+        $post = $this->input->post();
         $rbb = $this->getById($post["KODE_RBB"]);
         $used = $rbb[0]->ANGGARAN - $rbb[0]->SISA_ANGGARAN;
-        if ($post["NOMINAL"] < $used) { //if the new budget is less than used budget
+        if ($post["NOMINAL"] < $used) { 
             return false;
         }
         $new_left = $post["NOMINAL"] - $used;

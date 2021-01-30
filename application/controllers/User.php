@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class auth extends CI_Controller
+class User extends CI_Controller
 {
     public function __construct()
     {
@@ -32,11 +32,10 @@ class auth extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $title);
-            $this->load->view('auth/login');
+            $this->load->view('user/login');
             $this->load->view('templates/footer');
         } else {
-            //Validasi sukses  
-            $this->_login();  //_ untuk menandakan private hanya untuk kelas ini saja  
+            $this->_login(); 
         }
     }
 
@@ -44,9 +43,9 @@ class auth extends CI_Controller
     {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
-        $user = $this->db->get_where('user', ['USERNAME' => $username])->row_array();  //baca : select * dari tael user where email == $email  
+        $user = $this->db->get_where('user', ['USERNAME' => $username])->row_array();
         if ($user) {
-            // jika user aktif 
+
             if (password_verify($password, $user['PASSWORD'])) {
                 $data = [
                     'username' => $user['USERNAME'],
@@ -76,27 +75,12 @@ class auth extends CI_Controller
         $title['title'] = 'Registrasi Akun';
         $dataa['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($dataa['user']['ROLE'] == 'IT FINANCE') {
-            // if ($this->session->userdata('email')) {
-            //     redirect('user');
-            // }
-            $this->form_validation->set_rules('role', 'Role', 'required|trim');
-            $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
-
-            $this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[user.USERNAME]', [
-                'is_unique' => 'This username has already registered!'
-            ]);
-            $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[user.EMAIL]', [
-                'is_unique' => 'This email has already registered!'
-            ]);
-            $this->form_validation->set_rules('password1', 'Password', 'required|trim|min_length[6]|matches[password2]', [
-                'matches' => 'Password tidak sesuai',
-                'min_length' => 'Password terdiri dari minimal 6 karakter'
-            ]); //trim agar jika menyisakan spasi di depan atau dibelakang akan dihapus agar tidak tersimpan di db  
-            $this->form_validation->set_rules('password2', 'Password', 'required|trim|matches[password1]');
+            $this->form_validation->set_rules($this->User_model->rules());
+          
             if ($this->form_validation->run() == false) {
                 $this->load->view('templates/header', $title);
                 $this->load->view('templates/navbar', $dataa);
-                $this->load->view('auth/register');
+                $this->load->view('user/register');
                 $this->load->view('templates/footer');
             } else {
                 $data = [
@@ -117,7 +101,7 @@ class auth extends CI_Controller
                 $log->save($data_log);
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Akun berhasil dibuat. </div>');
-                redirect('auth/seeAllUser');
+                redirect('user/seeAllUser');
             }
         } elseif ($dataa['user']['ROLE'] == 'GROUP HEAD') {
             redirect('dashboard');
@@ -134,7 +118,7 @@ class auth extends CI_Controller
 
             $title['title'] = 'Daftar Akun Pengguna';
             // Config pagination
-            $config['base_url'] = base_url('auth/seeAllUser');
+            $config['base_url'] = base_url('user/seeAllUser');
             $config['per_page'] = 20;
             $config["uri_segment"] = 3;
 
@@ -184,15 +168,13 @@ class auth extends CI_Controller
 
             $data['list'] = $this->User_model->getPagination($data['search'], $config["per_page"], $data['page']);
 
-            //initialize pagination and create
             $this->pagination->initialize($config);
             $data['pagination'] = $this->pagination->create_links();
 
-            // $data['list'] = $this->User_model->getAll();
             $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
             $this->load->view('templates/header.php', $title);
             $this->load->view('templates/navbar.php', $data);
-            $this->load->view('auth/index', $data);
+            $this->load->view('user/index', $data);
             $this->load->view('templates/footer.php');
         } else {
             redirect("dashboard");
@@ -203,15 +185,14 @@ class auth extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['USERNAME' => $this->session->userdata('username')])->row_array();
         if ($data['user']['USERNAME'] == $username) {
-            // $this->User_model->delete($username);
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Anda tidak bisa menghapus akun yang anda gunakan saat ini</div>');
-            redirect('auth/seeAllUser');
+            redirect('user/seeAllUser');
         } else if ($data['user']['ROLE'] == 'IT FINANCE') {
             $this->User_model->delete($username);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data berhasil dihapus.</div>');
-            redirect('auth/seeAllUser');
+            redirect('user/seeAllUser');
         } else {
-            redirect('auth/seeAllUser');
+            redirect('user/seeAllUser');
         }
     }
 
@@ -225,10 +206,9 @@ class auth extends CI_Controller
 
     public function blocked()
     {
-        $this->load->view('auth/block');
+        $this->load->view('user/block');
     }
 
-    // 1. Unutk menampilkan form email untuk ganti password
     public function forgot()
     {
         $title['title'] = 'Lupa Password';
@@ -236,14 +216,14 @@ class auth extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header.php', $title);
-            $this->load->view('auth/forgot');
+            $this->load->view('user/forgot');
             $this->load->view('templates/footer.php');
         } else {
             $email = $this->input->post('email');
             $user = $this->db->get_where('user', ['email' => $email])->row_array();
 
             if ($user) {
-                // token
+
                 $token = base64_encode(openssl_random_pseudo_bytes(32));
                 $user_token = [
                     'email' => $email,
@@ -261,7 +241,7 @@ class auth extends CI_Controller
         }
     }
 
-    // 3. untuk mengecek apakah email dan token yang diakses user dari email benar
+
     public function resetPassword()
     {
         $email = $this->input->get('email');
@@ -286,7 +266,7 @@ class auth extends CI_Controller
         }
     }
 
-    // 2. untuk mengirim email
+
     public function _sendEmail($token)
     {
         $config = [
@@ -306,7 +286,6 @@ class auth extends CI_Controller
         $this->email->to($this->input->post('email'));
 
         $this->email->subject('Reset Password');
-        // $this->email->message('Click link berikut untuk mengubah password : <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Ubah Password</a>');
         $this->email->message('
         
         <!DOCTYPE html
@@ -338,7 +317,7 @@ class auth extends CI_Controller
                     <tr>
                         <td align="center">
                         <br>
-                            <a href="' . base_url() . 'auth/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '"><button style="background-color: #204d95;
+                            <a href="' . base_url() . 'user/resetPassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '"><button style="background-color: #204d95;
                             border: none;
                             color: white;
                             padding: 15px 32px;
@@ -356,7 +335,7 @@ class auth extends CI_Controller
 </html>
         
         ');
-        // $this->email->message('Click link berikut untuk mengubah password : <a href="">Ubah Password</a>');
+
 
         if ($this->email->send()) {
             return true;
@@ -366,7 +345,7 @@ class auth extends CI_Controller
         }
     }
 
-    // 4. menyimpan password baru
+
     public function changePassword()
     {
         if (!$this->session->userdata('reset_email')) {
@@ -382,13 +361,13 @@ class auth extends CI_Controller
         if ($this->form_validation->run() == false) {
             $title['title'] = 'Ubah Password';
             $this->load->view('templates/header.php', $title);
-            $this->load->view('auth/ubah');
+            $this->load->view('user/ubah');
             $this->load->view('templates/footer.php');
         } else if (password_verify($this->input->post('password1'), $pass_lama['PASSWORD'])) {
             $title['title'] = 'Ubah Password';
             $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Password baru sama dengan password lama</div>');
             $this->load->view('templates/header.php', $title);
-            $this->load->view('auth/ubah');
+            $this->load->view('user/ubah');
             $this->load->view('templates/footer.php');
         } else {
             $password = password_hash($this->input->post('password1'), PASSWORD_BCRYPT);

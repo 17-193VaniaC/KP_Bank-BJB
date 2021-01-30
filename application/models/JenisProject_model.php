@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class JProject_model extends CI_Model
+class JenisProject_model extends CI_Model
 {
     private $_table = "j_project";
 
